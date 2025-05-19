@@ -1,0 +1,71 @@
+/* css/auth.css */
+.auth-page .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.auth-form-container {
+  background-color: var(--color-bg-medium);
+  padding: calc(var(--spacing-unit) * 4); /* 32px */
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 450px; /* Ограничиваем ширину формы */
+}
+
+.auth-form-container h2 {
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 3); /* 24px */
+  color: var(--color-text);
+}
+
+.form-group {
+  margin-bottom: calc(var(--spacing-unit) * 2); /* 16px */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-unit); /* 8px */
+  color: var(--color-text);
+  font-size: 0.9em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.25); /* 10px */
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+  font-size: 1em;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.3);
+}
+
+.auth-form-container button[type="submit"] {
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.5); /* 12px */
+  font-size: 1.1em;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: calc(var(--spacing-unit) * 2.5); /* 20px */
+  font-size: 0.9em;
+}
+
+.auth-switch a {
+  color: var(--color-primary);
+  font-weight: bold;
+}

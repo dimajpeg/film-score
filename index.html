@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Film-score</title>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <!-- Сюда можно SVG или img для лого -->
+        FilmScore
+      </a>
+      <form action="/search" method="get" class="search-form">
+        <input type="search" name="query" placeholder="Поиск фильмов, сериалов.." aria-label="Поиск">
+        <button type="submit">Найти</button>
+      </form>
+      <nav class="main-navigation">
+        <ul>
+          <li><a href="sign-up.html">Войти</a></li>
+          <li>
+            <select name="language" aria-label="Выбор языка">
+              <option value="ru">RU</option>
+              <option value="en">EN</option>
+              <option value="ua">UA</option>
+            </select>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <section class="hero-banner">
+      <div class="container">
+        <!-- Здесь может быть слайдер или просто один большой баннер -->
+        <div class="hero-slide active">
+          <img src="images/placeholder-banner.jpg" alt="Захватывающий фильм - Баннер">
+          <div class="hero-content">
+            <h1>Супер Фильм Года</h1>
+            <p>Невероятные приключения ждут вас!</p>
+            <a href="/movie/super-film" class="btn btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="movies-section popular-movies">
+      <div class="container">
+        <h2>Популярное сейчас</h2>
+        <div class="movies-grid">
+          <!-- Пример карточки фильма -->
+          <article class="movie-card">
+            <a href="/movie/film1" class="movie-poster-link">
+              <img src="images/placeholder-poster1.jpg" alt="Постер фильма 1">
+            </a>
+            <div class="movie-info">
+              <h3><a href="/movie/film1">Название фильма 1 (2023)</a></h3>
+              <div class="movie-rating">
+                <!-- Сюда можно иконки звезд или просто цифру -->
+                <span>8.5</span>
+              </div>
+            </div>
+          </article>
+          <article class="movie-card">
+            <a href="/movie/film2" class="movie-poster-link">
+              <img src="images/placeholder-poster2.jpg" alt="Постер фильма 2">
+            </a>
+            <div class="movie-info">
+              <h3><a href="/movie/film2">Очень Популярный Фильм 2 (2024)</a></h3>
+              <div class="movie-rating">
+                <span>9.1</span>
+              </div>
+            </div>
+          </article>
+          <!-- ... еще 2-4 карточки ... -->
+        </div>
+        <a href="/popular" class="btn btn-secondary view-all-link">Смотреть все популярные</a>
+      </div>
+    </section>
+
+    <section class="movies-section themed-collection">
+      <div class="container">
+        <h2>Новогоднее настроение</h2>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <a href="/movie/film3" class="movie-poster-link">
+              <img src="images/placeholder-poster3.jpg" alt="Постер фильма 3">
+            </a>
+            <div class="movie-info">
+              <h3><a href="/movie/film3">Рождественская История (2009)</a></h3>
+              <div class="movie-rating">
+                <span>7.9</span>
+              </div>
+            </div>
+          </article>
+          <!-- ... еще карточки ... -->
+        </div>
+        <a href="/collection/new-year" class="btn btn-secondary view-all-link">Вся подборка</a>
+      </div>
+    </section>
+
+    <section class="movies-section recommended-movies">
+      <div class="container">
+        <h2>Рекомендуем посмотреть</h2>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <a href="/movie/film4" class="movie-poster-link">
+              <img src="images/placeholder-poster4.jpg" alt="Постер фильма 4">
+            </a>
+            <div class="movie-info">
+              <h3><a href="/movie/film4">Скрытая Жемчужина (2021)</a></h3>
+              <div class="movie-rating">
+                <span>8.8</span>
+              </div>
+            </div>
+          </article>
+          <!-- ... еще карточки ... -->
+        </div>
+        <a href="/recommended" class="btn btn-secondary view-all-link">Больше рекомендаций</a>
+      </div>
+    </section>
+
+    <!-- Можно добавить еще секции: "Скоро в кино", "Новинки на сайте" и т.д. -->
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2023-2024 МойКиноПроект. Все права защищены.</p>
+      <nav class="footer-nav">
+        <ul>
+          <li><a href="/about">О проекте</a></li>
+          <li><a href="/terms">Пользовательское соглашение</a></li>
+          <li><a href="/privacy">Политика конфиденциальности</a></li>
+          <li><a href="/contact">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- <script src="js/main.js"></script> --> <!-- Для будущего JS -->
+</body>
+
+</html>
