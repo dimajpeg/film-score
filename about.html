@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Язык будет управляться i18n.js -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="page.about.title">About Us - FilmScore</title> <!-- Ключ для заголовка страницы -->
+  <link rel="icon" href="assets/icons/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css"> <!-- Общие стили -->
+  <link rel="stylesheet" href="css/static-pages.css"> <!-- Стили для статичных страниц (создадим позже) -->
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo" data-i18n="auth.logo">FilmScore</a>
+      <!-- Используем существующий ключ или новый, например "site.logo" -->
+
+      <form action="/search" method="get" class="search-form">
+        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..."
+          aria-label="Search">
+        <button type="submit" data-i18n="search_btn">Search</button>
+      </form>
+
+      <nav class="main-navigation">
+        <ul>
+          <!-- Убираем "Sign In" так как мы на статической странице,
+               или можно оставить, если это общая навигация для всего сайта -->
+          <!-- <li><a href="sign-up.html" data-i18n="sign_in">Sign In</a></li> -->
+          <li>
+            <select id="language-switcher" name="language" aria-label="Language selection">
+              <option value="en">EN</option>
+              <option value="ru">RU</option>
+              <option value="ua">UA</option>
+            </select>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="container page-container"> <!-- Используем page-container для возможной специфической стилизации -->
+      <article class="about-us-content">
+        <h1 data-i18n="page.about.h1">About FilmScore</h1>
+
+        <section class="intro-section">
+          <p data-i18n="page.about.intro.p1">FilmScore is a project created by two students: Dima Matyushchenko and
+            Misha Efteni.</p>
+          <p data-i18n="page.about.intro.p2">We are aspiring Junior Developers passionate about web technologies and
+            cinema.</p>
+        </section>
+
+        <section class="mission-section">
+          <h2 data-i18n="page.about.mission.h2">Our Mission</h2>
+          <p data-i18n="page.about.mission.p1">The main goal of FilmScore is to provide a user-friendly platform for
+            discovering, rating, and discussing movies and TV series. We aim to create a community where film
+            enthusiasts can share their opinions and find new favorites.</p>
+          <p data-i18n="page.about.mission.p2">We believe that sharing experiences enriches the way we perceive art, and
+            cinema is a powerful form of it.</p>
+        </section>
+
+        
+        <section class="team-section">
+          <h2 data-i18n="page.about.team.h2">The Team</h2>
+          <div class="team-member">
+            <h3 data-i18n="page.about.team.dima.name">Dima Matyushchenko</h3>
+            <p data-i18n="page.about.team.dima.role">Co-founder & Junior Developer</p>
+            <!-- Текст здесь будет заменен переводом -->
+            <p data-i18n="page.about.team.dima.bio">Passionate about backend development...</p>
+            <!-- Текст здесь будет заменен переводом -->
+          </div>
+          <div class="team-member">
+            <h3 data-i18n="page.about.team.misha.name">Misha Efteni</h3>
+            <p data-i18n="page.about.team.misha.role">Co-founder & Junior Developer</p>
+            <!-- Текст здесь будет заменен переводом -->
+            <p data-i18n="page.about.team.misha.bio">Focused on frontend development...</p>
+            <!-- Текст здесь будет заменен переводом -->
+          </div>
+        </section>
+
+        <section class="future-section">
+          <h2 data-i18n="page.about.future.h2">Future Plans</h2>
+          <p data-i18n="page.about.future.p1">We are constantly working on improving FilmScore and adding new features.
+            Stay tuned for more updates!</p>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer_copyright">© 2025 FilmScore.</p> <!-- Используем общий ключ для футера -->
+      <nav class="footer-nav">
+        <ul>
+          <li><a href="about.html" data-i18n="footer_about">About</a></li>
+          <li><a href="contact.html" data-i18n="footer_contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script> <!-- Скрипт переводов -->
+  <!-- Другие скрипты, если они нужны для этой страницы -->
+</body>
+
+</html>

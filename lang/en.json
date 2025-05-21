@@ -52,5 +52,36 @@
   "message.registrationError": "An unexpected error occurred during registration.",
   "message.loginError": "An unexpected error occurred during login.",
   "message.loggedOut": "You have been logged out.",
-  "message.sessionExpired": "Your session has expired. Please log in again."
+  "message.sessionExpired": "Your session has expired. Please log in again.",
+
+  "site.logo": "FilmScore", 
+  "search_btn": "Search",
+  "page.about.title": "About Us - FilmScore",
+  "page.about.h1": "About FilmScore",
+
+  "page.about.intro.p1": "FilmScore is a project created by two students: Dima Matyushchenko and Misha Efteni.",
+  "page.about.intro.p2": "We are aspiring Junior Developers passionate about web technologies and cinema.",
+
+  "page.about.mission.h2": "Our Mission",
+  "page.about.mission.p1": "The main goal of FilmScore is to provide a user-friendly platform for discovering, rating, and discussing movies and TV series. We aim to create a community where film enthusiasts can share their opinions and find new favorites.",
+  "page.about.mission.p2": "We believe that sharing experiences enriches the way we perceive art, and cinema is a powerful form of it.",
+
+  "page.about.team.h2": "The Team",
+  "page.about.team.dima.name": "Dima Matyushchenko",
+  "page.about.team.dima.role": "Frontend Developer", 
+  "page.about.team.dima.bio": "Specializes in frontend development and creating intuitive user interfaces. Strives to bring ideas to life with clean code and modern design, ensuring the best user experience.", 
+  "page.about.team.misha.name": "Misha Efteni",
+  "page.about.team.misha.role": "Backend Developer",
+  "page.about.team.misha.bio": "Passionate about backend development and building reliable, scalable server-side applications. Enjoys solving complex technical challenges and ensuring stable system performance.",
+
+  "page.about.future.h2": "Future Plans",
+  "page.about.future.p1": "We are constantly working on improving FilmScore and adding new features. Stay tuned for more updates!",
+
+  "page.contact.title": "Contact Us - FilmScore",
+  "page.contact.h1": "Contact Us",
+  "page.contact.intro.p1": "If you have any questions, suggestions, or just want to say hello, feel free to reach out to us. We'd love to hear from you!",
+  "page.contact.details.h2": "Our Contact Information",
+  "page.contact.emailLabel": "Email:",
+  "page.contact.telegramLabel": "Telegram:",
+  "page.contact.githubLabel": "GitHub:"
 }

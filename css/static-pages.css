@@ -1,0 +1,255 @@
+/* css/static-pages.css */
+
+/* Общие стили для контейнера контента на статичных страницах */
+.page-container {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+/* Стили для основного контента статьи (например, about-us-content) */
+.page-container article {
+  background-color: #1c1c1c; /* Тот же фон, что и у карточек/хедера */
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  color: #e5e5e5; /* Основной цвет текста */
+}
+
+.page-container article h1 {
+  font-size: 2.2em; /* Крупный заголовок страницы */
+  color: #e50914; /* Акцентный красный */
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333; /* Разделитель под заголовком H1 */
+  text-align: center;
+}
+
+.page-container article h2 {
+  font-size: 1.8em;
+  color: #e5e5e5;
+  margin-top: 30px; /* Отступ перед подзаголовками секций */
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #444; /* Легкий разделитель */
+}
+
+.page-container article h3 {
+    font-size: 1.4em;
+    color: #f5c518; /* Желтый акцент для имен, как рейтинг */
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.page-container article p {
+  font-size: 1em;
+  line-height: 1.7;
+  margin-bottom: 15px;
+  color: #ccc; /* Чуть менее яркий текст для параграфов */
+}
+
+.page-container article a {
+  color: #0095ff; /* Можно использовать твой стандартный цвет ссылок или другой */
+  text-decoration: underline;
+}
+
+.page-container article a:hover {
+  color: #33afff;
+  text-decoration: none;
+}
+
+/* Стили для секций */
+.page-container article section {
+  margin-bottom: 30px;
+}
+
+/* Стили для секции команды (если нужно специфическое оформление) */
+.team-section .team-member {
+  background-color: #222; /* Немного другой фон для выделения члена команды */
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border-left: 3px solid #e50914; /* Акцентная полоса */
+}
+
+.team-section .team-member p {
+    font-size: 0.95em;
+    color: #b0b0b0;
+}
+.team-section .team-member p:last-of-type {
+    margin-bottom: 0; /* Убрать отступ у последнего параграфа в блоке */
+}
+
+
+/* Стили для контактной формы на странице contact.html (если используется .auth-container) */
+/* Эти стили уже могут быть в auth.css, но можно их здесь переопределить или дополнить */
+/* Например, если мы используем класс .auth-container для формы на contact.html */
+.page-container .auth-container { /* Если форма контактов имеет такой класс */
+  max-width: 700px; /* Форма контактов может быть шире */
+  margin: 30px auto;
+}
+
+.page-container textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: #e5e5e5;
+    font-size: 1em;
+    font-family: inherit; /* Наследовать шрифт от body */
+    line-height: 1.6;
+    resize: vertical; /* Разрешить изменять размер только по вертикали */
+    min-height: 100px; /* Минимальная высота */
+}
+
+.page-container textarea:focus {
+    outline: none;
+    border-color: #e50914;
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.25);
+}
+
+/* Адаптивность для статичных страниц */
+@media (max-width: 768px) {
+  .page-container article {
+    padding: 20px;
+  }
+
+  .page-container article h1 {
+    font-size: 1.8em;
+  }
+
+  .page-container article h2 {
+    font-size: 1.5em;
+  }
+  .page-container article h3 {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container article h1 {
+    font-size: 1.6em;
+  }
+
+  .page-container article h2 {
+    font-size: 1.3em;
+  }
+  .page-container article p {
+    font-size: 0.95em;
+  }
+}
+
+.contact-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;         /* Включаем Flexbox для родителя */
+  flex-wrap: wrap;       /* Разрешаем перенос элементов */
+  gap: 20px;             /* Пространство между элементами списка */
+  justify-content: flex-start; /* Выравнивание по началу */
+  margin-top: 25px;      /* Отступ сверху от заголовка H2 */
+}
+
+.contact-list li {
+  background-color: #2a2a2a; /* Фон для каждого элемента */
+  padding: 15px 20px;      /* Внутренние отступы */
+  border-radius: 6px;
+  border: 1px solid #383838;
+  min-width: 280px;        /* Минимальная ширина элемента, чтобы не был слишком узким */
+  flex-grow: 1;            /* Позволяем элементам расти */
+  display: flex;           /* LI сам становится flex-контейнером для иконки и текста */
+  align-items: center;     /* Вертикальное выравнивание иконки и текста */
+  gap: 15px;               /* Пространство между иконкой и текстовым блоком */
+  transition: background-color 0.2s ease-in-out; /* Плавный переход для фона li при наведении */
+}
+
+.contact-list li:hover {
+  background-color: #333; /* Немного меняем фон LI при наведении для лучшего эффекта */
+  /* border-color: #555; - можно и рамку менять */
+}
+
+.contact-icon {
+  display: inline-flex;    /* Для корректного отображения SVG */
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;          /* Предотвращаем сжатие иконки */
+}
+
+.contact-icon svg {
+  width: 28px;             /* Размер иконки */
+  height: 28px;
+  transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out; /* Плавный переход цвета */
+}
+
+/* Стили по умолчанию для иконок */
+.contact-icon .icon-mail { /* Для контурных иконок (например, email) */
+  stroke: #e0e0e0;       /* Белый/светло-серый по умолчанию */
+  fill: none;
+}
+.contact-icon .icon-telegram,
+.contact-icon .icon-github { /* Для залитых иконок (например, Telegram, GitHub) */
+  fill: #e0e0e0;         /* Белый/светло-серый по умолчанию */
+}
+
+/* Стили при наведении на родительский LI для иконок */
+.contact-list li:hover .contact-icon .icon-mail {
+  stroke: #0095ff;       /* Голубой при наведении */
+}
+.contact-list li:hover .contact-icon .icon-telegram,
+.contact-list li:hover .contact-icon .icon-github {
+  fill: #0095ff;         /* Голубой при наведении */
+}
+
+.contact-text {
+  display: flex;
+  flex-direction: column; /* Метка (strong) и ссылка (a) будут друг под другом */
+  flex-grow: 1;           /* Позволяем текстовому блоку занимать оставшееся место */
+}
+
+.contact-list li strong {
+  color: #e5e5e5;
+  display: block;
+  margin-bottom: 4px;     /* Отступ под меткой */
+  font-weight: bold;
+  font-size: 0.8em;       /* Метка чуть меньше основного текста ссылки */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.contact-list li a {
+  color: #0095ff;          /* Голубой цвет для ссылок */
+  text-decoration: none;
+  word-break: break-all;  /* Перенос длинных ссылок */
+  display: block;
+  font-weight: 500;
+  font-size: 1em;         /* Основной размер текста для ссылки */
+  line-height: 1.4;
+}
+
+.contact-list li a:hover {
+  text-decoration: underline;
+  /* color: #33afff; - можно осветлить цвет ссылки при наведении, если нужно */
+}
+
+/* Адаптивность для списка контактов */
+@media (max-width: 680px) {
+  .contact-list {
+    flex-direction: column; /* На маленьких экранах элементы будут друг под другом */
+    gap: 15px;
+  }
+  .contact-list li {
+    min-width: 100%;      /* Занимают всю ширину родителя */
+    padding: 12px 15px;   /* Можно немного уменьшить паддинги */
+    gap: 12px;            /* Уменьшаем gap внутри li */
+  }
+  .contact-icon svg {
+    width: 24px;          /* Иконки чуть меньше на мобильных */
+    height: 24px;
+  }
+  .contact-list li strong {
+    font-size: 0.75em;
+  }
+  .contact-list li a {
+    font-size: 0.95em;
+  }
+}
