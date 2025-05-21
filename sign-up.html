@@ -1,57 +1,88 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Регистрация - МойКиноПроект</title>
-  <link rel="stylesheet" href="css/style.css"> <!-- Общие стили -->
-  <link rel="stylesheet" href="css/auth.css"> <!-- Стили для страниц аутентификации -->
+  <link rel="icon" href="assets/icons/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css"> <!-- Common styles -->
+  <link rel="stylesheet" href="css/auth.css"> <!-- Styles for authentication pages -->
+  <title>Sign In & Sign Up - MyCinemaProject</title>
 </head>
 
 <body>
   <header class="site-header">
     <div class="container header-container">
-      <a href="index.html" class="logo">МойКиноПроект</a>
-      <!-- Можно убрать поиск и навигацию на странице регистрации или оставить для консистентности -->
+      <a href="index.html" class="logo">FilmScore</a>
+      <!-- Navigation and search can be removed or kept here, as you noted -->
     </div>
   </header>
 
   <main class="site-main auth-page">
     <div class="container">
-      <div class="auth-form-container">
-        <h2>Регистрация</h2>
-        <form id="signup-form">
-          <div class="form-group">
-            <label for="username">Имя пользователя:</label>
-            <input type="text" id="username" name="username" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" required minlength="6">
-          </div>
-          <div class="form-group">
-            <label for="confirm-password">Подтвердите пароль:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-        </form>
-        <p class="auth-switch">Уже есть аккаунт? <a href="sign-in.html">Войти</a></p>
-      </div>
-    </div>
+      <div class="auth-container">
+        <!-- Form Toggles -->
+        <div class="auth-toggle">
+          <button id="show-signin-btn" class="auth-toggle-btn active" data-form="signin">Sign In</button>
+          <button id="show-signup-btn" class="auth-toggle-btn" data-form="signup">Sign Up</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <div id="signin-form-container" class="form-wrapper">
+          <h2>Sign In</h2>
+          <form id="signin-form">
+            <div class="form-group">
+              <label for="signin-email">Gmail:</label>
+              <input type="email" id="signin-email" name="signin-email" placeholder="example@gmail.com" required>
+            </div>
+            <div class="form-group">
+              <label for="signin-password">Password:</label>
+              <input type="password" id="signin-password" name="signin-password" placeholder="******" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+            <p class="form-message" id="signin-message"></p> <!-- For error/success messages -->
+          </form>
+        </div>
+
+        <!-- Sign Up Form - initially hidden -->
+        <div id="signup-form-container" class="form-wrapper" style="display: none;">
+          <h2>Sign Up</h2>
+          <form id="signup-form">
+            <div class="form-group">
+              <label for="signup-name">Name:</label>
+              <input type="text" id="signup-name" name="signup-name" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="signup-surname">Surname:</label>
+              <input type="text" id="signup-surname" name="signup-surname" placeholder="Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="signup-email">Gmail:</label>
+              <input type="email" id="signup-email" name="signup-email" placeholder="example@gmail.com" required>
+            </div>
+            <div class="form-group">
+              <label for="signup-password">Password:</label>
+              <input type="password" id="signup-password" name="signup-password" placeholder="Minimum 6 characters" required minlength="6">
+            </div>
+            <div class="form-group">
+              <label for="signup-confirm-password">Confirm Password:</label>
+              <input type="password" id="signup-confirm-password" name="signup-confirm-password" placeholder="Repeat password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <p class="form-message" id="signup-message"></p> <!-- For error/success messages -->
+          </form>
+        </div>
+
+      </div> <!-- /.auth-container -->
+    </div> <!-- /.container -->
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>© 2023-2024 МойКиноПроект. Все права защищены.</p>
+      <p>© 2023-2024 MyCinemaProject. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- <script src="js/auth.js"></script> --> <!-- JS для логики регистрации, пока не нужен -->
+  <script src="auth.js"></script> <!-- JS for toggle logic and validation -->
 </body>
-
 </html>

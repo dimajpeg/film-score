@@ -1,71 +1,168 @@
-/* css/auth.css */
+/* css/auth.css - Стили для страниц аутентификации */
+
+/* Общие стили для страницы аутентификации */
 .auth-page .container {
   display: flex;
+  flex-direction: column; /* Позволит разместить и переключатели и форму */
   justify-content: center;
   align-items: center;
   padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 60px; /* Больше отступа снизу */
+  min-height: calc(100vh - 150px); /* Примерная высота хедера и футера, чтобы контент был по центру */
 }
 
-.auth-form-container {
-  background-color: var(--color-bg-medium);
-  padding: calc(var(--spacing-unit) * 4); /* 32px */
+.auth-container {
+  background-color: #1c1c1c; /* Тот же фон, что и у карточек фильмов */
+  padding: 30px 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   width: 100%;
-  max-width: 450px; /* Ограничиваем ширину формы */
+  max-width: 480px; /* Немного шире для комфорта */
+  margin: 20px auto; /* Отступы сверху/снизу и центрирование */
 }
 
-.auth-form-container h2 {
+/* Переключатели форм (Sign In / Sign Up) */
+.auth-toggle {
+  display: flex;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #333; /* Разделитель */
+}
+
+.auth-toggle-btn {
+  flex-grow: 1;
+  padding: 15px 10px;
+  background-color: transparent;
+  border: none;
+  color: #aaa; /* Неактивный цвет */
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
   text-align: center;
-  margin-bottom: calc(var(--spacing-unit) * 3); /* 24px */
-  color: var(--color-text);
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  border-bottom: 3px solid transparent; /* Для активного состояния */
 }
 
+.auth-toggle-btn:hover {
+  color: #e5e5e5; /* Светлее при наведении */
+}
+
+.auth-toggle-btn.active {
+  color: #e50914; /* Акцентный красный */
+  border-bottom-color: #e50914;
+}
+
+/* Стили для обертки формы (если потребуется) */
+.form-wrapper h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #e5e5e5;
+  font-size: 1.8em;
+}
+
+/* Группы полей формы */
 .form-group {
-  margin-bottom: calc(var(--spacing-unit) * 2); /* 16px */
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: var(--spacing-unit); /* 8px */
-  color: var(--color-text);
+  margin-bottom: 8px;
+  color: #ccc; /* Чуть менее яркий, чем основной текст */
   font-size: 0.9em;
+  font-weight: 500;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
   width: 100%;
-  padding: calc(var(--spacing-unit) * 1.25); /* 10px */
-  border: 1px solid var(--color-border);
+  padding: 12px 15px;
+  border: 1px solid #444; /* Темнее рамка */
   border-radius: 4px;
-  background-color: var(--color-bg-light);
-  color: var(--color-text);
+  background-color: #333; /* Темный фон инпута */
+  color: #e5e5e5; /* Светлый текст в инпуте */
   font-size: 1em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="email"]::placeholder,
+.form-group input[type="password"]::placeholder {
+  color: #777; /* Цвет плейсхолдера */
 }
 
 .form-group input[type="text"]:focus,
 .form-group input[type="email"]:focus,
 .form-group input[type="password"]:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.3);
+  border-color: #e50914; /* Акцентный красный при фокусе */
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.25); /* Легкая тень при фокусе */
 }
 
-.auth-form-container button[type="submit"] {
+/* Кнопка отправки формы */
+/* Используем классы .btn и .btn-primary из твоего style.css */
+/* Добавим специфичные стили для формы, если нужно */
+.auth-container form button[type="submit"].btn-primary {
   width: 100%;
-  padding: calc(var(--spacing-unit) * 1.5); /* 12px */
+  padding: 12px 20px; /* Можешь настроить паддинг */
   font-size: 1.1em;
+  margin-top: 10px; /* Небольшой отступ сверху */
 }
 
-.auth-switch {
+/* Сообщения об ошибках/успехе */
+.form-message {
   text-align: center;
-  margin-top: calc(var(--spacing-unit) * 2.5); /* 20px */
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
   font-size: 0.9em;
+  display: none; /* По умолчанию скрыто, будет показано через JS */
 }
 
-.auth-switch a {
-  color: var(--color-primary);
-  font-weight: bold;
+.form-message.error {
+  background-color: rgba(229, 9, 20, 0.1); /* Легкий красный фон для ошибки */
+  color: #e50914; /* Красный текст ошибки */
+  border: 1px solid #e50914;
+}
+
+.form-message.success {
+  background-color: rgba(34, 139, 34, 0.1); /* Легкий зеленый фон для успеха */
+  color: #228B22; /* Зеленый текст успеха */
+  border: 1px solid #228B22;
+}
+
+
+/* Адаптивность для форм */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 25px 30px;
+    margin: 20px 15px; /* Меньше отступов по бокам */
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .auth-toggle-btn {
+    font-size: 1em;
+    padding: 12px 5px;
+  }
+
+  .form-wrapper h2 {
+    font-size: 1.6em;
+    margin-bottom: 20px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    padding: 10px 12px;
+  }
+
+  .auth-container form button[type="submit"].btn-primary {
+    font-size: 1em;
+  }
 }
