@@ -166,3 +166,20 @@
     font-size: 1em;
   }
 }
+#user-info-container h2 {
+  color: #e5e5e5;
+  margin-bottom: 10px;
+}
+
+#user-info-container p {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Кнопка Logout уже должна быть стилизована через .btn и .btn-secondary,
+   но можно добавить специфичные отступы или ширину если нужно.
+   #logout-btn {
+     width: 50%;
+     margin: 20px auto 0;
+   }
+*/

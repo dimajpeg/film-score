@@ -1,88 +1,103 @@
 <!DOCTYPE html>
+<!-- Атрибут lang будет меняться JS, но можно оставить en по умолчанию -->
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/icons/logo.svg" type="image/x-icon">
-  <link rel="stylesheet" href="css/style.css"> <!-- Common styles -->
-  <link rel="stylesheet" href="css/auth.css"> <!-- Styles for authentication pages -->
-  <title>Sign In & Sign Up - MyCinemaProject</title>
+  <title data-i18n="auth.title">Sign In & Sign Up - MyCinemaProject</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
 
 <body>
   <header class="site-header">
     <div class="container header-container">
-      <a href="index.html" class="logo">FilmScore</a>
-      <!-- Navigation and search can be removed or kept here, as you noted -->
+      <a href="index.html" class="logo" data-i18n="auth.logo">MyCinemaProject</a>
+      <nav class="main-navigation">
+        <ul>
+          <li> <!-- Обернул select в li для корректной структуры списка -->
+            <select id="language-switcher" name="language" aria-label="Language selection">
+              <option value="en">EN</option>
+              <option value="ru">RU</option>
+              <option value="ua">UA</option>
+            </select>
+          </li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main class="site-main auth-page">
     <div class="container">
       <div class="auth-container">
-        <!-- Form Toggles -->
         <div class="auth-toggle">
-          <button id="show-signin-btn" class="auth-toggle-btn active" data-form="signin">Sign In</button>
-          <button id="show-signup-btn" class="auth-toggle-btn" data-form="signup">Sign Up</button>
+          <button id="show-signin-btn" class="auth-toggle-btn active" data-form="signin" data-i18n="auth.signIn.tab">Sign In</button>
+          <button id="show-signup-btn" class="auth-toggle-btn" data-form="signup" data-i18n="auth.signUp.tab">Sign Up</button>
         </div>
 
-        <!-- Sign In Form -->
         <div id="signin-form-container" class="form-wrapper">
-          <h2>Sign In</h2>
+          <h2 data-i18n="auth.signIn.title">Sign In</h2>
           <form id="signin-form">
             <div class="form-group">
-              <label for="signin-email">Gmail:</label>
-              <input type="email" id="signin-email" name="signin-email" placeholder="example@gmail.com" required>
+              <label for="signin-email" data-i18n="auth.signIn.emailLabel">Gmail:</label>
+              <input type="email" id="signin-email" name="signin-email" data-i18n="auth.signIn.emailPlaceholder" placeholder="example@gmail.com" required>
             </div>
             <div class="form-group">
-              <label for="signin-password">Password:</label>
-              <input type="password" id="signin-password" name="signin-password" placeholder="******" required>
+              <label for="signin-password" data-i18n="auth.signIn.passwordLabel">Password:</label>
+              <input type="password" id="signin-password" name="signin-password" data-i18n="auth.signIn.passwordPlaceholder" placeholder="******" required>
             </div>
-            <button type="submit" class="btn btn-primary">Sign In</button>
-            <p class="form-message" id="signin-message"></p> <!-- For error/success messages -->
+            <button type="submit" class="btn btn-primary" data-i18n="auth.signIn.button">Sign In</button>
+            <p class="form-message" id="signin-message"></p>
           </form>
         </div>
 
-        <!-- Sign Up Form - initially hidden -->
         <div id="signup-form-container" class="form-wrapper" style="display: none;">
-          <h2>Sign Up</h2>
+          <h2 data-i18n="auth.signUp.title">Sign Up</h2>
           <form id="signup-form">
             <div class="form-group">
-              <label for="signup-name">Name:</label>
-              <input type="text" id="signup-name" name="signup-name" placeholder="John" required>
+              <label for="signup-name" data-i18n="auth.signUp.nameLabel">Name:</label>
+              <input type="text" id="signup-name" name="signup-name" data-i18n="auth.signUp.namePlaceholder" placeholder="Dima" required>
             </div>
             <div class="form-group">
-              <label for="signup-surname">Surname:</label>
-              <input type="text" id="signup-surname" name="signup-surname" placeholder="Doe" required>
+              <label for="signup-surname" data-i18n="auth.signUp.surnameLabel">Surname:</label>
+              <input type="text" id="signup-surname" name="signup-surname" data-i18n="auth.signUp.surnamePlaceholder" placeholder="Ivanov" required>
             </div>
             <div class="form-group">
-              <label for="signup-email">Gmail:</label>
-              <input type="email" id="signup-email" name="signup-email" placeholder="example@gmail.com" required>
+              <label for="signup-email" data-i18n="auth.signUp.emailLabel">Gmail:</label>
+              <input type="email" id="signup-email" name="signup-email" data-i18n="auth.signUp.emailPlaceholder" placeholder="example@gmail.com" required>
             </div>
             <div class="form-group">
-              <label for="signup-password">Password:</label>
-              <input type="password" id="signup-password" name="signup-password" placeholder="Minimum 6 characters" required minlength="6">
+              <label for="signup-password" data-i18n="auth.signUp.passwordLabel">Password:</label>
+              <input type="password" id="signup-password" name="signup-password" data-i18n="auth.signUp.passwordPlaceholder" placeholder="Minimum 6 characters" required minlength="6">
             </div>
             <div class="form-group">
-              <label for="signup-confirm-password">Confirm Password:</label>
-              <input type="password" id="signup-confirm-password" name="signup-confirm-password" placeholder="Repeat password" required>
+              <label for="signup-confirm-password" data-i18n="auth.signUp.confirmPasswordLabel">Confirm Password:</label>
+              <input type="password" id="signup-confirm-password" name="signup-confirm-password" data-i18n="auth.signUp.confirmPasswordPlaceholder" placeholder="Repeat password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-            <p class="form-message" id="signup-message"></p> <!-- For error/success messages -->
+            <button type="submit" class="btn btn-primary" data-i18n="auth.signUp.button">Sign Up</button>
+            <p class="form-message" id="signup-message"></p>
           </form>
         </div>
 
-      </div> <!-- /.auth-container -->
-    </div> <!-- /.container -->
+        <div id="user-info-container" style="display: none; text-align: center;">
+          <!-- Этот h2 будет обновляться из auth.js, поэтому data-i18n здесь не нужен напрямую, но мы предусмотрим ключ -->
+          <h2 id="welcome-message" data-i18n-key="auth.welcomeMessageDefault">Welcome!</h2>
+          <p data-i18n="auth.loggedInMessage">You are successfully logged in.</p>
+          <button id="logout-btn" class="btn btn-secondary" style="margin-top: 20px;" data-i18n="auth.logoutButton">Logout</button>
+        </div>
+
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>© 2023-2024 MyCinemaProject. All rights reserved.</p>
+      <p data-i18n="auth.footerCopyright">© 2023-2024 MyCinemaProject. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="auth.js"></script> <!-- JS for toggle logic and validation -->
+  <script src="i18n.js"></script> <!-- Скрипт переводов -->
+  <script src="auth.js"></script> <!-- Скрипт аутентификации -->
 </body>
 </html>
