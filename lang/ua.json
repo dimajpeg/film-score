@@ -85,5 +85,15 @@
   "page.contact.details.h2": "Наша контактна інформація",
   "page.contact.emailLabel": "Email:",
   "page.contact.telegramLabel": "Telegram:",
-  "page.contact.githubLabel": "GitHub:"
+  "page.contact.githubLabel": "GitHub:",
+
+  "hero.slide1.title": "Майнкрафт у кіно",
+  "hero.slide1.subtitle": "Епічна пригода на великому екрані!",
+  "hero.slide2.title": "Грішники",
+  "hero.slide2.subtitle": "У кожного святого є минуле.",
+  "hero.slide3.title": "Громовержці",
+  "hero.slide3.subtitle": "Правосуддя, як блискавка...",
+  "hero.slide4.title": "Зла",
+  "hero.slide4.subtitle": "Кожен заслуговує на шанс злетіти."
+
 }

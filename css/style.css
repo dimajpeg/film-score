@@ -129,41 +129,194 @@ ul {
 }
 
 /* --- Hero баннер --- */
-.hero-banner {
-  background-color: #000; /* Фон для баннера, если картинка не загрузится */
+/* В style.css */
+
+/* --- Hero баннер --- */
+.hero-banner-slider {
+  background-color: #000;
   margin-bottom: 40px;
-  position: relative;
-  min-height: 400px; /* Минимальная высота баннера */
-  display: flex;
-  align-items: center;
+  position: relative; /* Для позиционирования контролов и контента */
+  width: 100%;
+  height: 500px; /* Или другая фиксированная высота, или min-height. Подбери под свои изображения */
+  overflow: hidden; /* Скрываем все, что выходит за пределы */
 }
 
-.hero-banner .hero-slide img {
+.hero-slides-container {
+  position: relative;
   width: 100%;
-  height: 400px; /* Фиксированная высота для примера, можно авто */
-  object-fit: cover; /* Масштабирует и обрезает изображение */
-  opacity: 0.7; /* Затемнение для читаемости текста */
+  height: 100%;
+  display: flex; /* Для горизонтального расположения слайдов, если будем делать slide-анимацию */
+                  /* Если fade-анимация, то display: block; или display: grid; и слайды друг на друге */
+}
+
+.hero-slide {
+  min-width: 100%; /* Каждый слайд занимает всю ширину контейнера */
+  height: 100%;
+  position: absolute; /* Для fade-анимации, все слайды на одном месте */
+  top: 0;
+  left: 0;
+  opacity: 0; /* По умолчанию все слайды невидимы */
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; /* Анимация появления/исчезновения */
+  display: flex; /* Чтобы .hero-content мог позиционироваться внутри */
+  align-items: center; /* Выравнивание .hero-content, если нужно */
+  justify-content: center; /* Выравнивание .hero-content, если нужно */
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10; /* Активный слайд поверх других */
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Масштабирует и обрезает изображение, чтобы заполнить контейнер */
+  /* opacity: 0.7; - можно убрать, если затемнение будет через ::before или отдельный слой */
+  display: block;
+}
+
+/* Затемнение для лучшей читаемости текста поверх ярких картинок */
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Степень затемнения */
+    z-index: 1; /* Под текстом, но над картинкой */
 }
 
 .hero-content {
   position: absolute;
-  bottom: 20px;
-  left: 5%; /* Позиционирование текста на баннере */
+  bottom: 40px; /* Отступ снизу */
+  left: 50%;    /* Центрируем по горизонтали */
+  transform: translateX(-50%); /* Точное центрирование */
   color: #fff;
-  padding: 20px;
-  background-color: rgba(0,0,0, 0.5); /* Полупрозрачный фон для текста */
-  border-radius: 5px;
-  max-width: 60%;
+  padding: 25px 30px;
+  /* background-color: rgba(0,0,0, 0.6); - можно чуть темнее или убрать, если есть ::before */
+  border-radius: 8px;
+  max-width: 70%; /* Максимальная ширина контентного блока */
+  text-align: center; /* Текст по центру */
+  z-index: 2; /* Поверх ::before, но под контролами, если они будут заходить на контент */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .hero-content h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
+  font-size: 2.8em; /* Немного крупнее */
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Тень для текста */
 }
 
 .hero-content p {
-  font-size: 1.2em;
-  margin-bottom: 20px;
+  font-size: 1.3em; /* Немного крупнее */
+  margin-bottom: 25px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Тень для текста */
+  line-height: 1.5;
+}
+
+.hero-content .btn-primary {
+    padding: 12px 25px;
+    font-size: 1.1em;
+}
+
+/* Элементы управления слайдером */
+.slider-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 20; /* Поверх всего */
+  border-radius: 50%; /* Круглые кнопки */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.slider-control:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slider-control.prev {
+  left: 20px;
+}
+
+.slider-control.next {
+  right: 20px;
+}
+
+/* Точки-индикаторы */
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 20;
+}
+
+.slider-dots .dot {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.slider-dots .dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.slider-dots .dot.active {
+  background-color: #e50914; /* Акцентный красный для активной точки */
+  /* background-color: #fff; */ /* Или просто белый */
+}
+
+/* Адаптивность для слайдера */
+@media (max-width: 768px) {
+  .hero-banner-slider {
+    height: 400px; /* Уменьшаем высоту на мобильных */
+  }
+  .hero-content {
+    bottom: 20px;
+    padding: 15px 20px;
+    max-width: 85%;
+  }
+  .hero-content h1 {
+    font-size: 2em; /* Уменьшаем шрифт */
+  }
+  .hero-content p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+  }
+  .slider-control {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    padding: 8px 12px;
+  }
+  .slider-control.prev {
+    left: 10px;
+  }
+  .slider-control.next {
+    right: 10px;
+  }
+  .slider-dots .dot {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 /* --- Секции с фильмами --- */

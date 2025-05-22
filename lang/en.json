@@ -83,5 +83,14 @@
   "page.contact.details.h2": "Our Contact Information",
   "page.contact.emailLabel": "Email:",
   "page.contact.telegramLabel": "Telegram:",
-  "page.contact.githubLabel": "GitHub:"
+  "page.contact.githubLabel": "GitHub:",
+
+  "hero.slide1.title": "Minecraft: The Movie",
+  "hero.slide1.subtitle": "An epic adventure on the big screen!",
+  "hero.slide2.title": "Sinners",
+  "hero.slide2.subtitle": "Every saint has a past.",
+  "hero.slide3.title": "Thunderbolts",
+  "hero.slide3.subtitle": "Justice, like lightning...",
+  "hero.slide4.title": "Wicked",
+  "hero.slide4.subtitle": "Everyone deserves the chance to fly."
 }

@@ -41,16 +41,56 @@
   </header>
 
   <main class="site-main">
-    <section class="hero-banner">
-      <div class="container">
-        <div class="hero-slide active">
-          <img src="images/placeholder-banner.jpg" alt="Exciting movie - Banner">
+    <section class="hero-banner-slider"> <!-- Изменили класс для ясности -->
+      <div class="hero-slides-container">
+        <!-- Слайд 1 -->
+        <div class="hero-slide" data-slide-index="0">
+          <img src="assets/images/banner-minecraft-poster.jpg" alt="Minecraft Movie Banner">
           <div class="hero-content">
-            <h1 data-i18n="top_movie_title">Top Movie of the Year</h1>
-            <p data-i18n="top_movie_subtitle">Incredible adventures await you!</p>
-            <a href="/movie/super-film" class="btn btn-primary" data-i18n="learn_more">Learn More</a>
+            <h1 data-i18n="hero.slide1.title">Minecraft: The Movie</h1>
+            <p data-i18n="hero.slide1.subtitle">An epic adventure on the big screen!</p>
+            <a href="/movie/minecraft" class="btn btn-primary" data-i18n="learn_more">Learn More</a>
           </div>
         </div>
+        <!-- Слайд 2 -->
+        <div class="hero-slide" data-slide-index="1">
+          <img src="assets/images/banner-sinners-poster.jpg" alt="Sinners Movie Banner">
+          <div class="hero-content">
+            <h1 data-i18n="hero.slide2.title">Sinners</h1>
+            <p data-i18n="hero.slide2.subtitle">Every saint has a past.</p>
+            <a href="/movie/sinners" class="btn btn-primary" data-i18n="learn_more">Learn More</a>
+          </div>
+        </div>
+        <!-- Слайд 3 -->
+        <div class="hero-slide" data-slide-index="2">
+          <img src="assets/images/banner-thunderbolts-poster.jpg" alt="Thunderbolts Movie Banner">
+          <div class="hero-content">
+            <h1 data-i18n="hero.slide3.title">Thunderbolts</h1>
+            <p data-i18n="hero.slide3.subtitle">Justice, like lightning...</p>
+            <a href="/movie/thunderbolts" class="btn btn-primary" data-i18n="learn_more">Learn More</a>
+          </div>
+        </div>
+        <!-- Слайд 4 -->
+        <div class="hero-slide" data-slide-index="3">
+          <img src="assets/images/banner-wicked-poster.jpg" alt="Wicked Movie Banner">
+          <div class="hero-content">
+            <h1 data-i18n="hero.slide4.title">Wicked</h1>
+            <p data-i18n="hero.slide4.subtitle">Everyone deserves the chance to fly.</p>
+            <a href="/movie/wicked" class="btn btn-primary" data-i18n="learn_more">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Элементы управления слайдером -->
+      <button class="slider-control prev" aria-label="Previous slide">❮</button>
+      <button class="slider-control next" aria-label="Next slide">❯</button>
+
+      <div class="slider-dots">
+        <!-- Точки будут генерироваться JS или можно добавить вручную, если JS не будет их генерировать -->
+        <span class="dot active" data-slide-to="0"></span>
+        <span class="dot" data-slide-to="1"></span>
+        <span class="dot" data-slide-to="2"></span>
+        <span class="dot" data-slide-to="3"></span>
       </div>
     </section>
 
