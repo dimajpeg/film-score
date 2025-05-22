@@ -515,3 +515,132 @@ ul {
       padding: 10px;
   }
 }
+
+/* В style.css (или в отдельном файле user-menu.css) */
+
+/* Общие стили для элементов навигации, если нужны */
+.main-navigation .nav-item {
+  display: flex; /* Чтобы элементы внутри li тоже могли выстраиваться */
+  align-items: center;
+}
+
+/* Контейнер для меню пользователя */
+.user-menu-container {
+  position: relative; /* Для позиционирования выпадающего меню */
+}
+
+/* Кнопка-аватар */
+.user-avatar-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 50%; /* Делаем круглым, если иконка позволяет */
+  transition: background-color 0.2s ease;
+}
+
+.user-avatar-btn:hover,
+.user-avatar-btn[aria-expanded="true"] { /* Подсветка при ховере или когда меню открыто */
+  background-color: #333; /* Немного темнее фон */
+}
+
+.user-avatar-btn svg.icon-user {
+  width: 28px; /* Размер иконки */
+  height: 28px;
+  stroke: #e5e5e5; /* Цвет иконки */
+}
+
+.nav-username-display { /* Если будешь добавлять имя рядом с иконкой */
+  color: #e5e5e5;
+  margin-left: 8px;
+  font-size: 0.9em;
+}
+
+/* Выпадающее меню */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px); /* Под кнопкой-аватаром с небольшим отступом */
+  right: 0; /* Выравнивание по правому краю */
+  background-color: #1c1c1c; /* Такой же фон, как у хедера */
+  border: 1px solid #333;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  min-width: 200px; /* Минимальная ширина меню */
+  z-index: 1010; /* Поверх остального контента */
+  padding: 10px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px); /* Начальное состояние для анимации */
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  padding: 8px 15px;
+  color: #aaa;
+  font-size: 0.9em;
+  border-bottom: 1px solid #333;
+  margin-bottom: 5px;
+}
+
+.dropdown-header #dropdown-username {
+    font-weight: bold;
+    color: #e5e5e5;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block; /* Переопределяем flex из .main-navigation ul */
+}
+
+.dropdown-menu li a,
+.dropdown-menu li .dropdown-item-button {
+  display: block;
+  padding: 10px 15px;
+  color: #e5e5e5;
+  text-decoration: none;
+  font-size: 0.95em;
+  white-space: nowrap; /* Чтобы текст не переносился */
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li .dropdown-item-button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li .dropdown-item-button:hover {
+  background-color: #333; /* Фон при наведении */
+  color: #fff;
+  text-decoration: none; /* Убираем подчеркивание при наведении, если оно есть у ссылок */
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 8px 0;
+  overflow: hidden;
+  background-color: #333;
+  border: 0;
+}
+
+/* Адаптивность для меню (если нужно) */
+@media (max-width: 480px) {
+  .dropdown-menu {
+    min-width: 180px; /* Чуть уже на маленьких экранах */
+    /* Можно сделать его на всю ширину, если очень мало места */
+    /* left: 10px; right: 10px; width: auto; */
+  }
+}

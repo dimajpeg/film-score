@@ -9,36 +9,62 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/icons/logo.svg" type="image/x-icon">
   <link rel="stylesheet" href="css/style.css">
-  <script src="i18n.js" defer></script>
-  <script src="index.js" defer></script>
   <title>Film-score</title>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container header-container">
-      <a href="/" class="logo">FilmScore</a>
+  <!-- Фрагмент header в index.html, about.html, contact.html, sign-up.html -->
+<header class="site-header">
+  <div class="container header-container">
+    <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
 
-      <form action="/search" method="get" class="search-form">
-        <input type="search" name="query" placeholder="Search for movies, series..." data-i18n="search_placeholder"
-          aria-label="Search">
-        <button type="submit" data-i18n="search_btn">Search</button>
-      </form>
+    <form action="/search" method="get" class="search-form">
+      <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..."
+        aria-label="Search">
+      <button type="submit" data-i18n="search_btn">Search</button>
+    </form>
 
-      <nav class="main-navigation">
-        <ul>
-          <li><a href="sign-up.html" data-i18n="sign_in">Sign In</a></li>
-          <li>
-            <select id="language-switcher" name="language" aria-label="Language selection">
-              <option value="en">EN</option>
-              <option value="ru">RU</option>
-              <option value="ua">UA</option>
-            </select>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+    <nav class="main-navigation">
+      <ul>
+        <!-- Ссылка для входа - будет показываться, если пользователь не авторизован -->
+        <li id="nav-signin-link" class="nav-item">
+          <a href="sign-up.html" data-i18n="sign_in">Sign In</a>
+        </li>
+
+        <!-- Блок пользователя - будет показываться, если пользователь авторизован -->
+        <li id="nav-user-loggedin" class="nav-item" style="display: none;"> <!-- Изначально скрыт -->
+          <div class="user-menu-container">
+            <button id="user-avatar-button" class="user-avatar-btn" aria-label="User menu" aria-expanded="false">
+              <!-- Иконка пользователя (SVG или Font Awesome) -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <!-- Можно добавить имя пользователя, если есть место и оно загружено -->
+              <!-- <span id="nav-username" class="nav-username-display"></span> -->
+            </button>
+            <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;"> <!-- Меню изначально скрыто -->
+              <div class="dropdown-header">
+                <span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span> <!-- Будет обновляться -->
+              </div>
+              <ul>
+                <li><a href="/my-ratings" data-i18n="userMenu.myRatings">My Ratings</a></li>
+                <li><a href="/edit-profile" data-i18n="userMenu.editProfile">Edit Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button id="logout-button-header" class="dropdown-item-button" data-i18n="userMenu.logout">Logout</button></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item"> <!-- Оставляем переключатель языка -->
+          <select id="language-switcher" name="language" aria-label="Language selection">
+            <option value="en">EN</option>
+            <option value="ru">RU</option>
+            <option value="ua">UA</option>
+          </select>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
   <main class="site-main">
     <section class="hero-banner-slider"> <!-- Изменили класс для ясности -->
@@ -172,6 +198,9 @@
       </nav>
     </div>
   </footer>
+  <script src="i18n.js" defer></script>
+  <script src="header-auth.js" defer></script> <!-- Правильное имя файла -->
+  <script src="index.js" defer></script> 
 </body>
 
 </html>

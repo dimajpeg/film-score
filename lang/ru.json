@@ -94,5 +94,11 @@
   "hero.slide3.title": "Громовержцы",
   "hero.slide3.subtitle": "Правосудие, как молния...",
   "hero.slide4.title": "Злая",
-  "hero.slide4.subtitle": "Каждый заслуживает шанс взлететь."
+  "hero.slide4.subtitle": "Каждый заслуживает шанс взлететь.",
+
+  "userMenu.greeting": "Привет, Гость!",
+  "userMenu.greetingUser": "Привет, {userName}!",
+  "userMenu.myRatings": "Мои оценки",
+  "userMenu.editProfile": "Редактировать профиль",
+  "userMenu.logout": "Выйти"
 }

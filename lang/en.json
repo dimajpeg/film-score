@@ -92,5 +92,11 @@
   "hero.slide3.title": "Thunderbolts",
   "hero.slide3.subtitle": "Justice, like lightning...",
   "hero.slide4.title": "Wicked",
-  "hero.slide4.subtitle": "Everyone deserves the chance to fly."
+  "hero.slide4.subtitle": "Everyone deserves the chance to fly.",
+
+  "userMenu.greeting": "Hello, Guest!", 
+  "userMenu.greetingUser": "Hello, {userName}!",
+  "userMenu.myRatings": "My Ratings",
+  "userMenu.editProfile": "Edit Profile",
+  "userMenu.logout": "Logout"
 }

@@ -94,6 +94,12 @@
   "hero.slide3.title": "Громовержці",
   "hero.slide3.subtitle": "Правосуддя, як блискавка...",
   "hero.slide4.title": "Зла",
-  "hero.slide4.subtitle": "Кожен заслуговує на шанс злетіти."
+  "hero.slide4.subtitle": "Кожен заслуговує на шанс злетіти.",
+
+  "userMenu.greeting": "Привіт, Гість!",
+  "userMenu.greetingUser": "Привіт, {userName}!",
+  "userMenu.myRatings": "Мої оцінки",
+  "userMenu.editProfile": "Редагувати профіль",
+  "userMenu.logout": "Вийти"
 
 }
