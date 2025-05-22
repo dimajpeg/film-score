@@ -14,57 +14,66 @@
 
 <body>
   <!-- Фрагмент header в index.html, about.html, contact.html, sign-up.html -->
-<header class="site-header">
-  <div class="container header-container">
-    <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
 
-    <form action="/search" method="get" class="search-form">
-      <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..."
-        aria-label="Search">
-      <button type="submit" data-i18n="search_btn">Search</button>
-    </form>
+      <form action="/search" method="get" class="search-form">
+        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..."
+          aria-label="Search">
+        <button type="submit" data-i18n="search_btn">Search</button>
+      </form>
 
-    <nav class="main-navigation">
-      <ul>
-        <!-- Ссылка для входа - будет показываться, если пользователь не авторизован -->
-        <li id="nav-signin-link" class="nav-item">
-          <a href="sign-up.html" data-i18n="sign_in">Sign In</a>
-        </li>
+      <nav class="main-navigation">
+        <ul>
+          <!-- Ссылка для входа - будет показываться, если пользователь не авторизован -->
+          <li id="nav-signin-link" class="nav-item">
+            <a href="sign-up.html" data-i18n="sign_in">Sign In</a>
+          </li>
 
-        <!-- Блок пользователя - будет показываться, если пользователь авторизован -->
-        <li id="nav-user-loggedin" class="nav-item" style="display: none;"> <!-- Изначально скрыт -->
-          <div class="user-menu-container">
-            <button id="user-avatar-button" class="user-avatar-btn" aria-label="User menu" aria-expanded="false">
-              <!-- Иконка пользователя (SVG или Font Awesome) -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <!-- Можно добавить имя пользователя, если есть место и оно загружено -->
-              <!-- <span id="nav-username" class="nav-username-display"></span> -->
-            </button>
-            <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;"> <!-- Меню изначально скрыто -->
-              <div class="dropdown-header">
-                <span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span> <!-- Будет обновляться -->
+          <!-- Блок пользователя - будет показываться, если пользователь авторизован -->
+          <li id="nav-user-loggedin" class="nav-item" style="display: none;"> <!-- Изначально скрыт -->
+            <div class="user-menu-container">
+              <button id="user-avatar-button" class="user-avatar-btn" aria-label="User menu" aria-expanded="false">
+                <!-- Иконка пользователя (SVG или Font Awesome) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-user">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <!-- Можно добавить имя пользователя, если есть место и оно загружено -->
+                <!-- <span id="nav-username" class="nav-username-display"></span> -->
+              </button>
+              <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;"> <!-- Меню изначально скрыто -->
+                <div class="dropdown-header">
+                  <span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span>
+                  <!-- Будет обновляться -->
+                </div>
+                <ul>
+                  <li><a href="/my-ratings" data-i18n="userMenu.myRatings">My Ratings</a></li>
+                  <li><a href="/edit-profile" data-i18n="userMenu.editProfile">Edit Profile</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><button id="logout-button-header" class="dropdown-item-button"
+                      data-i18n="userMenu.logout">Logout</button></li>
+                </ul>
               </div>
-              <ul>
-                <li><a href="/my-ratings" data-i18n="userMenu.myRatings">My Ratings</a></li>
-                <li><a href="/edit-profile" data-i18n="userMenu.editProfile">Edit Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><button id="logout-button-header" class="dropdown-item-button" data-i18n="userMenu.logout">Logout</button></li>
-              </ul>
             </div>
-          </div>
-        </li>
+          </li>
 
-        <li class="nav-item"> <!-- Оставляем переключатель языка -->
-          <select id="language-switcher" name="language" aria-label="Language selection">
-            <option value="en">EN</option>
-            <option value="ru">RU</option>
-            <option value="ua">UA</option>
-          </select>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
+          <li class="nav-item"> <!-- Оставляем переключатель языка -->
+            <select id="language-switcher" name="language" aria-label="Language selection">
+              <option value="en">EN</option>
+              <option value="ru">RU</option>
+              <option value="ua">UA</option>
+            </select>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <main class="site-main">
     <section class="hero-banner-slider"> <!-- Изменили класс для ясности -->
@@ -120,34 +129,145 @@
       </div>
     </section>
 
+    <!-- Фрагмент из index.html -->
     <section class="movies-section popular-movies">
       <div class="container">
         <h2 data-i18n="trending_now">Trending Now</h2>
         <div class="movies-grid">
+          <!-- Фильм 1: Thunderbolts -->
           <article class="movie-card">
-            <a href="/movie/film1" class="movie-poster-link">
-              <img src="images/placeholder-poster1.jpg" alt="Movie Poster 1">
+            <a href="movie-details.html?id=thunderbolts" class="movie-poster-link">
+              <img src="assets/images/promo-thunderbolts.jpg" alt="Thunderbolts Poster">
             </a>
             <div class="movie-info">
-              <h3><a href="/movie/film1">Movie Title 1 (2023)</a></h3>
-              <div class="movie-rating"><span>8.5</span></div>
+              <h3><a href="movie-details.html?id=thunderbolts" data-i18n="movie.thunderbolts.title">Thunderbolts</a>
+              </h3>
+              <div class="movie-meta">
+                <span class="movie-year" data-i18n="movie.thunderbolts.year">2025</span>
+                <span class="movie-genres">
+                  <a href="/genre/action" data-i18n="genre.action">Action</a>,
+                  <a href="/genre/adventure" data-i18n="genre.adventure">Adventure</a>
+                </span>
+              </div>
+              <div class="movie-rating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                  class="icon icon-star">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
+                </svg>
+                <span data-i18n="movie.thunderbolts.rating">7.9</span> 
+              </div>
             </div>
           </article>
 
+          <!-- Фильм 2: Conclave -->
           <article class="movie-card">
-            <a href="/movie/film2" class="movie-poster-link">
-              <img src="images/placeholder-poster2.jpg" alt="Movie Poster 2">
+            <a href="movie-details.html?id=conclave" class="movie-poster-link">
+              <img src="assets/images/promo-conclave.jpg" alt="Conclave Poster">
             </a>
             <div class="movie-info">
-              <h3><a href="/movie/film2">Very Popular Movie 2 (2024)</a></h3>
-              <div class="movie-rating"><span>9.1</span></div>
+              <h3><a href="movie-details.html?id=conclave" data-i18n="movie.conclave.title">Conclave</a></h3>
+              <div class="movie-meta">
+                <span class="movie-year" data-i18n="movie.conclave.year">2024</span>
+                <span class="movie-genres">
+                  <a href="/genre/thriller" data-i18n="genre.thriller">Thriller</a>,
+                  <a href="/genre/drama" data-i18n="genre.drama">Drama</a>
+                </span>
+              </div>
+              <div class="movie-rating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                  class="icon icon-star">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
+                </svg>
+                <span data-i18n="movie.conclave.rating">7.8</span>
+              </div>
             </div>
           </article>
+
+          <!-- Фильм 3: Minecraft -->
+          <article class="movie-card">
+            <a href="movie-details.html?id=minecraft" class="movie-poster-link">
+              <img src="assets/images/promo-minecraft.jpg" alt="Minecraft Poster">
+            </a>
+            <div class="movie-info">
+              <h3><a href="movie-details.html?id=minecraft" data-i18n="movie.minecraft.title">Minecraft</a></h3>
+              <!-- Используем ID, который был для баннера -->
+              <div class="movie-meta">
+                <span class="movie-year" data-i18n="movie.minecraft.year">2025</span>
+                <span class="movie-genres">
+                  <a href="/genre/adventure" data-i18n="genre.adventure">Adventure</a>,
+                  <a href="/genre/family" data-i18n="genre.family">Family</a>
+                </span>
+              </div>
+              <div class="movie-rating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                  class="icon icon-star">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
+                </svg>
+                <span data-i18n="movie.minecraft.rating">7.7</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Фильм 4: Nosferatu -->
+          <article class="movie-card">
+            <a href="movie-details.html?id=nosferatu" class="movie-poster-link">
+              <img src="assets/images/promo-nosferatu.jpg" alt="Nosferatu Poster">
+            </a>
+            <div class="movie-info">
+              <h3><a href="movie-details.html?id=nosferatu" data-i18n="movie.nosferatu.title">Nosferatu</a></h3>
+              <div class="movie-meta">
+                <span class="movie-year" data-i18n="movie.nosferatu.year">2024</span>
+                <span class="movie-genres">
+                  <a href="/genre/horror" data-i18n="genre.horror">Horror</a>,
+                  <a href="/genre/fantasy" data-i18n="genre.fantasy">Fantasy</a>
+                </span>
+              </div>
+              <div class="movie-rating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                  class="icon icon-star">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
+                </svg>
+                <span data-i18n="movie.nosferatu.rating">8.1</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Фильм 5: Final Destination -->
+          <article class="movie-card">
+            <a href="movie-details.html?id=finaldestination6" class="movie-poster-link">
+              <!-- ID может быть уникальным -->
+              <img src="assets/images/promo-final-destination.jpg" alt="Final Destination Poster">
+            </a>
+            <div class="movie-info">
+              <h3><a href="movie-details.html?id=finaldestination6" data-i18n="movie.finaldestination6.title">Final
+                  Destination: Bloodlines</a></h3>
+              <div class="movie-meta">
+                <span class="movie-year" data-i18n="movie.finaldestination6.year">2025</span>
+                <span class="movie-genres">
+                  <a href="/genre/horror" data-i18n="genre.horror">Horror</a>,
+                  <a href="/genre/thriller" data-i18n="genre.thriller">Thriller</a>
+                </span>
+              </div>
+              <div class="movie-rating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                  class="icon icon-star">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
+                </svg>
+                <span data-i18n="movie.finaldestination6.rating">8.0</span>
+              </div>
+            </div>
+          </article>
+
         </div>
         <a href="/popular" class="btn btn-secondary view-all-link" data-i18n="see_all_trending">See All Trending</a>
       </div>
     </section>
-
+    
     <section class="movies-section themed-collection">
       <div class="container">
         <h2 data-i18n="holiday_mood">Holiday Mood</h2>
@@ -200,7 +320,7 @@
   </footer>
   <script src="i18n.js" defer></script>
   <script src="header-auth.js" defer></script> <!-- Правильное имя файла -->
-  <script src="index.js" defer></script> 
+  <script src="index.js" defer></script>
 </body>
 
 </html>

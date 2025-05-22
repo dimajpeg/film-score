@@ -100,6 +100,44 @@
   "userMenu.greetingUser": "Привіт, {userName}!",
   "userMenu.myRatings": "Мої оцінки",
   "userMenu.editProfile": "Редагувати профіль",
-  "userMenu.logout": "Вийти"
+  "userMenu.logout": "Вийти",
+
+  "movie.thunderbolts.title": "Громовержці",
+  "movie.thunderbolts.year": "2025",
+  "movie.thunderbolts.rating": "7.9", 
+
+  "movie.conclave.title": "Конклав",
+  "movie.conclave.year": "2024",
+  "movie.conclave.rating": "7.8",
+
+  "movie.minecraft.title": "Майнкрафт",
+  "movie.minecraft.year": "2025",
+  "movie.minecraft.rating": "7.7",
+
+  "movie.nosferatu.title": "Носферату",
+  "movie.nosferatu.year": "2024",
+  "movie.nosferatu.rating": "8.1",
+
+  "movie.finaldestination6.title": "Пункт призначення: Родовід",
+  "movie.finaldestination6.year": "2025",
+  "movie.finaldestination6.rating": "8.0",
+
+  "movie.film1.title": "Фільм Назва 1",
+  "movie.film1.year": "2023",
+  "movie.film1.rating": "8.5",
+
+  "movie.film2.title": "Дуже Популярний Фільм 2",
+  "movie.film2.year": "2024",
+  "movie.film2.rating": "9.1",
+  
+  "genre.action": "Бойовик",
+  "genre.adventure": "Пригоди",
+  "genre.thriller": "Трилер",
+  "genre.drama": "Драма",
+  "genre.family": "Сімейний",
+  "genre.horror": "Жахи",
+  "genre.fantasy": "Фентезі",
+  "genre.scifi": "Наукова фантастика",
+  "genre.comedy": "Комедія"
 
 }

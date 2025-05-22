@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,15 +7,18 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
-  background-color: #141414; /* Темный фон, как у многих киносайтов */
-  color: #e5e5e5; /* Светлый текст */
+  background-color: #141414;
+  /* Темный фон, как у многих киносайтов */
+  color: #e5e5e5;
+  /* Светлый текст */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 a {
-  color: #007bff; /* Яркий синий для ссылок */
+  color: #007bff;
+  /* Яркий синий для ссылок */
   text-decoration: none;
 }
 
@@ -43,10 +45,12 @@ ul {
 
 /* --- Хедер --- */
 .site-header {
-  background-color: #1c1c1c; /* Чуть светлее основного фона */
+  background-color: #1c1c1c;
+  /* Чуть светлее основного фона */
   padding: 15px 0;
   border-bottom: 1px solid #333;
-  position: sticky; /* Прилипающий хедер */
+  position: sticky;
+  /* Прилипающий хедер */
   top: 0;
   z-index: 1000;
 }
@@ -60,7 +64,8 @@ ul {
 .logo {
   font-size: 1.8em;
   font-weight: bold;
-  color: #e50914; /* Красный акцент, как у Netflix/IMDb */
+  color: #e50914;
+  /* Красный акцент, как у Netflix/IMDb */
 }
 
 .logo:hover {
@@ -69,9 +74,11 @@ ul {
 
 .search-form {
   display: flex;
-  flex-grow: 1; /* Занимает доступное пространство */
+  flex-grow: 1;
+  /* Занимает доступное пространство */
   margin: 0 20px;
-  max-width: 500px; /* Ограничение ширины поиска */
+  max-width: 500px;
+  /* Ограничение ширины поиска */
 }
 
 .search-form input[type="search"] {
@@ -124,8 +131,10 @@ ul {
 
 /* --- Основной контент --- */
 .site-main {
-  flex-grow: 1; /* Занимает все доступное пространство по высоте */
-  padding-bottom: 40px; /* Отступ снизу */
+  flex-grow: 1;
+  /* Занимает все доступное пространство по высоте */
+  padding-bottom: 40px;
+  /* Отступ снизу */
 }
 
 /* --- Hero баннер --- */
@@ -135,91 +144,116 @@ ul {
 .hero-banner-slider {
   background-color: #000;
   margin-bottom: 40px;
-  position: relative; /* Для позиционирования контролов и контента */
+  position: relative;
+  /* Для позиционирования контролов и контента */
   width: 100%;
-  height: 500px; /* Или другая фиксированная высота, или min-height. Подбери под свои изображения */
-  overflow: hidden; /* Скрываем все, что выходит за пределы */
+  height: 500px;
+  /* Или другая фиксированная высота, или min-height. Подбери под свои изображения */
+  overflow: hidden;
+  /* Скрываем все, что выходит за пределы */
 }
 
 .hero-slides-container {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex; /* Для горизонтального расположения слайдов, если будем делать slide-анимацию */
-                  /* Если fade-анимация, то display: block; или display: grid; и слайды друг на друге */
+  display: flex;
+  /* Для горизонтального расположения слайдов, если будем делать slide-анимацию */
+  /* Если fade-анимация, то display: block; или display: grid; и слайды друг на друге */
 }
 
 .hero-slide {
-  min-width: 100%; /* Каждый слайд занимает всю ширину контейнера */
+  min-width: 100%;
+  /* Каждый слайд занимает всю ширину контейнера */
   height: 100%;
-  position: absolute; /* Для fade-анимации, все слайды на одном месте */
+  position: absolute;
+  /* Для fade-анимации, все слайды на одном месте */
   top: 0;
   left: 0;
-  opacity: 0; /* По умолчанию все слайды невидимы */
+  opacity: 0;
+  /* По умолчанию все слайды невидимы */
   visibility: hidden;
-  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; /* Анимация появления/исчезновения */
-  display: flex; /* Чтобы .hero-content мог позиционироваться внутри */
-  align-items: center; /* Выравнивание .hero-content, если нужно */
-  justify-content: center; /* Выравнивание .hero-content, если нужно */
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  /* Анимация появления/исчезновения */
+  display: flex;
+  /* Чтобы .hero-content мог позиционироваться внутри */
+  align-items: center;
+  /* Выравнивание .hero-content, если нужно */
+  justify-content: center;
+  /* Выравнивание .hero-content, если нужно */
 }
 
 .hero-slide.active {
   opacity: 1;
   visibility: visible;
-  z-index: 10; /* Активный слайд поверх других */
+  z-index: 10;
+  /* Активный слайд поверх других */
 }
 
 .hero-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Масштабирует и обрезает изображение, чтобы заполнить контейнер */
+  object-fit: cover;
+  /* Масштабирует и обрезает изображение, чтобы заполнить контейнер */
   /* opacity: 0.7; - можно убрать, если затемнение будет через ::before или отдельный слой */
   display: block;
 }
 
 /* Затемнение для лучшей читаемости текста поверх ярких картинок */
 .hero-slide::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* Степень затемнения */
-    z-index: 1; /* Под текстом, но над картинкой */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  /* Степень затемнения */
+  z-index: 1;
+  /* Под текстом, но над картинкой */
 }
 
 .hero-content {
   position: absolute;
-  bottom: 40px; /* Отступ снизу */
-  left: 50%;    /* Центрируем по горизонтали */
-  transform: translateX(-50%); /* Точное центрирование */
+  bottom: 40px;
+  /* Отступ снизу */
+  left: 50%;
+  /* Центрируем по горизонтали */
+  transform: translateX(-50%);
+  /* Точное центрирование */
   color: #fff;
   padding: 25px 30px;
   /* background-color: rgba(0,0,0, 0.6); - можно чуть темнее или убрать, если есть ::before */
   border-radius: 8px;
-  max-width: 70%; /* Максимальная ширина контентного блока */
-  text-align: center; /* Текст по центру */
-  z-index: 2; /* Поверх ::before, но под контролами, если они будут заходить на контент */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  max-width: 70%;
+  /* Максимальная ширина контентного блока */
+  text-align: center;
+  /* Текст по центру */
+  z-index: 2;
+  /* Поверх ::before, но под контролами, если они будут заходить на контент */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .hero-content h1 {
-  font-size: 2.8em; /* Немного крупнее */
+  font-size: 2.8em;
+  /* Немного крупнее */
   margin-bottom: 15px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Тень для текста */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  /* Тень для текста */
 }
 
 .hero-content p {
-  font-size: 1.3em; /* Немного крупнее */
+  font-size: 1.3em;
+  /* Немного крупнее */
   margin-bottom: 25px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Тень для текста */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  /* Тень для текста */
   line-height: 1.5;
 }
 
 .hero-content .btn-primary {
-    padding: 12px 25px;
-    font-size: 1.1em;
+  padding: 12px 25px;
+  font-size: 1.1em;
 }
 
 /* Элементы управления слайдером */
@@ -233,8 +267,10 @@ ul {
   padding: 10px 15px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 20; /* Поверх всего */
-  border-radius: 50%; /* Круглые кнопки */
+  z-index: 20;
+  /* Поверх всего */
+  border-radius: 50%;
+  /* Круглые кнопки */
   width: 50px;
   height: 50px;
   display: flex;
@@ -280,39 +316,50 @@ ul {
 }
 
 .slider-dots .dot.active {
-  background-color: #e50914; /* Акцентный красный для активной точки */
-  /* background-color: #fff; */ /* Или просто белый */
+  background-color: #e50914;
+  /* Акцентный красный для активной точки */
+  /* background-color: #fff; */
+  /* Или просто белый */
 }
 
 /* Адаптивность для слайдера */
 @media (max-width: 768px) {
   .hero-banner-slider {
-    height: 400px; /* Уменьшаем высоту на мобильных */
+    height: 400px;
+    /* Уменьшаем высоту на мобильных */
   }
+
   .hero-content {
     bottom: 20px;
     padding: 15px 20px;
     max-width: 85%;
   }
+
   .hero-content h1 {
-    font-size: 2em; /* Уменьшаем шрифт */
+    font-size: 2em;
+    /* Уменьшаем шрифт */
   }
+
   .hero-content p {
     font-size: 1.1em;
     margin-bottom: 20px;
   }
+
   .slider-control {
     width: 40px;
     height: 40px;
     font-size: 20px;
     padding: 8px 12px;
   }
+
   .slider-control.prev {
     left: 10px;
   }
+
   .slider-control.next {
     right: 10px;
   }
+
   .slider-dots .dot {
     width: 10px;
     height: 10px;
@@ -327,13 +374,15 @@ ul {
 .movies-section h2 {
   font-size: 1.8em;
   margin-bottom: 20px;
-  border-left: 4px solid #e50914; /* Акцентная полоска слева от заголовка */
+  border-left: 4px solid #e50914;
+  /* Акцентная полоска слева от заголовка */
   padding-left: 10px;
 }
 
 .movies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Адаптивная сетка */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  /* Адаптивная сетка */
   gap: 20px;
 }
 
@@ -341,18 +390,21 @@ ul {
 .movie-card {
   background-color: #1c1c1c;
   border-radius: 8px;
-  overflow: hidden; /* Чтобы скругление работало с картинкой */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  overflow: hidden;
+  /* Чтобы скругление работало с картинкой */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
 }
 
 .movie-card:hover {
-  transform: translateY(-5px); /* Легкий эффект при наведении */
+  transform: translateY(-5px);
+  /* Легкий эффект при наведении */
 }
 
 .movie-poster-link img {
   width: 100%;
-  aspect-ratio: 2 / 3; /* Соотношение сторон постера */
+  aspect-ratio: 2 / 3;
+  /* Соотношение сторон постера */
   object-fit: cover;
 }
 
@@ -375,13 +427,14 @@ ul {
 
 .movie-rating {
   font-size: 0.9em;
-  color: #f5c518; /* Желтый для рейтинга, как на IMDb */
+  color: #f5c518;
+  /* Желтый для рейтинга, как на IMDb */
   font-weight: bold;
 }
 
-.movie-rating span::before {
+/* .movie-rating span::before {
   content: "★ "; /* Звездочка перед рейтингом */
-}
+/* } */
 
 /* --- Кнопки --- */
 .btn {
@@ -401,7 +454,8 @@ ul {
 }
 
 .btn-primary:hover {
-  background-color: #b20710; /* Темнее при наведении */
+  background-color: #b20710;
+  /* Темнее при наведении */
   text-decoration: none;
 }
 
@@ -417,7 +471,8 @@ ul {
 }
 
 .view-all-link {
-  display: block; /* Чтобы занимала всю ширину */
+  display: block;
+  /* Чтобы занимала всю ширину */
   margin-top: 20px;
   text-align: center;
 }
@@ -430,7 +485,8 @@ ul {
   padding: 30px 0;
   text-align: center;
   font-size: 0.9em;
-  margin-top: auto; /* Прижимает футер к низу, если контента мало */
+  margin-top: auto;
+  /* Прижимает футер к низу, если контента мало */
 }
 
 .footer-nav ul {
@@ -455,64 +511,69 @@ ul {
 /* --- Адаптивность (базовая) --- */
 @media (max-width: 768px) {
   .header-container {
-      flex-direction: column;
-      align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .search-form {
-      width: 100%;
-      margin: 10px 0;
-      max-width: none;
+    width: 100%;
+    margin: 10px 0;
+    max-width: none;
   }
 
   .main-navigation {
-      width: 100%;
-      margin-top: 10px;
+    width: 100%;
+    margin-top: 10px;
   }
 
   .main-navigation ul {
-      justify-content: space-around;
+    justify-content: space-around;
   }
 
   .main-navigation li {
-      margin-left: 0;
+    margin-left: 0;
   }
 
   .hero-content {
-      max-width: 80%;
-      left: 10%;
-      bottom: 10px;
+    max-width: 80%;
+    left: 10%;
+    bottom: 10px;
   }
 
   .hero-content h1 {
-      font-size: 1.8em;
+    font-size: 1.8em;
   }
-   .hero-content p {
-      font-size: 1em;
+
+  .hero-content p {
+    font-size: 1em;
   }
 
   .movies-grid {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
   }
 
   .movie-info h3 {
-      font-size: 1em;
+    font-size: 1em;
   }
 }
 
 @media (max-width: 480px) {
   .logo {
-      font-size: 1.5em;
+    font-size: 1.5em;
   }
+
   .movies-section h2 {
-      font-size: 1.5em;
+    font-size: 1.5em;
   }
+
   .movies-grid {
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Еще меньше карточки */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    /* Еще меньше карточки */
   }
-   .movie-info {
-      padding: 10px;
+
+  .movie-info {
+    padding: 10px;
   }
 }
 
@@ -520,13 +581,15 @@ ul {
 
 /* Общие стили для элементов навигации, если нужны */
 .main-navigation .nav-item {
-  display: flex; /* Чтобы элементы внутри li тоже могли выстраиваться */
+  display: flex;
+  /* Чтобы элементы внутри li тоже могли выстраиваться */
   align-items: center;
 }
 
 /* Контейнер для меню пользователя */
 .user-menu-container {
-  position: relative; /* Для позиционирования выпадающего меню */
+  position: relative;
+  /* Для позиционирования выпадающего меню */
 }
 
 /* Кнопка-аватар */
@@ -537,22 +600,28 @@ ul {
   cursor: pointer;
   display: flex;
   align-items: center;
-  border-radius: 50%; /* Делаем круглым, если иконка позволяет */
+  border-radius: 50%;
+  /* Делаем круглым, если иконка позволяет */
   transition: background-color 0.2s ease;
 }
 
 .user-avatar-btn:hover,
-.user-avatar-btn[aria-expanded="true"] { /* Подсветка при ховере или когда меню открыто */
-  background-color: #333; /* Немного темнее фон */
+.user-avatar-btn[aria-expanded="true"] {
+  /* Подсветка при ховере или когда меню открыто */
+  background-color: #333;
+  /* Немного темнее фон */
 }
 
 .user-avatar-btn svg.icon-user {
-  width: 28px; /* Размер иконки */
+  width: 28px;
+  /* Размер иконки */
   height: 28px;
-  stroke: #e5e5e5; /* Цвет иконки */
+  stroke: #e5e5e5;
+  /* Цвет иконки */
 }
 
-.nav-username-display { /* Если будешь добавлять имя рядом с иконкой */
+.nav-username-display {
+  /* Если будешь добавлять имя рядом с иконкой */
   color: #e5e5e5;
   margin-left: 8px;
   font-size: 0.9em;
@@ -561,18 +630,24 @@ ul {
 /* Выпадающее меню */
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 10px); /* Под кнопкой-аватаром с небольшим отступом */
-  right: 0; /* Выравнивание по правому краю */
-  background-color: #1c1c1c; /* Такой же фон, как у хедера */
+  top: calc(100% + 10px);
+  /* Под кнопкой-аватаром с небольшим отступом */
+  right: 0;
+  /* Выравнивание по правому краю */
+  background-color: #1c1c1c;
+  /* Такой же фон, как у хедера */
   border: 1px solid #333;
   border-radius: 6px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  min-width: 200px; /* Минимальная ширина меню */
-  z-index: 1010; /* Поверх остального контента */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  min-width: 200px;
+  /* Минимальная ширина меню */
+  z-index: 1010;
+  /* Поверх остального контента */
   padding: 10px 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px); /* Начальное состояние для анимации */
+  transform: translateY(-10px);
+  /* Начальное состояние для анимации */
   transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
@@ -591,15 +666,16 @@ ul {
 }
 
 .dropdown-header #dropdown-username {
-    font-weight: bold;
-    color: #e5e5e5;
+  font-weight: bold;
+  color: #e5e5e5;
 }
 
 .dropdown-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: block; /* Переопределяем flex из .main-navigation ul */
+  display: block;
+  /* Переопределяем flex из .main-navigation ul */
 }
 
 .dropdown-menu li a,
@@ -609,23 +685,26 @@ ul {
   color: #e5e5e5;
   text-decoration: none;
   font-size: 0.95em;
-  white-space: nowrap; /* Чтобы текст не переносился */
+  white-space: nowrap;
+  /* Чтобы текст не переносился */
   transition: background-color 0.2s ease;
 }
 
 .dropdown-menu li .dropdown-item-button {
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
 }
 
 .dropdown-menu li a:hover,
 .dropdown-menu li .dropdown-item-button:hover {
-  background-color: #333; /* Фон при наведении */
+  background-color: #333;
+  /* Фон при наведении */
   color: #fff;
-  text-decoration: none; /* Убираем подчеркивание при наведении, если оно есть у ссылок */
+  text-decoration: none;
+  /* Убираем подчеркивание при наведении, если оно есть у ссылок */
 }
 
 .dropdown-divider {
@@ -639,8 +718,137 @@ ul {
 /* Адаптивность для меню (если нужно) */
 @media (max-width: 480px) {
   .dropdown-menu {
-    min-width: 180px; /* Чуть уже на маленьких экранах */
+    min-width: 180px;
+    /* Чуть уже на маленьких экранах */
     /* Можно сделать его на всю ширину, если очень мало места */
     /* left: 10px; right: 10px; width: auto; */
   }
 }
+
+/* В style.css */
+
+/* --- Карточка фильма --- */
+.movie-card {
+  background-color: #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  /* Добавил box-shadow в transition */
+  display: flex;
+  /* Для лучшего управления внутренними элементами, если понадобится */
+  flex-direction: column;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  /* Немного увеличим и поднимем */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  /* Более выраженная тень */
+}
+
+.movie-poster-link img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  /* Отлично для постеров */
+  object-fit: cover;
+  display: block;
+  /* Убираем лишние отступы под картинкой */
+}
+
+.movie-info {
+  padding: 12px 15px;
+  /* Немного скорректировал паддинги */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  /* Чтобы инфо-блок занимал оставшееся место, если карточки разной высоты из-за текста */
+}
+
+.movie-info h3 {
+  font-size: 1.05em;
+  /* Можно чуть уменьшить, если много текста */
+  margin-bottom: 8px;
+  /* Отступ под заголовком */
+  line-height: 1.3;
+  /* Ограничение на количество строк для заголовка, если нужно */
+  /* display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+
+.movie-info h3 a {
+  color: #e5e5e5;
+  text-decoration: none;
+  /* Убираем подчеркивание по умолчанию */
+}
+
+.movie-info h3 a:hover {
+  color: #e50914;
+  text-decoration: underline;
+  /* Показываем при наведении */
+}
+
+.movie-meta {
+  font-size: 0.8em;
+  color: #aaa;
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  /* Если жанров много и они не помещаются */
+  gap: 8px;
+  /* Пространство между годом и блоком жанров */
+  line-height: 1.4;
+}
+
+
+
+.movie-genres a {
+  color: #bbb;
+  /* Цвет ссылок на жанры */
+  text-decoration: none;
+  /* background-color: #333; */
+  /* Можно добавить фон для жанров-тегов */
+  /* padding: 2px 6px; */
+  /* border-radius: 3px; */
+  /* margin-right: 5px; */
+  /* Если жанры просто текст через запятую, это не нужно */
+}
+
+.movie-genres a:hover {
+  color: #e50914;
+  text-decoration: underline;
+}
+
+.movie-rating {
+  font-size: 0.9em;
+  color: #f5c518;
+  /* Желтый для рейтинга */
+  font-weight: bold;
+  margin-top: auto;
+  /* Прижимает рейтинг к низу карточки, если есть свободное место */
+  padding-top: 8px;
+  /* Небольшой отступ сверху от мета-информации */
+  display: flex;
+  /* Для выравнивания иконки звезды и текста */
+  align-items: center;
+}
+
+.movie-rating .icon-star {
+  /* Стиль для SVG иконки звезды */
+  width: 1em;
+  /* Размер относительно шрифта рейтинга */
+  height: 1em;
+  fill: currentColor;
+  /* Звезда будет того же цвета, что и текст рейтинга (#f5c518) */
+  margin-right: 5px;
+}
+
+/* Убираем старое правило, если оно было в твоем style.css: */
+/*
+.movie-rating span::before {
+  content: "★ ";
+}
+*/

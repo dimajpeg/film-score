@@ -98,5 +98,36 @@
   "userMenu.greetingUser": "Hello, {userName}!",
   "userMenu.myRatings": "My Ratings",
   "userMenu.editProfile": "Edit Profile",
-  "userMenu.logout": "Logout"
+  "userMenu.logout": "Logout",
+
+  "movie.thunderbolts.title": "Thunderbolts",
+  "movie.thunderbolts.year": "2025",
+  "movie.thunderbolts.rating": "7.9", 
+
+  "movie.conclave.title": "Conclave",
+  "movie.conclave.year": "2024",
+  "movie.conclave.rating": "7.8",
+
+  "movie.minecraft.title": "Minecraft", 
+  "movie.minecraft.year": "2025",
+  "movie.minecraft.rating": "7.7",
+
+  "movie.nosferatu.title": "Nosferatu",
+  "movie.nosferatu.year": "2024",
+  "movie.nosferatu.rating": "8.1",
+
+  "movie.finaldestination6.title": "Final Destination: Bloodlines",
+  "movie.finaldestination6.year": "2025",
+  "movie.finaldestination6.rating": "8.0",
+
+
+  "genre.action": "Action",
+  "genre.adventure": "Adventure",
+  "genre.thriller": "Thriller",
+  "genre.drama": "Drama",
+  "genre.family": "Family",
+  "genre.horror": "Horror",
+  "genre.fantasy": "Fantasy",
+  "genre.scifi": "Sci-Fi", 
+  "genre.comedy": "Comedy" 
 }

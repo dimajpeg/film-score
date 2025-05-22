@@ -100,5 +100,36 @@
   "userMenu.greetingUser": "Привет, {userName}!",
   "userMenu.myRatings": "Мои оценки",
   "userMenu.editProfile": "Редактировать профиль",
-  "userMenu.logout": "Выйти"
+  "userMenu.logout": "Выйти",
+
+  "movie.thunderbolts.title": "Громовержцы",
+  "movie.thunderbolts.year": "2025",
+  "movie.thunderbolts.rating": "7.9", 
+
+  "movie.conclave.title": "Конклав",
+  "movie.conclave.year": "2024",
+  "movie.conclave.rating": "7.8",
+
+  "movie.minecraft.title": "Майнкрафт",
+  "movie.minecraft.year": "2025",
+  "movie.minecraft.rating": "7.7",
+
+  "movie.nosferatu.title": "Носферату",
+  "movie.nosferatu.year": "2024",
+  "movie.nosferatu.rating": "8.1",
+
+  "movie.finaldestination6.title": "Пункт назначения: Родословная",
+  "movie.finaldestination6.year": "2025",
+  "movie.finaldestination6.rating": "8.0",
+
+  
+  "genre.action": "Боевик",
+  "genre.adventure": "Приключения",
+  "genre.thriller": "Триллер",
+  "genre.drama": "Драма",
+  "genre.family": "Семейный",
+  "genre.horror": "Ужасы",
+  "genre.fantasy": "Фэнтези",
+  "genre.scifi": "Научная фантастика",
+  "genre.comedy": "Комедия"
 }
