@@ -1,0 +1,332 @@
+/* css/movie-details.css */
+
+body { /* Чтобы фон был согласован, если основной контент не занимает всю высоту */
+  background-color: #141414;
+}
+
+.movie-details-page {
+  color: #e5e5e5;
+}
+
+/* --- Секция баннера --- */
+.movie-backdrop-section {
+  width: 100%;
+  height: 65vh; /* Высота баннера */
+  min-height: 400px;
+  max-height: 600px;
+  position: relative;
+  overflow: hidden; /* На случай если картинка будет больше */
+}
+
+.movie-backdrop-section img#movie-backdrop-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Масштабирует и обрезает, чтобы заполнить */
+  object-position: center 30%; /* Смещаем фокус немного вверх, если на фото есть лица */
+  display: block;
+}
+
+.backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, 
+      rgba(20, 20, 20, 1) 0%,       /* Полностью непрозрачный черный снизу */
+      rgba(20, 20, 20, 0.9) 20%,    /* Постепенно становится прозрачнее */
+      rgba(20, 20, 20, 0.4) 60%,
+      rgba(20, 20, 20, 0) 100%      /* Полностью прозрачный сверху */
+  );
+  z-index: 1;
+}
+
+/* --- Основной контент под баннером --- */
+.movie-content-container {
+  position: relative;
+  z-index: 5; /* Чтобы был над оверлеем баннера */
+}
+
+.movie-main-details {
+  display: flex;
+  gap: 30px; /* Расстояние между постером и информацией */
+  margin-top: -180px; /* Поднимаем этот блок на баннер */
+  padding-bottom: 40px;
+  border-bottom: 1px solid #2f2f2f;
+  margin-bottom: 40px;
+}
+
+.movie-poster-wrapper {
+  flex-basis: 300px; /* Фиксированная ширина для постера */
+  flex-shrink: 0;
+  align-self: flex-start; /* Чтобы постер не растягивался, если инфо-блок высокий */
+}
+
+.movie-poster-wrapper img#movie-details-poster-img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.movie-info-wrapper {
+  flex-grow: 1;
+  padding-top: 140px; /* Отступ сверху, чтобы текст начинался ниже верхнего края постера */
+}
+
+.movie-info-wrapper h1 {
+  font-size: 2.6em; /* Размер заголовка фильма */
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.2;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.movie-info-wrapper .meta-data {
+  font-size: 0.95em;
+  color: #b0b0b0;
+  margin-bottom: 15px;
+}
+
+.meta-data .separator {
+  margin: 0 8px;
+  color: #555;
+}
+
+.meta-data a {
+  color: #b0b0b0;
+  text-decoration: none;
+}
+.meta-data a:hover {
+  color: #e50914;
+  text-decoration: underline;
+}
+
+.rating-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #f5c518; /* Цвет рейтинга */
+  margin-bottom: 25px;
+}
+.rating-wrapper .icon-star-large {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+.rating-wrapper .total-votes {
+  font-size: 0.6em;
+  color: #999;
+  font-weight: normal;
+}
+
+.overview-section h2,
+.crew-info h2, /* Если будет отдельный заголовок для crew */
+.movie-trailer-section h2,
+.movie-comments-section h2,
+.related-movies-section h2 {
+  font-size: 1.5em;
+  color: #e5e5e5;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.overview-section p {
+  font-size: 1em;
+  line-height: 1.7;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.crew-info p {
+  font-size: 0.95em;
+  color: #ccc;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.crew-info strong {
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+/* --- Трейлер --- */
+.movie-trailer-section {
+  margin-bottom: 40px;
+}
+.trailer-embed-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 896px; /* Например, 560 * 1.6 */
+  margin: 0 auto;
+  background-color: #000;
+  border-radius: 8px;
+}
+.trailer-embed-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+#trailer-status { /* Для сообщения "трейлер не доступен" */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #aaa;
+}
+
+/* --- Комментарии --- */
+.movie-comments-section {
+  margin-bottom: 40px;
+}
+.comment-item {
+  background-color: #1c1c1c;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid #2f2f2f;
+}
+.comment-author {
+  font-weight: bold;
+  color: #e50914;
+  margin-bottom: 3px;
+}
+.comment-date {
+  font-size: 0.8em;
+  color: #777;
+  margin-bottom: 8px;
+}
+.comment-text {
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.add-comment-form {
+  margin-top: 20px;
+  background-color: #1c1c1c;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #2f2f2f;
+}
+.add-comment-form h3 {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+.add-comment-form textarea {
+  width: 100%;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 80px;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+.add-comment-form textarea::placeholder {
+  color: #777;
+}
+.add-comment-form .btn-primary {
+  /* Стили для кнопки уже есть в style.css */
+}
+.comment-login-prompt {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #1c1c1c;
+  border: 1px solid #2f2f2f;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.95em;
+}
+.comment-login-prompt a {
+  color: #e50914;
+  font-weight: bold;
+}
+
+/* --- Похожие фильмы --- */
+.related-movies-section {
+  margin-bottom: 20px; /* Отступ снизу */
+}
+.related-movies-section .movies-grid {
+  /* Стили для .movies-grid и .movie-card уже есть в style.css */
+}
+
+
+/* --- Адаптивность для страницы деталей --- */
+@media (max-width: 992px) {
+  .movie-poster-wrapper {
+      flex-basis: 220px; /* Уменьшаем постер */
+  }
+  .movie-info-wrapper {
+      padding-top: 100px; /* Уменьшаем отступ */
+  }
+  .movie-info-wrapper h1 {
+      font-size: 2.2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-backdrop-section {
+      height: 50vh;
+      min-height: 300px;
+  }
+  .movie-main-details {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: -100px; /* Меньше поднимаем на баннер */
+  }
+  .movie-poster-wrapper {
+      width: 200px; /* Ширина постера на мобильных */
+      margin-bottom: 20px;
+      align-self: center;
+  }
+  .movie-info-wrapper {
+      padding-top: 0; /* Нет отступа, так как постер сверху */
+      text-align: center; /* Центрируем весь текст в инфо-блоке */
+  }
+  .meta-data, .rating-wrapper {
+      justify-content: center; /* Центрируем мета и рейтинг */
+  }
+  .crew-info p, .overview-section h2, .crew-info h2,
+  .movie-trailer-section h2, .movie-comments-section h2, .related-movies-section h2 {
+      text-align: left; /* Возвращаем выравнивание влево для этих блоков */
+  }
+   .crew-info p { /* Чтобы strong и span были на одной линии и текст слева */
+      display: flex;
+      justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-backdrop-section {
+      height: 40vh;
+      min-height: 250px;
+  }
+  .movie-main-details {
+      margin-top: -60px;
+      gap: 20px;
+  }
+  .movie-poster-wrapper {
+      width: 160px;
+  }
+  .movie-info-wrapper h1 {
+      font-size: 1.8em;
+  }
+  .rating-wrapper {
+      font-size: 1.2em;
+  }
+  .overview-section h2, .crew-info h2,
+  .movie-trailer-section h2, .movie-comments-section h2, .related-movies-section h2 {
+      font-size: 1.3em;
+  }
+}
