@@ -536,7 +536,7 @@ ul {
 
   .hero-content {
     max-width: 80%;
-    left: 10%;
+    /* left: 10%; */
     bottom: 10px;
   }
 
