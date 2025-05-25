@@ -90,10 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
             showSlide(currentSlideIndex);
             startSlideShow();
 
-            if (nextButton) { /* ... обработчик ... */ nextButton.addEventListener('click', () => { nextSlide(); stopSlideShow(); startSlideShow(); });}
-            if (prevButton) { /* ... обработчик ... */ prevButton.addEventListener('click', () => { prevSlide(); stopSlideShow(); startSlideShow(); });}
+            if (nextButton) { nextButton.addEventListener('click', () => { nextSlide(); stopSlideShow(); startSlideShow(); });}
+            if (prevButton) { prevButton.addEventListener('click', () => { prevSlide(); stopSlideShow(); startSlideShow(); });}
             const sliderElement = document.querySelector('.hero-banner-slider');
-            if (sliderElement) { /* ... обработчики ... */ sliderElement.addEventListener('mouseenter', stopSlideShow); sliderElement.addEventListener('mouseleave', startSlideShow); }
+            if (sliderElement) { sliderElement.addEventListener('mouseenter', stopSlideShow); sliderElement.addEventListener('mouseleave', startSlideShow); }
         }
     }
     // --- Конец логики для слайдера ---
@@ -101,21 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- НОВАЯ ЛОГИКА: Рендеринг карточек фильмов ---
 
-    // ИСПРАВЛЕННАЯ Функция для получения текста
+    // ИСПРАВЛЕННАЯ Функция для получения текста (из предыдущего ответа)
     function getText(key, fallbackTextIfKeyNotFound = '') {
         if (window.i18n && typeof window.i18n.getTranslation === 'function') {
             const translation = window.i18n.getTranslation(key);
-            // i18n.getTranslation (из нашего i18n.js) вернет сам ключ, если перевод не найден.
-            // Поэтому мы проверяем, отличается ли результат от ключа.
             if (translation !== key) {
                 return translation; // Перевод найден
             }
-            // Если перевод не найден (translation === key), используем fallbackTextIfKeyNotFound
-            // Если fallbackTextIfKeyNotFound не предоставлен, то просто вернем "чистую" часть ключа
-            return fallbackTextIfKeyNotFound || key.split('.').pop();
+            return fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
-        // Фоллбэк, если i18n вообще недоступен
-        return fallbackTextIfKeyNotFound || key.split('.').pop();
+        return fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     }
 
     // Функция для создания HTML одной карточки фильма
@@ -125,15 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return '';
         }
 
-        // Для title, если перевод не найден, используем ID фильма как fallback
-        const title = getText(movie.titleKey, movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())); // movie.id с заглавными буквами
+        const fallbackTitle = movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const title = getText(movie.titleKey, fallbackTitle);
         const year = movie.year;
         const rating = movie.rating;
         const poster = movie.posterUrl;
         const movieUrl = `movie-details.html?id=${movie.id}`;
 
         const genresHTML = movie.genreKeys.map(genreKey => {
-            // Для жанра, если перевод не найден, используем последнюю часть ключа с большой буквы
             const defaultGenreName = genreKey.split('.').pop();
             const genreName = getText(genreKey, defaultGenreName.charAt(0).toUpperCase() + defaultGenreName.slice(1));
             return `<span>${genreName}</span>`;
@@ -189,38 +183,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (moviesHTML === "") {
-            // Используем ключ messages.noMoviesFoundSect, который ты определил в JSON
             container.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
         } else {
             container.innerHTML = moviesHTML;
         }
     }
+    
+    // Функция для инициализации рендеринга фильмов (чтобы можно было вызвать после загрузки переводов)
+    function initializeMovieSections() {
+        const trendingGrid = document.getElementById('trending-now-grid');
+        const holidayGrid = document.getElementById('holiday-mood-grid');
+        const recommendedGrid = document.getElementById('recommended-movies-grid');
 
-    // Рендеринг секций фильмов
-    const trendingGrid = document.getElementById('trending-now-grid');
-    const holidayGrid = document.getElementById('holiday-mood-grid');
-    const recommendedGrid = document.getElementById('recommended-movies-grid');
+        if (typeof trendingNowMovieIds !== 'undefined' && trendingNowMovieIds.length > 0) {
+            renderMovies(trendingNowMovieIds, 'trending-now-grid');
+        } else {
+            console.warn('`trendingNowMovieIds` is not defined or empty. Trending Now section will be empty.');
+            if (trendingGrid) trendingGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
+        }
 
-    if (typeof trendingNowMovieIds !== 'undefined' && trendingNowMovieIds.length > 0) {
-        renderMovies(trendingNowMovieIds, 'trending-now-grid');
-    } else {
-        console.warn('`trendingNowMovieIds` is not defined or empty. Trending Now section will be empty.');
-        if (trendingGrid) trendingGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
+        if (typeof holidayMoodMovieIds !== 'undefined' && holidayMoodMovieIds.length > 0) {
+            renderMovies(holidayMoodMovieIds, 'holiday-mood-grid');
+        } else {
+            console.warn('`holidayMoodMovieIds` is not defined or empty. Holiday Mood section will be empty.');
+            if (holidayGrid) holidayGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
+        }
+
+        if (typeof recommendedMovieIds !== 'undefined' && recommendedMovieIds.length > 0) {
+            renderMovies(recommendedMovieIds, 'recommended-movies-grid');
+        } else {
+            console.warn('`recommendedMovieIds` is not defined or empty. Recommended section will be empty.');
+            if (recommendedGrid) recommendedGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
+        }
     }
 
-    if (typeof holidayMoodMovieIds !== 'undefined' && holidayMoodMovieIds.length > 0) {
-        renderMovies(holidayMoodMovieIds, 'holiday-mood-grid');
-    } else {
-        console.warn('`holidayMoodMovieIds` is not defined or empty. Holiday Mood section will be empty.');
-        if (holidayGrid) holidayGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
+    // Слушаем событие, что переводы для ЯЗЫКА готовы, ПЕРЕД тем как рендерить карточки
+    document.addEventListener('translationsReady', function(event) {
+        console.log(`[index.js] Event 'translationsReady' received for lang: ${event.detail.lang}. Initializing movie sections.`);
+        initializeMovieSections(); 
+    });
+
+    // Также нужно обновить карточки при смене языка (если translationsReady не сработает первым при смене)
+    // languageChanged диспатчится ПОСЛЕ applyTranslations, который уже применил статические переводы
+    document.addEventListener('languageChanged', function(event) {
+        console.log(`[index.js] Event 'languageChanged' received for lang: ${event.detail.lang}. Re-initializing movie sections.`);
+        initializeMovieSections(); 
+    });
+    
+    // Если i18n.js загружается быстро и событие 'translationsReady' может произойти до того,
+    // как этот слушатель будет добавлен, можно добавить проверку:
+    if (window.i18n && window.i18n.getCurrentLanguage && typeof allMoviesData !== 'undefined') { // Проверяем, что i18n и данные уже есть
+        // Если текущий язык уже есть и переводы для него могли быть загружены
+        // (Это для случая, если translationsReady уже прошло)
+        // Можно попробовать инициализировать сразу, но лучше полагаться на событие.
+        // Для большей надежности, i18n.js должен гарантировать, что translationsReady вызывается ПОСЛЕ того, как объект window.i18n создан.
+        // В нашем i18n.js событие диспатчится после applyTranslations, а window.i18n создается в конце,
+        // так что это должно быть в порядке.
     }
 
-    if (typeof recommendedMovieIds !== 'undefined' && recommendedMovieIds.length > 0) {
-        renderMovies(recommendedMovieIds, 'recommended-movies-grid');
-    } else {
-        console.warn('`recommendedMovieIds` is not defined or empty. Recommended section will be empty.');
-        if (recommendedGrid) recommendedGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
-    }
+
     // --- Конец НОВОЙ ЛОГИКИ ---
 
 });
