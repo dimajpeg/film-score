@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/movies-page.css"> 
+  <title data-i18n="page.movies.title">All Movies - FilmScore</title>
+</head>
+
+<body>
+  <header class="site-header">
+    <!-- Твой стандартный хедер -->
+    <div class="container header-container">
+      <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
+      <form action="/search" method="get" class="search-form">
+        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..." aria-label="Search">
+        <button type="submit" data-i18n="search_btn">Search</button>
+      </form>
+      <nav class="main-navigation">
+        <ul>
+          <li id="nav-signin-link" class="nav-item"><a href="sign-up.html" data-i18n="sign_in">Sign In</a></li>
+          <li id="nav-user-loggedin" class="nav-item" style="display: none;">
+            <div class="user-menu-container">
+              <button id="user-avatar-button" class="user-avatar-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
+              <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;">
+                <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span></div>
+                <ul>
+                  <li><a href="/my-ratings" data-i18n="userMenu.myRatings">My Ratings</a></li>
+                  <li><a href="/edit-profile" data-i18n="userMenu.editProfile">Edit Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><button id="logout-button-header" class="dropdown-item-button" data-i18n="userMenu.logout">Logout</button></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <select id="language-switcher" name="language"><option value="en">EN</option><option value="ru">RU</option><option value="ua">UA</option></select>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main movies-archive-page">
+    <div class="container">
+      <header class="page-header">
+        <h1 data-i18n="page.movies.mainTitle">Movie Library</h1>
+      </header>
+
+      <div class="filters-and-sorting-panel">
+        <!-- Сортировка -->
+        <div class="sort-control">
+          <label for="sort-movies" data-i18n="page.movies.sortByLabel">Sort by:</label>
+          <select id="sort-movies" name="sort_movies">
+            <option value="default" data-i18n="page.movies.sort.default">Default</option>
+            <option value="rating_desc" data-i18n="page.movies.sort.ratingDesc">Rating (High to Low)</option>
+            <option value="rating_asc" data-i18n="page.movies.sort.ratingAsc">Rating (Low to High)</option>
+            <option value="year_desc" data-i18n="page.movies.sort.yearDesc">Release Date (Newest First)</option>
+            <option value="year_asc" data-i18n="page.movies.sort.yearAsc">Release Date (Oldest First)</option>
+            <option value="title_asc" data-i18n="page.movies.sort.titleAsc">Title (A-Z)</option>
+            <option value="title_desc" data-i18n="page.movies.sort.titleDesc">Title (Z-A)</option>
+          </select>
+        </div>
+
+        <!-- Фильтр по жанрам -->
+        <div class="genre-filter">
+          <h3 data-i18n="page.movies.filterByGenreLabel">Filter by Genre:</h3>
+          <div class="genre-checkboxes" id="genre-filter-options">
+            <!-- Чекбоксы для жанров будут добавлены сюда JS или можно сделать статически -->
+            <!-- Пример:
+            <label><input type="checkbox" name="genre" value="genre.action"> <span data-i18n="genre.action">Action</span></label>
+            <label><input type="checkbox" name="genre" value="genre.comedy"> <span data-i18n="genre.comedy">Comedy</span></label>
+            ... для всех 10 жанров ...
+            -->
+          </div>
+        </div>
+        
+        <button id="reset-filters-btn" class="btn btn-secondary btn-small" data-i18n="page.movies.resetFiltersBtn">Reset Filters</button>
+      </div>
+
+      <div class="movies-grid" id="all-movies-grid">
+        <!-- Карточки фильмов будут вставлены сюда JavaScript'ом -->
+      </div>
+
+      <div class="pagination-controls" id="pagination-area">
+        <!-- Кнопки пагинации будут здесь (например, "Previous", "1", "2", "3", "Next") -->
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <!-- Твой стандартный футер -->
+    <div class="container">
+      <p data-i18n="footer_copyright">© 2025 FilmScore.</p>
+      <nav class="footer-nav">
+        <ul>
+          <li><a href="about.html" data-i18n="footer_about">About</a></li>
+          <li><a href="contact.html" data-i18n="footer_contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Определение SVG иконок, если нужно (например, для звезды) -->
+  <svg style="display: none;">
+    <defs>
+      <path id="icon-star-path" d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z"/>
+    </defs>
+  </svg>
+
+  <script src="i18n.js" defer></script>
+  <script src="header-auth.js" defer></script>
+  <script src="movies-data.js" defer></script>
+  <script src="movies-page.js" defer></script> 
+</body>
+</html>

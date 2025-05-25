@@ -1,0 +1,254 @@
+/* css/movies-page.css */
+
+.movies-archive-page .page-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-top: 20px;
+}
+
+.movies-archive-page .page-header h1 {
+  font-size: 2.5em;
+  color: #e50914; /* Акцентный цвет */
+}
+
+.filters-and-sorting-panel {
+  background-color: #1c1c1c; /* Фон панели */
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap; /* Для адаптивности */
+  gap: 25px;
+  align-items: flex-end; /* Выравниваем элементы по низу, если они разной высоты */
+}
+
+.sort-control, .genre-filter {
+  margin-bottom: 15px; /* Отступ для мобильных, когда они друг под другом */
+}
+
+.sort-control label, .genre-filter h3 {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95em;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.sort-control select {
+  padding: 8px 12px;
+  background-color: #333;
+  color: #e5e5e5;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 0.9em;
+  min-width: 200px; /* Минимальная ширина селекта */
+}
+
+.genre-filter h3 {
+  margin-bottom: 10px;
+}
+
+.genre-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 15px; /* Отступы между чекбоксами */
+}
+
+.genre-checkboxes label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #ddd;
+  padding: 5px 8px;
+  background-color: #2a2a2a;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.genre-checkboxes label:hover {
+  background-color: #383838;
+}
+
+.genre-checkboxes input[type="checkbox"] {
+  margin-right: 6px;
+  accent-color: #e50914; /* Цвет "галочки" */
+}
+
+#reset-filters-btn {
+  /* Стили .btn.btn-secondary.btn-small уже должны быть,
+     но можно добавить margin-left: auto; чтобы прижать кнопку вправо, если нужно */
+  margin-left: auto; /* Если панель в одну строку, кнопка будет справа */
+  align-self: flex-end; /* Выравниваем кнопку по низу с селектом */
+}
+
+/* Стили для сетки фильмов .movies-grid и .movie-card берутся из style.css */
+
+.pagination-controls {
+  margin-top: 40px;
+  text-align: center;
+  /* Стили для кнопок пагинации добавим позже */
+}
+
+/* Адаптивность для панели фильтров */
+@media (max-width: 768px) {
+  .filters-and-sorting-panel {
+      flex-direction: column; /* Фильтры друг под другом */
+      align-items: stretch; /* Растягиваем по ширине */
+  }
+  .sort-control select {
+      width: 100%; /* Селект на всю ширину */
+  }
+  #reset-filters-btn {
+      margin-left: 0; /* Убираем авто-отступ */
+      margin-top: 10px; /* Добавляем отступ сверху */
+      width: 100%; /* Кнопка на всю ширину */
+  }
+}
+
+.pagination-controls {
+  margin-top: 40px;
+  text-align: center;
+  padding-bottom: 20px; /* Дополнительный отступ снизу */
+}
+
+.btn-pagination {
+  background-color: #2a2a2a;
+  color: #ccc;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-pagination:hover {
+  background-color: #383838;
+  color: #fff;
+}
+
+.btn-pagination.active {
+  background-color: #e50914; /* Акцентный цвет */
+  color: white;
+  border-color: #e50914;
+  cursor: default;
+}
+/* css/movies-page.css */
+/* ... (существующие стили) ... */
+
+.genre-filter {
+  /* Можно добавить flex-grow, чтобы этот блок занимал больше места, если нужно */
+  /* flex-grow: 1; */
+}
+
+.genre-filter h3 {
+  margin-bottom: 12px; /* Чуть больше отступ */
+}
+
+.genre-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Уменьшим общий gap, т.к. у label будут свои отступы */
+}
+
+.genre-checkboxes label {
+  display: inline-block; /* Изменяем с flex на inline-block для тего-подобного вида */
+  cursor: pointer;
+  font-size: 0.85em; /* Размер текста жанра */
+  color: #ccc;
+  background-color: #2a2a2a;
+  border: 1px solid #383838;
+  padding: 6px 12px; /* Отступы внутри "кнопки" */
+  border-radius: 15px; /* Более скругленные углы для вида тега/пилюли */
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  user-select: none; /* Чтобы текст не выделялся при клике */
+}
+
+.genre-checkboxes label:hover {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: #fff;
+}
+
+/* Скрываем стандартный чекбокс */
+.genre-checkboxes input[type="checkbox"] {
+  display: none; 
+}
+
+/* Стили для "выбранного" жанра */
+.genre-checkboxes input[type="checkbox"]:checked + span { 
+  /* Этот селектор не сработает, так как span у нас теперь не соседний, 
+     мы будем стилизовать сам label через JS или по-другому */
+}
+
+/* Новый подход: стилизуем сам label, когда чекбокс внутри него выбран */
+.genre-checkboxes label input[type="checkbox"]:checked ~ span {
+  /* Этот тоже не очень удобен, если span не прямой потомок */
+}
+
+/* Лучше всего стилизовать сам label, когда его внутренний чекбокс :checked.
+ Это можно сделать, если JS будет добавлять класс к label, или если обернуть текст в span ПОСЛЕ чекбокса.
+ В нашем текущем JS (populateGenreFilters) текст добавляется после чекбокса.
+ Поэтому можно попробовать так: */
+
+.genre-checkboxes input[type="checkbox"]:checked + span { /* Это если бы span был сразу после input */
+  /* Не сработает с текущим label.appendChild(document.createTextNode(" " + genreName)); */
+}
+
+/* Давай изменим populateGenreFilters, чтобы текст был в span, и добавим класс к label */
+/* ИЛИ ПРОЩЕ: Стилизуем сам label, когда он содержит checked input (CSS :has() пока не везде) */
+/* Будем добавлять класс 'active' к label через JS */
+
+.genre-checkboxes label.active { /* Этот класс будем добавлять/удалять JS */
+  background-color: #e50914; /* Акцентный цвет для выбранного жанра */
+  color: #fff;
+  border-color: #e50914;
+}
+.genre-checkboxes label.active:hover {
+  background-color: #c00711; /* Темнее при наведении на активный */
+  border-color: #c00711;
+}
+
+
+
+#reset-filters-btn {
+  padding: 8px 15px; /* Стандартные отступы для .btn-small */
+  font-size: 0.85em;
+  background-color: #444; /* Немного другой фон */
+  border-color: #555;
+  color: #ccc;
+  /* margin-left: auto; - если панель фильтров в одну строку и кнопка справа */
+}
+
+#reset-filters-btn:hover {
+  background-color: #555;
+  border-color: #666;
+  color: #fff;
+}
+/* В style.css */
+
+/* ... (другие стили для .movie-card, .movie-info) ... */
+
+.movie-rating {
+  font-size: 0.9em;
+  color: #f5c518; /* Желтый для рейтинга и для звезды по умолчанию (из-за currentColor) */
+  font-weight: bold;
+  margin-top: auto; /* Прижимает рейтинг к низу карточки */
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.movie-rating .icon-star { /* Стиль для SVG иконки звезды, используемой через <use> */
+  width: 2em;    /* Размер звезды относительно шрифта текста рейтинга */
+  height: 2em;
+  fill: currentColor; /* Звезда будет того же цвета, что и текст .movie-rating */
+  margin-right: 5px; /* Отступ между звездой и числом */
+}
+
+.movie-rating span {
+  /* Дополнительные стили для самого числа рейтинга, если нужны */
+  line-height: 1; /* Для лучшего вертикального выравнивания с иконкой */
+}

@@ -79,6 +79,8 @@ const allMoviesData = [
     actorsKeys: ["actor.sachabaroncohen", "actor.kenavitian"],
     trailerUrl: "https://www.youtube.com/embed/dL6_G1z6ymw" // Примечание: это может быть трейлер второй части, уточни
   },
+
+
   {
     id: "cap-civil-war",
     titleKey: "movie.cap-civil-war.title", // Название фильма: Captain America: Civil War
@@ -234,6 +236,19 @@ const allMoviesData = [
     directorKey: "director.robertzemeckis",
     actorsKeys: ["actor.tomhanks", "actor.sallyfield", "actor.garysinise"],
     trailerUrl: "https://www.youtube.com/embed/bLvqoHBptjg"
+  },
+  {
+    id: "despicable-me", 
+    titleKey: "movie.despicable-me.title",
+    year: 2010, 
+    rating: "7.6", 
+    posterUrl: "assets/images/posters/despicable-me.jpg", 
+    bannerUrl: "assets/images/banner/despicable-me.jpg", 
+    genreKeys: ["genre.animation", "genre.comedy", "genre.family"],
+    descriptionKey: "movie.despicable-me.description", 
+    directorKey: "director.pierrecoffin_chrisrenaud", 
+    actorsKeys: ["actor.stevecarell", "actor.jasonsegel", "actor.russellbrand"], 
+    trailerUrl: "https://www.youtube.com/embed/zzfV2-if61w" 
   },
   {
     id: "get-out",
@@ -763,7 +778,7 @@ const allMoviesData = [
     rating: "7.9",
     posterUrl: "assets/images/posters/thunderbolts.jpg",
     bannerUrl: "assets/images/banner/thunderbolts.jpg",
-    genreKeys: ["genre.action", "genre.adventure", "genre.superhero"],
+    genreKeys: ["genre.action", "genre.adventure", "genre.scifi"],
     descriptionKey: "movie.thunderbolts.description",
     directorKey: "director.jake", 
     actorsKeys: ["actor.sebastianstan", "actor.wyattrussell", "actor.florencepugh"],
