@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let slideInterval;
 
         function showSlide(index) {
-            if (index < 0 || index >= slides.length || !slides[index]) { // Добавил проверку на slides[index]
+            if (index < 0 || index >= slides.length || !slides[index]) {
                 // console.warn(`Attempted to show slide with invalid index: ${index} or slides not fully loaded.`);
                 return;
             }
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function nextSlide() {
-            if (slides.length === 0) return; // Предохранитель
+            if (slides.length === 0) return;
             let newIndex = currentSlideIndex + 1;
             if (newIndex >= slides.length) {
                 newIndex = 0;
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function prevSlide() {
-            if (slides.length === 0) return; // Предохранитель
+            if (slides.length === 0) return;
             let newIndex = currentSlideIndex - 1;
             if (newIndex < 0) {
                 newIndex = slides.length - 1;
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function startSlideShow() {
             stopSlideShow();
-            if (slides.length > 1) { // Запускаем только если больше одного слайда
+            if (slides.length > 1) {
                  slideInterval = setInterval(nextSlide, 7000);
             }
         }
@@ -63,10 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (slides.length > 0) {
-            // Убедимся, что точки сгенерированы или существуют перед установкой активной
             if (dotsContainer) {
                 const existingDots = Array.from(dotsContainer.children).filter(child => child.classList.contains('dot'));
-                if (existingDots.length === 0) { // Генерируем, если не было в HTML
+                if (existingDots.length === 0) {
                     slides.forEach((_, index) => {
                         const dot = document.createElement('span');
                         dot.classList.add('dot');
@@ -74,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         dotsContainer.appendChild(dot);
                     });
                 }
-                // Добавляем обработчики на все точки
                 Array.from(dotsContainer.children).forEach(dot => {
                     if (dot.tagName === 'SPAN' && dot.classList.contains('dot')) {
                         dot.addEventListener('click', (e) => {
@@ -89,28 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
             
-            showSlide(currentSlideIndex); // Показываем первый слайд (это также установит активную точку)
+            showSlide(currentSlideIndex);
             startSlideShow();
 
-            if (nextButton) {
-                nextButton.addEventListener('click', () => {
-                    nextSlide();
-                    stopSlideShow();
-                    startSlideShow();
-                });
-            }
-            if (prevButton) {
-                prevButton.addEventListener('click', () => {
-                    prevSlide();
-                    stopSlideShow();
-                    startSlideShow();
-                });
-            }
+            if (nextButton) { /* ... обработчик ... */ nextButton.addEventListener('click', () => { nextSlide(); stopSlideShow(); startSlideShow(); });}
+            if (prevButton) { /* ... обработчик ... */ prevButton.addEventListener('click', () => { prevSlide(); stopSlideShow(); startSlideShow(); });}
             const sliderElement = document.querySelector('.hero-banner-slider');
-            if (sliderElement) {
-                sliderElement.addEventListener('mouseenter', stopSlideShow);
-                sliderElement.addEventListener('mouseleave', startSlideShow);
-            }
+            if (sliderElement) { /* ... обработчики ... */ sliderElement.addEventListener('mouseenter', stopSlideShow); sliderElement.addEventListener('mouseleave', startSlideShow); }
         }
     }
     // --- Конец логики для слайдера ---
@@ -118,16 +101,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- НОВАЯ ЛОГИКА: Рендеринг карточек фильмов ---
 
-    // Функция для получения текста (с использованием i18n.js, если он доступен)
-    function getText(key, fallbackText = '') {
+    // ИСПРАВЛЕННАЯ Функция для получения текста
+    function getText(key, fallbackTextIfKeyNotFound = '') {
         if (window.i18n && typeof window.i18n.getTranslation === 'function') {
-            // Для ключей типа "movie.id.title", нам нужно передать сам ключ,
-            // а i18n.js вернет перевод или ключ, если перевода нет.
-            // Для простых ключей типа "genre.action" это тоже сработает.
-            return window.i18n.getTranslation(key, {}, fallbackText || key.split('.').pop());
+            const translation = window.i18n.getTranslation(key);
+            // i18n.getTranslation (из нашего i18n.js) вернет сам ключ, если перевод не найден.
+            // Поэтому мы проверяем, отличается ли результат от ключа.
+            if (translation !== key) {
+                return translation; // Перевод найден
+            }
+            // Если перевод не найден (translation === key), используем fallbackTextIfKeyNotFound
+            // Если fallbackTextIfKeyNotFound не предоставлен, то просто вернем "чистую" часть ключа
+            return fallbackTextIfKeyNotFound || key.split('.').pop();
         }
-        // Фоллбэк, если i18n недоступен
-        return fallbackText || key.split('.').pop(); // Возвращаем последнюю часть ключа или фоллбэк
+        // Фоллбэк, если i18n вообще недоступен
+        return fallbackTextIfKeyNotFound || key.split('.').pop();
     }
 
     // Функция для создания HTML одной карточки фильма
@@ -137,15 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return '';
         }
 
-        const title = getText(movie.titleKey, "Movie Title");
+        // Для title, если перевод не найден, используем ID фильма как fallback
+        const title = getText(movie.titleKey, movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())); // movie.id с заглавными буквами
         const year = movie.year;
         const rating = movie.rating;
-        const poster = movie.posterUrl; // Используем как есть, ты заменишь пути
+        const poster = movie.posterUrl;
         const movieUrl = `movie-details.html?id=${movie.id}`;
 
         const genresHTML = movie.genreKeys.map(genreKey => {
-            const genreName = getText(genreKey, genreKey.substring(genreKey.lastIndexOf('.') + 1));
-            // Для страниц жанров можно будет сделать ссылки: <a href="movies.html?genre=${genreKey.substring(genreKey.lastIndexOf('.') + 1)}">${genreName}</a>
+            // Для жанра, если перевод не найден, используем последнюю часть ключа с большой буквы
+            const defaultGenreName = genreKey.split('.').pop();
+            const genreName = getText(genreKey, defaultGenreName.charAt(0).toUpperCase() + defaultGenreName.slice(1));
             return `<span>${genreName}</span>`;
         }).join(', ');
 
@@ -177,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Проверка доступности глобальных данных
         if (typeof allMoviesData === 'undefined' || !Array.isArray(allMoviesData)) {
             console.error('Error: `allMoviesData` is not defined or not an array. Make sure movies-data.js is loaded and correct.');
             container.innerHTML = `<p>${getText('messages.dataError', 'Error loading movie data.')}</p>`;
@@ -200,36 +189,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (moviesHTML === "") {
-            container.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies to display in this section right now.')}</p>`;
+            // Используем ключ messages.noMoviesFoundSect, который ты определил в JSON
+            container.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
         } else {
             container.innerHTML = moviesHTML;
         }
     }
 
     // Рендеринг секций фильмов
-    // Убедимся, что эти массивы ID определены в movies-data.js
-    if (typeof trendingNowMovieIds !== 'undefined') {
+    const trendingGrid = document.getElementById('trending-now-grid');
+    const holidayGrid = document.getElementById('holiday-mood-grid');
+    const recommendedGrid = document.getElementById('recommended-movies-grid');
+
+    if (typeof trendingNowMovieIds !== 'undefined' && trendingNowMovieIds.length > 0) {
         renderMovies(trendingNowMovieIds, 'trending-now-grid');
     } else {
-        console.warn('`trendingNowMovieIds` is not defined. Trending Now section will be empty.');
-        const trendingGrid = document.getElementById('trending-now-grid');
-        if (trendingGrid) trendingGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies to display in this section right now.')}</p>`;
+        console.warn('`trendingNowMovieIds` is not defined or empty. Trending Now section will be empty.');
+        if (trendingGrid) trendingGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
     }
 
-    if (typeof holidayMoodMovieIds !== 'undefined') {
+    if (typeof holidayMoodMovieIds !== 'undefined' && holidayMoodMovieIds.length > 0) {
         renderMovies(holidayMoodMovieIds, 'holiday-mood-grid');
     } else {
-        console.warn('`holidayMoodMovieIds` is not defined. Holiday Mood section will be empty.');
-        const holidayGrid = document.getElementById('holiday-mood-grid');
-        if (holidayGrid) holidayGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies to display in this section right now.')}</p>`;
+        console.warn('`holidayMoodMovieIds` is not defined or empty. Holiday Mood section will be empty.');
+        if (holidayGrid) holidayGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
     }
 
-    if (typeof recommendedMovieIds !== 'undefined') {
+    if (typeof recommendedMovieIds !== 'undefined' && recommendedMovieIds.length > 0) {
         renderMovies(recommendedMovieIds, 'recommended-movies-grid');
     } else {
-        console.warn('`recommendedMovieIds` is not defined. Recommended section will be empty.');
-        const recommendedGrid = document.getElementById('recommended-movies-grid');
-        if (recommendedGrid) recommendedGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies to display in this section right now.')}</p>`;
+        console.warn('`recommendedMovieIds` is not defined or empty. Recommended section will be empty.');
+        if (recommendedGrid) recommendedGrid.innerHTML = `<p>${getText('messages.noMoviesFoundSect', 'No movies here yet.')}</p>`;
     }
     // --- Конец НОВОЙ ЛОГИКИ ---
 
