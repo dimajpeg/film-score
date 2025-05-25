@@ -330,3 +330,61 @@ body { /* Чтобы фон был согласован, если основно
       font-size: 1.3em;
   }
 }
+.user-rating-widget {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #2f2f2f; /* Отделим от остальной информации */
+}
+
+.user-rating-widget h3 {
+  font-size: 1.2em;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.stars-interactive {
+  display: flex;
+  gap: 5px; /* Небольшой отступ между звездами */
+  cursor: pointer; /* Показываем, что на них можно нажимать */
+  margin-bottom: 5px;
+}
+
+.stars-interactive .star-icon.interactive {
+  width: 28px; /* Размер звезд для оценки */
+  height: 28px;
+  fill: #444; /* Незакрашенная звезда (темно-серая) */
+  transition: fill 0.1s ease-in-out;
+}
+
+/* Стили для подсветки при наведении (будет управлять JS) */
+.stars-interactive .star-icon.interactive.hover {
+  fill: #d4a100; /* Цвет подсветки при наведении (темно-желтый) */
+}
+
+/* Стили для выбранных/закрашенных звезд (будет управлять JS) */
+.stars-interactive .star-icon.interactive.selected {
+  fill: #f5c518; /* Ярко-желтый для выбранных */
+}
+
+/* Стили для частично закрашенной звезды (половинка) */
+/* Этого можно достичь с помощью linear-gradient на fill или clip-path */
+.stars-interactive .star-icon.interactive.half-selected {
+  /* Пример с градиентом. Потребуется уникальный ID для каждой SVG звезды, чтобы градиент применился правильно */
+  /* Или более сложный JS, который модифицирует сам SVG path */
+}
+
+.current-rating-text {
+  color: #aaa;
+  font-size: 0.9em;
+  min-height: 1.2em; /* Чтобы не прыгало, когда текст появляется/исчезает */
+}
+
+.user-rating-widget .btn-small { /* Стиль для кнопки Submit поменьше */
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+/* Стили для .comment-login-prompt уже должны быть (если скопировал из моего предыдущего) */
+#rating-login-prompt { /* Убедимся, что у него тоже есть отступы */
+  margin-top: 15px;
+}

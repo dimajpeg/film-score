@@ -95,9 +95,12 @@
           <!-- Внутри .movie-details-page, например, под .rating-wrapper -->
           <div class="user-rating-widget"> <!-- Убрал id и style, JS будет управлять видимостью -->
             <h3 data-i18n="page.movieDetails.yourRatingTitle">Your Rating:</h3>
-            <div class="stars-input"> <!-- Изменил класс на более общий -->
-              <!-- 5 звезд, каждая может быть SVG или набором span -->
-              <!-- Этот HTML для звезд мы сейчас заменим на более подходящий для JS -->
+            <div class="stars-interactive" aria-label="Rate this movie">
+              <svg class="star-icon interactive" data-rating-value="1" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
+              <svg class="star-icon interactive" data-rating-value="2" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
+              <svg class="star-icon interactive" data-rating-value="3" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
+              <svg class="star-icon interactive" data-rating-value="4" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
+              <svg class="star-icon interactive" data-rating-value="5" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
             </div>
             <p id="current-rating-display" class="current-rating-text" style="min-height: 1.2em; margin-top: 5px;"></p>
             <input type="hidden" id="user-movie-rating-value" name="user_rating_value">

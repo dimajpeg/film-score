@@ -129,5 +129,7 @@
   "genre.horror": "Horror",
   "genre.fantasy": "Fantasy",
   "genre.scifi": "Sci-Fi", 
-  "genre.comedy": "Comedy" 
+  "genre.comedy": "Comedy",
+
+  "messages.noMoviesFound": "No movies to display in this section currently."
 }

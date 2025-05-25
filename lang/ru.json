@@ -131,5 +131,7 @@
   "genre.horror": "Ужасы",
   "genre.fantasy": "Фэнтези",
   "genre.scifi": "Научная фантастика",
-  "genre.comedy": "Комедия"
+  "genre.comedy": "Комедия",
+  
+  "messages.noMoviesFound": "В этом разделе пока нет фильмов для отображения."
 }

@@ -138,6 +138,8 @@
   "genre.horror": "Жахи",
   "genre.fantasy": "Фентезі",
   "genre.scifi": "Наукова фантастика",
-  "genre.comedy": "Комедія"
+  "genre.comedy": "Комедія",
+  
+  "messages.noMoviesFound": "У цьому розділі наразі немає фільмів для відображення."
 
 }
