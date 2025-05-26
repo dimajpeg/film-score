@@ -3,16 +3,16 @@
 const allMoviesData = [
   {
     id: "a-quiet-place",
-    titleKey: "movie.a-quiet-place.title", // Название фильма: A Quiet Place
+    titleKey: "movie.a-quiet-place.title", 
     year: 2018,
     rating: "7.5",
-    posterUrl: "assets/images/posters/a-quiet-place.jpg", // ЗАМЕНИ НА СВОЙ ПУТЬ И ИМЯ ФАЙЛА
-    bannerUrl: "assets/images/banner/a-quiet-place.jpg", // ЗАМЕНИ НА СВОЙ ПУТЬ И ИМЯ ФАЙЛА
+    posterUrl: "assets/images/posters/a-quiet-place.jpg", 
+    bannerUrl: "assets/images/banner/a-quiet-place.jpg", 
     genreKeys: ["genre.horror", "genre.scifi", "genre.thriller"],
-    descriptionKey: "movie.a-quiet-place.description", // Краткое описание
-    directorKey: "director.johnkrasinski", // Режиссер
-    actorsKeys: ["actor.emilyblunt", "actor.johnkrasinski", "actor.millicentsimmonds"], // Актеры
-    trailerUrl: "https://www.youtube.com/embed/WR7cc5t7tv8" // Трейлер
+    descriptionKey: "movie.a-quiet-place.description", 
+    directorKey: "director.johnkrasinski", 
+    actorsKeys: ["actor.emilyblunt", "actor.johnkrasinski", "actor.millicentsimmonds"], 
+    trailerUrl: "https://www.youtube.com/embed/WR7cc5t7tv8" 
   },
   {
     id: "avatar-2009",
@@ -36,7 +36,7 @@ const allMoviesData = [
     bannerUrl: "assets/images/banner/avengers-endgame.jpg", // ЗАМЕНИ
     genreKeys: ["genre.action", "genre.adventure", "genre.scifi"],
     descriptionKey: "movie.avengers-endgame.description",
-    directorKey: "director.russobrothers", // Anthony Russo, Joe Russo
+    directorKey: "director.russobrothers",
     actorsKeys: ["actor.robertdowneyjr", "actor.chrisevans", "actor.markruffalo"],
     trailerUrl: "https://www.youtube.com/embed/TcMBFSGVi1c"
   },
@@ -79,8 +79,6 @@ const allMoviesData = [
     actorsKeys: ["actor.sachabaroncohen", "actor.kenavitian"],
     trailerUrl: "https://www.youtube.com/embed/dL6_G1z6ymw" // Примечание: это может быть трейлер второй части, уточни
   },
-
-
   {
     id: "cap-civil-war",
     titleKey: "movie.cap-civil-war.title", // Название фильма: Captain America: Civil War
@@ -248,7 +246,7 @@ const allMoviesData = [
     descriptionKey: "movie.despicable-me.description", 
     directorKey: "director.pierrecoffin_chrisrenaud", 
     actorsKeys: ["actor.stevecarell", "actor.jasonsegel", "actor.russellbrand"], 
-    trailerUrl: "https://www.youtube.com/embed/zzfV2-if61w" 
+    trailerUrl: "https://www.youtube.com/embed/zzCZ1W_CUoI?si=gCTUP5KGZq9lpKuh" 
   },
   {
     id: "get-out",
@@ -456,7 +454,7 @@ const allMoviesData = [
     genreKeys: ["genre.adventure", "genre.fantasy"],
     descriptionKey: "movie.minecraft.description",
     directorKey: "director.jaredhess",
-    actorsKeys: ["actor.jasoneMomoa"],
+    actorsKeys: ["actor.jasoneMomoa","actor.jasoneMomoa" ],
     trailerUrl: "https://www.youtube.com/embed/wJO_vIDZn-I"
   },
   {

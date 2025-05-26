@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="page.movieDetails.defaultTitle">Movie Details - FilmScore</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/static-pages.css"> <!-- Общие стили для статичных страниц могут пригодиться -->
-  <link rel="stylesheet" href="css/movie-details.css"> <!-- Новые стили для этой страницы -->
+  <link rel="stylesheet" href="css/static-pages.css">
+  <link rel="stylesheet" href="css/movie-details.css">
 </head>
 
 <body>
@@ -16,8 +16,7 @@
     <div class="container header-container">
       <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
       <form action="/search" method="get" class="search-form">
-        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..."
-          aria-label="Search">
+        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..." aria-label="Search">
         <button type="submit" data-i18n="search_btn">Search</button>
       </form>
       <nav class="main-navigation">
@@ -25,33 +24,20 @@
           <li id="nav-signin-link" class="nav-item"><a href="sign-up.html" data-i18n="sign_in">Sign In</a></li>
           <li id="nav-user-loggedin" class="nav-item" style="display: none;">
             <div class="user-menu-container">
-              <button id="user-avatar-button" class="user-avatar-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" class="icon icon-user">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg></button>
+              <button id="user-avatar-button" class="user-avatar-btn"><svg class="icon icon-user"><use xlink:href="#icon-user-path"/></svg></button> <!-- Предполагаем, что #icon-user-path тоже определен -->
               <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;">
-                <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello,
-                    User!</span></div>
+                <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span></div>
                 <ul>
                   <li><a href="/my-ratings" data-i18n="userMenu.myRatings">My Ratings</a></li>
                   <li><a href="/edit-profile" data-i18n="userMenu.editProfile">Edit Profile</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><button id="logout-button-header" class="dropdown-item-button"
-                      data-i18n="userMenu.logout">Logout</button></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><button id="logout-button-header" class="dropdown-item-button" data-i18n="userMenu.logout">Logout</button></li>
                 </ul>
               </div>
             </div>
           </li>
           <li class="nav-item">
-            <select id="language-switcher" name="language">
-              <option value="en">EN</option>
-              <option value="ru">RU</option>
-              <option value="ua">UA</option>
-            </select>
+            <select id="language-switcher" name="language"><option value="en">EN</option><option value="ru">RU</option><option value="ua">UA</option></select>
           </li>
         </ul>
       </nav>
@@ -59,42 +45,35 @@
   </header>
 
   <main class="site-main movie-details-page">
-    <!-- Секция с большим баннером фильма -->
     <section class="movie-backdrop-section">
-      <img src="assets/images/banner-thunderbolts-poster.jpg" alt="Thunderbolts Movie Backdrop"
-        id="movie-backdrop-image">
+      <!-- JS вставит сюда src и alt -->
+      <img src="assets/images/placeholder-banner-large.jpg" alt="Movie Backdrop" id="movie-backdrop-image"> 
       <div class="backdrop-overlay"></div>
     </section>
 
     <div class="container movie-content-container">
-      <!-- Основная информация о фильме: постер + детали -->
       <section class="movie-main-details">
         <div class="movie-poster-wrapper">
-          <img src="assets/images/posters/thunderbolts.jpg" alt="Thunderbolts Poster" id="movie-details-poster-img">
+          <!-- JS вставит сюда src и alt -->
+          <img src="assets/images/placeholder-poster-large.jpg" alt="Movie Poster" id="movie-details-poster-img">
         </div>
         <div class="movie-info-wrapper">
-          <h1 id="movie-details-title" data-i18n="movie.thunderbolts.title">Thunderbolts</h1>
+          <!-- JS вставит сюда текст -->
+          <h1 id="movie-details-title" data-i18n-key="movie.placeholder.title">Movie Title</h1> 
           <div class="meta-data">
-            <span id="movie-details-year" data-i18n="movie.thunderbolts.year">2025</span>
+            <span id="movie-details-year" data-i18n-key="movie.placeholder.year">YYYY</span>
             <span class="separator">•</span>
-            <span id="movie-details-genres">
-              <a href="/genre/action" data-i18n="genre.action">Action</a>,
-              <a href="/genre/adventure" data-i18n="genre.adventure">Adventure</a>
-            </span>
+            <!-- JS сгенерирует сюда жанры -->
+            <span id="movie-details-genres" data-i18n-key="movie.placeholder.genres">Genres</span>
           </div>
           <div class="rating-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
-              class="icon icon-star-large">
-              <path
-                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
-            </svg>
-            <span id="movie-details-rating" data-i18n="movie.thunderbolts.rating">7.9</span>
-            <!-- <span class="total-votes">(120k votes)</span> -->
+            <svg class="icon icon-star-large"><use xlink:href="#icon-star-path"/></svg>
+            <!-- JS вставит сюда рейтинг -->
+            <span id="movie-details-rating" data-i18n-key="movie.placeholder.rating">X.X</span>
           </div>
-          <!-- Внутри .movie-details-page, например, под .rating-wrapper -->
-          <!-- Внутри .movie-details-page, например, под .rating-wrapper -->
-          <div class="user-rating-widget"> <!-- Убрал id и style, JS будет управлять видимостью -->
-            <h3 data-i18n="page.movieDetails.yourRatingTitle">Your Rating:</h3>
+          
+          <div class="user-rating-widget" style="display: none;"> <!-- JS будет управлять видимостью -->
+            <h3 data-i18n="page.movieDetails.yourRatingTitle">Your Rating</h3>
             <div class="stars-interactive" aria-label="Rate this movie">
               <svg class="star-icon interactive" data-rating-value="1" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
               <svg class="star-icon interactive" data-rating-value="2" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
@@ -102,169 +81,69 @@
               <svg class="star-icon interactive" data-rating-value="4" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
               <svg class="star-icon interactive" data-rating-value="5" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
             </div>
-            <p id="current-rating-display" class="current-rating-text" style="min-height: 1.2em; margin-top: 5px;"></p>
+            <p id="current-rating-display" class="current-rating-text"></p>
             <input type="hidden" id="user-movie-rating-value" name="user_rating_value">
-            <button id="submit-user-rating-btn" class="btn btn-secondary btn-small"
-              data-i18n="page.movieDetails.submitRatingBtn" style="display: none; margin-top:10px;">Submit</button>
-            <p class="form-message" id="user-rating-message" style="margin-top:10px;"></p>
+            <button id="submit-user-rating-btn" class="btn btn-secondary btn-small" data-i18n="page.movieDetails.submitRatingBtn" style="display: none;"></button>
+            <p class="form-message" id="user-rating-message"></p>
           </div>
-          <div id="rating-login-prompt" class="comment-login-prompt" style="display: block;">
-            <!-- Изначально показываем это, если юзер не залогинен -->
-            <p data-i18n="page.movieDetails.loginToRatePrompt">Please <a href="sign-up.html?form=signin"
-                data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup"
-                data-i18n="page.movieDetails.registerLink">register</a> to rate this movie.</p>
+          <div id="rating-login-prompt" class="comment-login-prompt" style="display: none;">
+            <p data-i18n="page.movieDetails.loginToRatePrompt">Please <a href="sign-up.html?form=signin" data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup" data-i18n="page.movieDetails.registerLink">register</a> to rate this movie.</p>
           </div>
+
           <div class="overview-section">
             <h2 data-i18n="page.movieDetails.overviewTitle">Overview</h2>
-            <p id="movie-details-description" data-i18n="movie.thunderbolts.description">A group of supervillains are
-              recruited to go on missions for the government. Expect action, twists, and a new kind of team dynamic in
-              the MCU.</p>
+            <!-- JS вставит сюда описание -->
+            <p id="movie-details-description" data-i18n-key="movie.placeholder.description">Loading description...</p>
           </div>
           <div class="crew-info">
-            <p><strong data-i18n="page.movieDetails.directorLabel">Director:</strong> <span id="movie-details-director"
-                data-i18n="director.jakeSchreier">Jake Schreier</span></p>
-            <p><strong data-i18n="page.movieDetails.actorsLabel">Starring:</strong> <span id="movie-details-actors"
-                data-i18n="actors.thunderbolts">Florence Pugh, Sebastian Stan, David Harbour, Julia Louis-Dreyfus, Wyatt
-                Russell</span></p>
+            <p><strong data-i18n="page.movieDetails.directorLabel">Director:</strong> <span id="movie-details-director" data-i18n-key="director.placeholder">N/A</span></p>
+            <p><strong data-i18n="page.movieDetails.actorsLabel">Starring:</strong> <span id="movie-details-actors" data-i18n-key="actors.placeholder">N/A</span></p>
           </div>
         </div>
       </section>
 
-      <!-- Трейлер -->
       <section class="movie-trailer-section">
         <h2 data-i18n="page.movieDetails.trailerTitle">Trailer</h2>
         <div class="trailer-embed-container" id="movie-trailer-embed">
-          <iframe id="trailer-iframe" src="https://www.youtube.com/embed/-sAOWhvheK8" title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-          </iframe>
-          <!-- <p data-i18n="page.movieDetails.trailerNotAvailable" id="trailer-status" style="display:none;">Official trailer coming soon!</p> -->
+          <!-- JS вставит сюда iframe или сообщение "трейлер недоступен" -->
+          <p id="trailer-status" data-i18n="page.movieDetails.trailerLoading">Loading trailer...</p>
         </div>
       </section>
 
-      <!-- Комментарии -->
       <section class="movie-comments-section">
         <h2 data-i18n="page.movieDetails.commentsTitle">Comments</h2>
         <div id="existing-comments-list">
-          <!-- Сюда JS будет загружать комментарии. Пример одного комментария: -->
-          <div class="comment-item">
-            <div class="comment-author" data-i18n="comment.sample.author">User123</div>
-            <div class="comment-date" data-i18n="comment.sample.date">October 27, 2023</div>
-            <p class="comment-text" data-i18n="comment.sample.text">This movie looks amazing! Can't wait.</p>
-          </div>
-          <div class="comment-item">
-            <div class="comment-author" data-i18n="comment.sample.author2">MovieBuff</div>
-            <div class="comment-date" data-i18n="comment.sample.date2">October 26, 2023</div>
-            <p class="comment-text" data-i18n="comment.sample.text2">Hope it lives up to the hype!</p>
-          </div>
+          <!-- JS будет загружать. Оставим примеры для верстки, JS их очистит перед загрузкой реальных -->
+          <div class="comment-item"><div class="comment-author" data-i18n="comment.sample.author">User123</div><div class="comment-date" data-i18n="comment.sample.date">October 27, 2023</div><p class="comment-text" data-i18n="comment.sample.text">This movie looks amazing! Can't wait.</p></div>
         </div>
-
-        <!-- Форма добавления комментария (для залогиненных) -->
-        <form id="add-comment-form" class="add-comment-form" style="display: none;">
-          <!-- Изначально скрыта, JS покажет если юзер залогинен -->
-          <h3 data-i18n="page.movieDetails.leaveCommentTitle">Leave a Comment</h3>
-          <textarea id="comment-text-input" name="commentText" rows="4"
-            data-i18n-placeholder="page.movieDetails.commentPlaceholder" placeholder="Write your comment here..."
-            required></textarea>
-          <button type="submit" class="btn btn-primary" data-i18n="page.movieDetails.submitCommentButton">Submit
-            Comment</button>
-          <p class="form-message" id="comment-form-message"></p>
-        </form>
-
-        <!-- Призыв войти/зарегистрироваться (для гостей) -->
-        <div id="comment-login-prompt" class="comment-login-prompt">
-          <p data-i18n="page.movieDetails.loginToCommentPrompt">Please <a href="sign-up.html?form=signin"
-              data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup"
-              data-i18n="page.movieDetails.registerLink">register</a> to leave a comment.</p>
-        </div>
+        <form id="add-comment-form" class="add-comment-form" style="display: none;"><h3 data-i18n="page.movieDetails.leaveCommentTitle">Leave a Comment</h3><textarea id="comment-text-input" name="commentText" rows="4" data-i18n-placeholder="page.movieDetails.commentPlaceholder" placeholder="Write your comment here..." required></textarea><button type="submit" class="btn btn-primary" data-i18n="page.movieDetails.submitCommentButton">Submit Comment</button><p class="form-message" id="comment-form-message"></p></form>
+        <div id="comment-login-prompt-page" class="comment-login-prompt" style="display: none;"><p data-i18n="page.movieDetails.loginToCommentPrompt">Please <a href="sign-up.html?form=signin" data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup" data-i18n="page.movieDetails.registerLink">register</a> to leave a comment.</p></div>
       </section>
 
-      <!-- Похожие фильмы -->
       <section class="related-movies-section">
         <h2 data-i18n="page.movieDetails.relatedMoviesTitle">More Like This</h2>
         <div class="movies-grid" id="related-movies-grid">
-          <!-- Сюда JS будет вставлять карточки похожих фильмов. Плейсхолдеры: -->
-          <article class="movie-card"><a href="#" class="movie-poster-link"><img src="images/placeholder-poster1.jpg"
-                alt="Related Movie 1"></a>
-            <div class="movie-info">
-              <h3><a href="#">Related Movie 1</a></h3>
-              <div class="movie-meta"><span class="movie-year">202X</span> <span class="movie-genres">Genre</span></div>
-              <div class="movie-rating"><svg class="icon icon-star">
-                  <use xlink:href="#icon-star-path" />
-                </svg><span>?.?</span></div>
-            </div>
-          </article>
-          <article class="movie-card"><a href="#" class="movie-poster-link"><img src="images/placeholder-poster2.jpg"
-                alt="Related Movie 2"></a>
-            <div class="movie-info">
-              <h3><a href="#">Related Movie 2</a></h3>
-              <div class="movie-meta"><span class="movie-year">202X</span> <span class="movie-genres">Genre</span></div>
-              <div class="movie-rating"><svg class="icon icon-star">
-                  <use xlink:href="#icon-star-path" />
-                </svg><span>?.?</span></div>
-            </div>
-          </article>
-          <article class="movie-card"><a href="#" class="movie-poster-link"><img src="images/placeholder-poster3.jpg"
-                alt="Related Movie 3"></a>
-            <div class="movie-info">
-              <h3><a href="#">Related Movie 3</a></h3>
-              <div class="movie-meta"><span class="movie-year">202X</span> <span class="movie-genres">Genre</span></div>
-              <div class="movie-rating"><svg class="icon icon-star">
-                  <use xlink:href="#icon-star-path" />
-                </svg><span>?.?</span></div>
-            </div>
-          </article>
-          <article class="movie-card"><a href="#" class="movie-poster-link"><img src="images/placeholder-poster4.jpg"
-                alt="Related Movie 4"></a>
-            <div class="movie-info">
-              <h3><a href="#">Related Movie 4</a></h3>
-              <div class="movie-meta"><span class="movie-year">202X</span> <span class="movie-genres">Genre</span></div>
-              <div class="movie-rating"><svg class="icon icon-star">
-                  <use xlink:href="#icon-star-path" />
-                </svg><span>?.?</span></div>
-            </div>
-          </article>
-          <article class="movie-card"><a href="#" class="movie-poster-link"><img src="images/placeholder-poster1.jpg"
-                alt="Related Movie 5"></a>
-            <div class="movie-info">
-              <h3><a href="#">Related Movie 5</a></h3>
-              <div class="movie-meta"><span class="movie-year">202X</span> <span class="movie-genres">Genre</span></div>
-              <div class="movie-rating"><svg class="icon icon-star">
-                  <use xlink:href="#icon-star-path" />
-                </svg><span>?.?</span></div>
-            </div>
-          </article>
+          <!-- JS вставит карточки похожих фильмов -->
         </div>
       </section>
-    </div> <!-- /.movie-content-container -->
+    </div>
   </main>
 
   <footer class="site-footer">
     <!-- Твой стандартный футер -->
-    <div class="container">
-      <p data-i18n="footer_copyright">© 2025 FilmScore.</p>
-      <nav class="footer-nav">
-        <ul>
-          <li><a href="about.html" data-i18n="footer_about">About</a></li>
-          <li><a href="contact.html" data-i18n="footer_contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
   </footer>
 
-  <!-- Определяем путь к иконке звезды один раз для <use> -->
   <svg style="display: none;">
     <defs>
-      <path id="icon-star-path"
-        d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z" />
+      <path id="icon-star-path" d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z"/>
+      <!-- Добавь сюда определение для #icon-user-path, если его нет в общем SVG-спрайте -->
+      <path id="icon-user-path" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2 M12 11A4 4 0 1 0 12 3 4 4 0 0 0 12 11Z"></path>
     </defs>
   </svg>
 
-  <script src="js/i18n.js" defer></script>
-  <script src="js/header-auth.js" defer></script>
-  <script src="js/movies-data.js" defer></script>
-  <script src="js/movie-details.js" defer></script>
+  <script src="i18n.js" defer></script>
+  <script src="header-auth.js" defer></script>
+  <script src="movies-data.js" defer></script>
+  <script src="movie-details.js" defer></script>
 </body>
-
 </html>
