@@ -240,15 +240,72 @@
   display: flex;
   align-items: center;
 }
-
-.movie-rating .icon-star { /* Стиль для SVG иконки звезды, используемой через <use> */
-  width: 2em;    /* Размер звезды относительно шрифта текста рейтинга */
-  height: 2em;
-  fill: currentColor; /* Звезда будет того же цвета, что и текст .movie-rating */
-  margin-right: 5px; /* Отступ между звездой и числом */
+.movie-rating .icon-star {
+  width: 2em;    /* Или другой размер, который тебе нравится, например, 1.1em, 1.2em */
+  height: 2em;   /* Сделаем их одинаковыми, так как звезда обычно вписывается в квадрат */
+  fill: currentColor;
+  margin-right: 5px;
+  vertical-align: middle; /* Попробуй добавить для лучшего выравнивания с текстом */
 }
 
 .movie-rating span {
-  /* Дополнительные стили для самого числа рейтинга, если нужны */
-  line-height: 1; /* Для лучшего вертикального выравнивания с иконкой */
+  line-height: 1; 
+  vertical-align: middle; 
 }
+
+.genre-filter {
+  flex-grow: 1; /* Позволим блоку жанров занять доступное пространство */
+  min-width: 250px; /* Минимальная ширина, чтобы не сжимался слишком сильно */
+}
+
+.genre-filter h3 {
+display: block;
+margin-bottom: 12px; /* Увеличил отступ */
+font-size: 0.95em;
+color: #ccc;
+font-weight: 500;
+}
+
+.genre-checkboxes {
+display: flex;
+flex-wrap: wrap; /* Оставляем перенос */
+gap: 8px 12px;   /* Немного скорректировал gap */
+}
+
+.genre-checkboxes label {
+display: inline-flex; /* Используем inline-flex для лучшего выравнивания чекбокса и текста */
+align-items: center;
+cursor: pointer;
+font-size: 0.85em;
+color: #ccc;
+background-color: #2a2a2a;
+border: 1px solid #383838;
+padding: 6px 12px;
+border-radius: 15px; /* Оставляем скругленные */
+transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+user-select: none;
+}
+
+.genre-checkboxes label:hover {
+background-color: #3a3a3a;
+border-color: #555;
+color: #fff;
+}
+
+/* Скрываем стандартный чекбокс */
+.genre-checkboxes input[type="checkbox"] {
+display: none; /* Прячем сам чекбокс */
+}
+
+/* Стиль для активного/выбранного жанра (класс 'active' добавляется JS) */
+.genre-checkboxes label.active {
+background-color: #e50914; /* Акцентный цвет */
+color: #fff;
+border-color: #e50914;
+}
+
+.genre-checkboxes label.active:hover {
+background-color: #c00711; /* Темнее при наведении на активный */
+border-color: #c00711;
+}
+

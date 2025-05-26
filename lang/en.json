@@ -210,7 +210,8 @@
   "page.movies.resetFiltersBtn": "Reset Filters",
   "messages.noMoviesMatchFilters": "No movies match your current filters.",
 
- 
+ "page.movieDetails.loginToRatePrompt": "Please {loginLink} or {registerLink} to rate this movie.",
+  "page.movieDetails.loginToCommentPrompt": "Please {loginLink} or {registerLink} to comment on this movie.",
   "page.movieDetails.loginLink": "login",
   "page.movieDetails.registerLink": "register",
 

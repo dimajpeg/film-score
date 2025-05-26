@@ -216,7 +216,9 @@
 
   "page.movieDetails.noRelatedMovies": "Похожие фильмы не найдены.",
 
- "page.movieDetails.loginLink": "войти",
+  "page.movieDetails.loginToRatePrompt": "Пожалуйста, {loginLink} или {registerLink}, чтобы оценить этот фильм.",
+  "page.movieDetails.loginToCommentPrompt": "Пожалуйста, {loginLink} или {registerLink}, чтобы оставить комментарий.",
+  "page.movieDetails.loginLink": "войти",
   "page.movieDetails.registerLink": "зарегистрироваться",
 
   "page.movieDetails.overviewTitle": "Обзор",

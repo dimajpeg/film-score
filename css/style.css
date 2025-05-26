@@ -838,9 +838,9 @@ ul {
 
 .movie-rating .icon-star {
   /* Стиль для SVG иконки звезды */
-  width: 1em;
+  width: 2em;
   /* Размер относительно шрифта рейтинга */
-  height: 1em;
+  height: 2em;
   fill: currentColor;
   /* Звезда будет того же цвета, что и текст рейтинга (#f5c518) */
   margin-right: 5px;
@@ -852,3 +852,5 @@ ul {
   content: "★ ";
 }
 */
+
+

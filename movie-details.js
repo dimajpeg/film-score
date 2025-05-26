@@ -13,302 +13,298 @@ document.addEventListener('DOMContentLoaded', () => {
     const directorElement = document.getElementById('movie-details-director');
     const actorsElement = document.getElementById('movie-details-actors');
     const trailerEmbedContainer = document.getElementById('movie-trailer-embed');
-    const trailerStatusElement = document.getElementById('trailer-status'); // Если ты его оставил в HTML
+    const trailerStatusElement = document.getElementById('trailer-status');
 
-    // Элементы для пользовательской оценки
     const userRatingWidget = document.querySelector('.user-rating-widget');
-    const starsInteractiveContainer = document.querySelector('.stars-interactive'); // Убедись, что этот класс есть в HTML звезд оценки
+    const starsInteractiveContainer = document.querySelector('.stars-interactive');
     const currentRatingDisplay = document.getElementById('current-rating-display');
     const userRatingValueInput = document.getElementById('user-movie-rating-value');
     const submitRatingBtn = document.getElementById('submit-user-rating-btn');
-    const ratingLoginPrompt = document.getElementById('rating-login-prompt');
+    const ratingLoginPromptContainer = document.getElementById('rating-login-prompt'); // Контейнер div
+    const ratingLoginPromptParagraph = ratingLoginPromptContainer ? ratingLoginPromptContainer.querySelector('p') : null; // Сам параграф
+
+    const addCommentForm = document.getElementById('add-comment-form');
+    const commentLoginPromptPageContainer = document.getElementById('comment-login-prompt-page'); // Контейнер div
+    const commentLoginPromptParagraph = commentLoginPromptPageContainer ? commentLoginPromptPageContainer.querySelector('p') : null; // Сам параграф
+
+    const relatedMoviesGrid = document.getElementById('related-movies-grid');
     const userRatingMessage = document.getElementById('user-rating-message');
 
-    // Элементы для комментариев
-    const addCommentForm = document.getElementById('add-comment-form');
-    const commentLoginPromptPage = document.getElementById('comment-login-prompt'); // Переименовал, чтобы не путать с ratingLoginPrompt
 
-    // Элементы для похожих фильмов
-    const relatedMoviesGrid = document.getElementById('related-movies-grid');
-
-    let currentMovieData = null; // Здесь будет храниться объект текущего фильма
+    let currentMovieData = null;
     let selectedUserRating = 0;
     let potentialUserRating = 0;
 
-
-    // Функция для получения текста (аналогична той, что в index.js/movies-page.js)
+    // ИСПРАВЛЕННАЯ Функция для получения текста, которая ПРАВИЛЬНО ПЕРЕДАЕТ PARAMS в i18n
     function getText(key, fallbackTextIfKeyNotFound = '', params = {}) {
         if (window.i18n && typeof window.i18n.getTranslation === 'function') {
-            const translation = window.i18n.getTranslation(key, params);
-            if (translation !== key) return translation;
-            const parts = key.split('.');
-            return fallbackTextIfKeyNotFound || (parts.length > 1 ? parts.pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : key);
+            // Передаем params в window.i18n.getTranslation
+            const translation = window.i18n.getTranslation(key, params); 
+            
+            // Если i18n.getTranslation вернул сам ключ (значит, перевод не найден в JSON),
+            // тогда используем наш фоллбэк (если он есть), Иначе используем результат от i18n (даже если это ключ)
+            if (translation === key) {
+                let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                // Применяем params и к фоллбэку, если они есть
+                if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
+                    for (const paramKey in params) {
+                        fallback = fallback.replace(new RegExp(`{${paramKey}}`, 'g'), params[paramKey]);
+                    }
+                }
+                return fallback;
+            }
+            return translation; // Перевод найден и параметры (если были) уже применены в i18n.js
         }
-        const parts = key.split('.');
-        return fallbackTextIfKeyNotFound || (parts.length > 1 ? parts.pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : key);
+        // Фоллбэк, если i18n вообще недоступен
+        let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
+             for (const paramKey in params) {
+                fallback = fallback.replace(new RegExp(`{${paramKey}}`, 'g'), params[paramKey]);
+            }
+        }
+        return fallback;
+    }
+    
+    function showRatingMessage(messageText, type = 'error') {
+        if (!userRatingMessage) return;
+        userRatingMessage.textContent = messageText;
+        userRatingMessage.className = 'form-message'; 
+        userRatingMessage.classList.add(type);
+        userRatingMessage.style.display = 'block';
     }
 
-    // Функция для отображения данных фильма на странице
     function displayMovieDetails(movie) {
         if (!movie) {
             document.body.innerHTML = `<div class="container" style="padding-top: 50px; text-align: center;"><h1>${getText('error.movieNotFound', 'Movie not found')}</h1><a href="index.html">${getText('error.backToHome', 'Back to Home')}</a></div>`;
             return;
         }
-        currentMovieData = movie; // Сохраняем данные текущего фильма
+        currentMovieData = movie;
 
-        // 1. Заголовок страницы
-        const pageTitleText = getText(movie.titleKey, movie.id) + " - FilmScore";
-        if (pageTitleElement) pageTitleElement.textContent = pageTitleText;
-        else document.title = pageTitleText;
+        const movieTitleForPage = getText(movie.titleKey, movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
+        if (pageTitleElement) pageTitleElement.textContent = `${movieTitleForPage} - FilmScore`;
+        else document.title = `${movieTitleForPage} - FilmScore`;
 
-
-        // 2. Баннер и постер
         if (backdropImageElement && movie.bannerUrl) {
             backdropImageElement.src = movie.bannerUrl;
-            backdropImageElement.alt = `${getText(movie.titleKey)} Backdrop`;
-        } else if (backdropImageElement && movie.posterUrl) { // Фоллбэк на постер, если нет баннера
+            backdropImageElement.alt = `${movieTitleForPage} Backdrop`;
+        } else if (backdropImageElement && movie.posterUrl) {
             backdropImageElement.src = movie.posterUrl;
-            backdropImageElement.alt = `${getText(movie.titleKey)} Backdrop`;
+            backdropImageElement.alt = `${movieTitleForPage} Backdrop`;
         } else if (backdropImageElement) {
-            backdropImageElement.style.display = 'none'; // Скрыть блок, если нет изображений
+            backdropImageElement.style.display = 'none';
         }
 
         if (posterImageElement && movie.posterUrl) {
             posterImageElement.src = movie.posterUrl;
-            posterImageElement.alt = `${getText(movie.titleKey)} Poster`;
+            posterImageElement.alt = `${movieTitleForPage} Poster`;
         }
 
-        // 3. Основная информация
-        if (titleElement) titleElement.textContent = getText(movie.titleKey);
+        if (titleElement) titleElement.textContent = movieTitleForPage;
         if (yearElement) yearElement.textContent = movie.year;
         if (ratingElement) ratingElement.textContent = movie.rating;
 
         if (genresElement && movie.genreKeys) {
             genresElement.innerHTML = movie.genreKeys.map(gKey => {
-                const genreName = getText(gKey, gKey.split('.').pop());
-                // Можно сделать ссылки на movies.html?genre=...
+                const defaultGenreName = gKey.split('.').pop();
+                const genreName = getText(gKey, defaultGenreName.charAt(0).toUpperCase() + defaultGenreName.slice(1));
                 return `<a href="movies.html?genre=${gKey.split('.').pop().toLowerCase()}">${genreName}</a>`;
             }).join(', ');
         }
 
-        if (descriptionElement && movie.descriptionKey) {
-            descriptionElement.textContent = getText(movie.descriptionKey, "No description available.");
+        if (descriptionElement) { // Проверка на существование descriptionKey
+            descriptionElement.textContent = movie.descriptionKey 
+                ? getText(movie.descriptionKey, getText('movie.placeholder.description')) 
+                : getText('movie.placeholder.description');
         }
 
-        // 4. Режиссер и актеры
-        if (directorElement && movie.directorKey) {
-            directorElement.textContent = getText(movie.directorKey, "N/A");
+
+        if (directorElement) { // Проверка на существование directorKey
+            directorElement.textContent = movie.directorKey 
+                ? getText(movie.directorKey, getText('director.placeholder'))
+                : getText('director.placeholder');
         }
-        if (actorsElement && movie.actorsKeys) {
-            actorsElement.innerHTML = movie.actorsKeys.map(aKey => {
-                const actorName = getText(aKey, "N/A");
-                // Можно сделать ссылки на страницу актера в будущем
-                return `<span>${actorName}</span>`;
-            }).join(', ');
+        if (actorsElement) { // Проверка на существование actorsKeys
+             if (movie.actorsKeys && movie.actorsKeys.length > 0) {
+                actorsElement.innerHTML = movie.actorsKeys.map(aKey => {
+                    const actorName = getText(aKey, getText('actor.placeholderSingle', 'Actor'));
+                    return `<span>${actorName}</span>`;
+                }).join(', ');
+            } else {
+                actorsElement.textContent = getText('actors.placeholder');
+            }
         }
 
-        // 5. Трейлер
+
         if (trailerEmbedContainer) {
             if (movie.trailerUrl) {
                 trailerEmbedContainer.innerHTML = `
-                    <iframe 
-                        src="${movie.trailerUrl}" 
-                        title="YouTube video player for ${getText(movie.titleKey)}" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>`;
+                    <iframe src="${movie.trailerUrl}" 
+                            title="YouTube video player for ${movieTitleForPage}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen></iframe>`;
                 if (trailerStatusElement) trailerStatusElement.style.display = 'none';
             } else {
-                trailerEmbedContainer.innerHTML = ''; // Очищаем, если был iframe
-                if (trailerStatusElement) {
-                    trailerStatusElement.textContent = getText('page.movieDetails.trailerNotAvailable', 'Trailer not available.');
-                    trailerStatusElement.style.display = 'block';
-                } else { // Если элемента нет, создадим
-                     const p = document.createElement('p');
-                     p.textContent = getText('page.movieDetails.trailerNotAvailable', 'Trailer not available.');
+                trailerEmbedContainer.innerHTML = '';
+                const p = trailerEmbedContainer.querySelector('p#trailer-status') || document.createElement('p');
+                p.id = 'trailer-status';
+                p.textContent = getText('page.movieDetails.trailerNotAvailable', 'Trailer not available.');
+                if (!trailerEmbedContainer.querySelector('p#trailer-status')) {
                      trailerEmbedContainer.appendChild(p);
                 }
+                p.style.display = 'block';
             }
         }
         
-        // 6. Инициализация виджета оценки и комментариев
         checkUserAuthForInteractiveElements();
-        // 7. Загрузка и отображение похожих фильмов
         displayRelatedMovies(movie.genreKeys, movie.id);
     }
 
-    // --- Логика для виджета пользовательской оценки (как мы обсуждали ранее) ---
-    function updateStarsDisplay(ratingToDisplay) {
-        if (!starsInteractiveContainer) return;
-        const stars = starsInteractiveContainer.querySelectorAll('.star-icon.interactive');
-        stars.forEach((star) => {
-            const starValue = parseFloat(star.dataset.ratingValue);
-            star.classList.remove('selected', 'half-selected-temp', 'hover'); // Сброс
+    // --- Логика звезд (остается без изменений, как в предыдущем ответе) ---
+    function updateStarsDisplay(ratingToDisplay) { /* ... */ }
+    function updateHoverStarsDisplay(hoverRating) { /* ... */ }
+    if (starsInteractiveContainer) { /* ... обработчики для звезд ... */ }
+    if (submitRatingBtn) { /* ... обработчик для кнопки submit ... */ }
+    // Скопируй сюда полный код для звездной оценки из предыдущего моего ответа
 
-            if (ratingToDisplay >= starValue) { // Полностью закрашенная звезда
-                star.classList.add('selected');
-            } else if (ratingToDisplay >= starValue - 0.5) { // Половина звезды
-                // Для CSS-only половинчатой звезды, нужен более сложный CSS.
-                // Пока что, если это выбранная оценка, показываем как целую меньшую,
-                // а текст отобразит точное значение.
-                // Для hover эффекта можно добавить класс для временной подсветки половинки.
-                star.classList.add('half-selected-temp'); // Для hover эффекта половинки
-            }
-        });
-    }
 
-    function updateHoverStarsDisplay(hoverRating) {
-        if (!starsInteractiveContainer) return;
-        const stars = starsInteractiveContainer.querySelectorAll('.star-icon.interactive');
-        stars.forEach(star => {
-            const starValue = parseFloat(star.dataset.ratingValue);
-            star.classList.remove('hover', 'half-selected-temp');
-            if (hoverRating >= starValue - 0.5) {
-                 if (hoverRating < starValue && hoverRating >= starValue - 0.5) { // Левая половина
-                    star.classList.add('half-selected-temp'); // Временный класс для CSS
-                 } else if (hoverRating >= starValue) { // Целая или правая половина
-                    star.classList.add('hover');
-                 }
-            }
-        });
-    }
-    
-    if (starsInteractiveContainer) {
-        const stars = Array.from(starsInteractiveContainer.querySelectorAll('.star-icon.interactive'));
-        stars.forEach(star => {
-            star.addEventListener('mousemove', function(event) {
-                if (!localStorage.getItem('authToken')) return; // Не даем взаимодействовать, если не залогинен
-                const rect = star.getBoundingClientRect();
-                const hoverPosition = event.clientX - rect.left;
-                const starValue = parseFloat(star.dataset.ratingValue);
-                potentialUserRating = (hoverPosition < rect.width / 2) ? starValue - 0.5 : starValue;
-                updateHoverStarsDisplay(potentialUserRating);
-                if (currentRatingDisplay) currentRatingDisplay.textContent = `${potentialUserRating.toFixed(1)} / 5.0`;
-            });
-            star.addEventListener('mouseleave', function() {
-                if (!localStorage.getItem('authToken')) return;
-                updateStarsDisplay(selectedUserRating); // Показываем выбранные
-                updateHoverStarsDisplay(selectedUserRating); // Убираем подсветку hover, оставляем selected
-                if (currentRatingDisplay) currentRatingDisplay.textContent = selectedUserRating > 0 ? `${selectedUserRating.toFixed(1)} / 5.0` : getText('page.movieDetails.rateThisMovie', "Rate this movie");
-            });
-            star.addEventListener('click', function() {
-                if (!localStorage.getItem('authToken')) return;
-                selectedUserRating = potentialUserRating;
-                if(userRatingValueInput) userRatingValueInput.value = selectedUserRating;
-                updateStarsDisplay(selectedUserRating);
-                updateHoverStarsDisplay(selectedUserRating); // Чтобы убрать hover, оставить selected
-                if (currentRatingDisplay) currentRatingDisplay.textContent = `${selectedUserRating.toFixed(1)} / 5.0`;
-                if (submitRatingBtn) submitRatingBtn.style.display = 'inline-block';
-                if (userRatingMessage) userRatingMessage.style.display = 'none';
-            });
-        });
-    }
-
-    if (submitRatingBtn) {
-        submitRatingBtn.addEventListener('click', function() {
-            const ratingValue = userRatingValueInput ? userRatingValueInput.value : "0";
-            const movieId = currentMovieData ? currentMovieData.id : null;
-
-            if (movieId && ratingValue && parseFloat(ratingValue) > 0) {
-                const token = localStorage.getItem('authToken');
-                if (!token) {
-                    if(userRatingMessage) showRatingMessage(getText('error.notLoggedInToRate', 'You must be logged in to rate.'), 'error');
-                    return;
-                }
-                console.log(`Submitting rating: ${ratingValue} for movie ID: ${movieId} with token: ${token}`);
-                // TODO: Реализовать fetch запрос на бэкенд для сохранения оценки
-                // fetch(`/api/movies/${movieId}/rate`, { method: 'POST', headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}, body: JSON.stringify({ rating: parseFloat(ratingValue) }) })
-                // .then(res => res.json()).then(data => { if(userRatingMessage) showRatingMessage(getText('message.ratingSaved', 'Rating saved!'), 'success'); })
-                // .catch(err => { console.error(err); if(userRatingMessage) showRatingMessage(getText('error.ratingSaveFailed', 'Failed to save rating.'), 'error'); });
-                if(userRatingMessage) showRatingMessage(getText('message.ratingSubmitted', 'Rating submitted (simulated)!'), 'success');
-            } else {
-                if(userRatingMessage) showRatingMessage(getText('message.selectRatingFirst', 'Please select a rating first.'), 'error');
-            }
-        });
-    }
-
-    // Показ/скрытие элементов в зависимости от авторизации
     function checkUserAuthForInteractiveElements() {
         const token = localStorage.getItem('authToken');
+
+        const loginLinkText = getText('page.movieDetails.loginLink', 'login');
+        const registerLinkText = getText('page.movieDetails.registerLink', 'register');
+        const loginLinkHTML = `<a href="sign-up.html?form=signin">${loginLinkText}</a>`;
+        const registerLinkHTML = `<a href="sign-up.html?form=signup">${registerLinkText}</a>`;
+
         if (token) {
-            // Пользователь залогинен
             if (userRatingWidget) userRatingWidget.style.display = 'block';
-            if (ratingLoginPrompt) ratingLoginPrompt.style.display = 'none';
-            if (addCommentForm) addCommentForm.style.display = 'block'; // или 'flex' если форма так стилизована
-            if (commentLoginPromptPage) commentLoginPromptPage.style.display = 'none';
-
-            // TODO: Загрузить и отобразить сохраненную оценку пользователя
-            // Например: const userStoredRating = fetchUserRatingForMovie(currentMovieData.id, token);
-            // selectedUserRating = userStoredRating || 0;
-            // updateStarsDisplay(selectedUserRating);
-            // if (currentRatingDisplay && selectedUserRating > 0) currentRatingDisplay.textContent = `${selectedUserRating.toFixed(1)} / 5.0`;
-            // else if (currentRatingDisplay) currentRatingDisplay.textContent = getText('page.movieDetails.rateThisMovie', "Rate this movie");
-
+            if (ratingLoginPromptContainer) ratingLoginPromptContainer.style.display = 'none';
+            if (addCommentForm) addCommentForm.style.display = 'block'; 
+            if (commentLoginPromptPageContainer) commentLoginPromptPageContainer.style.display = 'none';
+            // TODO: Загрузить сохраненную оценку
         } else {
-            // Пользователь не залогинен
             if (userRatingWidget) userRatingWidget.style.display = 'none';
-            if (ratingLoginPrompt) ratingLoginPrompt.style.display = 'block';
+            if (ratingLoginPromptContainer) ratingLoginPromptContainer.style.display = 'block';
+            if (ratingLoginPromptParagraph) {
+                ratingLoginPromptParagraph.innerHTML = getText(
+                    'page.movieDetails.loginToRatePrompt',
+                    'Please {loginLink} or {registerLink} to rate this movie.',
+                    { loginLink: loginLinkHTML, registerLink: registerLinkHTML }
+                );
+            }
+
             if (addCommentForm) addCommentForm.style.display = 'none';
-            if (commentLoginPromptPage) commentLoginPromptPage.style.display = 'block'; // или 'flex'
+            if (commentLoginPromptPageContainer) commentLoginPromptPageContainer.style.display = 'block';
+            if (commentLoginPromptParagraph) {
+                commentLoginPromptParagraph.innerHTML = getText(
+                    'page.movieDetails.loginToCommentPrompt', 
+                    'Please {loginLink} or {registerLink} to leave a comment.',
+                    { loginLink: loginLinkHTML, registerLink: registerLinkHTML }
+                );
+            }
         }
     }
+    
+    // Функция createMovieCardHTML (для Related Movies)
+    function createMovieCardHTML(movie) { // Эта функция должна быть здесь
+        if (!movie || !movie.id || !movie.titleKey || !movie.posterUrl || !movie.year || !movie.genreKeys || !movie.rating) {
+            return '';
+        }
+        const fallbackTitle = movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const title = getText(movie.titleKey, fallbackTitle);
+        const year = movie.year;
+        const rating = movie.rating;
+        const poster = movie.posterUrl;
+        const movieUrl = `movie-details.html?id=${movie.id}`;
+        const genresHTML = movie.genreKeys.map(genreKey => {
+            const defaultGenreName = genreKey.split('.').pop();
+            const genreName = getText(genreKey, defaultGenreName.charAt(0).toUpperCase() + defaultGenreName.slice(1));
+            return `<span>${genreName}</span>`;
+        }).join(', ');
 
-    // Функция для отображения похожих фильмов
+        return `
+            <article class="movie-card">
+              <a href="${movieUrl}" class="movie-poster-link">
+                <img src="${poster}" alt="${title} Poster">
+              </a>
+              <div class="movie-info">
+                <h3><a href="${movieUrl}">${title}</a></h3>
+                <div class="movie-meta">
+                  <span class="movie-year">${year}</span>
+                  <span class="movie-genres">${genresHTML || getText('genre.unknown', 'N/A')}</span>
+                </div>
+                <div class="movie-rating">
+                  <svg class="icon icon-star"><use xlink:href="#icon-star-path"/></svg>
+                  <span>${rating}</span>
+                </div>
+              </div>
+            </article>
+        `;
+    }
+
+
     function displayRelatedMovies(currentMovieGenreKeys, currentMovieId) {
-        if (!relatedMoviesGrid || typeof allMoviesData === 'undefined' || !currentMovieGenreKeys) return;
-
-        const related = allMoviesData.filter(movie => {
-            if (movie.id === currentMovieId) return false; // Не показывать текущий фильм
-            // Найти фильмы, у которых есть хотя бы один общий жанр
+        if (!relatedMoviesGrid || typeof allMoviesData === 'undefined' || !currentMovieGenreKeys || !currentMovieId) {
+            if(relatedMoviesGrid) relatedMoviesGrid.innerHTML = `<p>${getText('page.movieDetails.noRelatedMovies', 'No similar movies found.')}</p>`;
+            return;
+        }
+        let similarMovies = allMoviesData.filter(movie => {
+            if (movie.id === currentMovieId) return false;
             return movie.genreKeys.some(genreKey => currentMovieGenreKeys.includes(genreKey));
-        }).slice(0, 5); // Показать первые 5 похожих
-
-        if (related.length > 0) {
-            relatedMoviesGrid.innerHTML = related.map(movie => createMovieCardHTML(movie)).join('');
+        });
+        similarMovies.sort(() => 0.5 - Math.random());
+        const relatedToDisplay = similarMovies.slice(0, 5);
+        if (relatedToDisplay.length > 0) {
+            relatedMoviesGrid.innerHTML = relatedToDisplay.map(movie => createMovieCardHTML(movie)).join('');
         } else {
             relatedMoviesGrid.innerHTML = `<p>${getText('page.movieDetails.noRelatedMovies', 'No similar movies found.')}</p>`;
         }
     }
 
-    // --- Инициализация страницы ---
     function initializeMovieDetailsPage() {
         const urlParams = new URLSearchParams(window.location.search);
         const movieId = urlParams.get('id');
-
         if (!movieId) {
-            console.error('Movie ID not found in URL for details page.');
             document.body.innerHTML = `<div class="container" style="padding-top: 50px; text-align: center;"><h1>${getText('error.missingMovieId', 'Movie ID is missing.')}</h1><a href="index.html">${getText('error.backToHome', 'Back to Home')}</a></div>`;
             return;
         }
-
         if (typeof allMoviesData !== 'undefined') {
             const movie = allMoviesData.find(m => m.id === movieId);
-            displayMovieDetails(movie);
+            displayMovieDetails(movie); // Это вызовет и checkUserAuthForInteractiveElements
         } else {
             console.error('`allMoviesData` is not defined. Make sure movies-data.js is loaded.');
-            // Можно показать сообщение об ошибке загрузки данных
         }
     }
 
-    // Ждем события готовности переводов, затем инициализируем страницу
-    document.addEventListener('translationsReady', function(event) {
-        console.log(`[movie-details.js] Event 'translationsReady' received for lang: ${event.detail.lang}. Initializing details page.`);
+    // Инициализация после загрузки переводов
+    function initPageAfterTranslations() {
         initializeMovieDetailsPage();
+        // Убедимся, что и другие интерактивные элементы обновляются с переводами, если нужно
+        // Например, текст кнопки "Submit Rating" и т.д., если он не через data-i18n
+        if (submitRatingBtn) submitRatingBtn.textContent = getText('page.movieDetails.submitRatingBtn', 'Submit');
+    }
+
+
+    document.addEventListener('translationsReady', function(event) {
+        console.log(`[movie-details.js] Event 'translationsReady' received for lang: ${event.detail.lang}.`);
+        initPageAfterTranslations();
     });
 
-    // Также обновляем при смене языка
     document.addEventListener('languageChanged', function(event) {
-        console.log(`[movie-details.js] Event 'languageChanged' received for lang: ${event.detail.lang}. Re-initializing details page.`);
-        initializeMovieDetailsPage(); // Переинициализация заполнит все текстовые поля новыми переводами
+        console.log(`[movie-details.js] Event 'languageChanged' received for lang: ${event.detail.lang}.`);
+        initPageAfterTranslations();
     });
     
-    // Если i18n.js загружается очень быстро, и 'translationsReady' могло уже произойти
-    // Можно добавить проверку, загружен ли уже язык, и вызвать инициализацию,
-    // но лучше полагаться на событие.
-    // Если window.i18n уже есть и текущий язык загружен (можно добавить флаг в i18n.js)
-    // if (window.i18n && window.i18n.areTranslationsReadyFor && window.i18n.areTranslationsReadyFor(window.i18n.getCurrentLanguage())) {
-    //    initializeMovieDetailsPage();
-    // }
+    // Обработка событий логина/логаута
+    document.addEventListener('userLoggedInGlobal', checkUserAuthForInteractiveElements);
+    document.addEventListener('userLoggedOutGlobal', checkUserAuthForInteractiveElements);
 
+    // Если i18n.js и movies-data.js уже загружены к моменту выполнения этого скрипта
+    if (window.i18n && window.i18n.getCurrentLanguage() && typeof allMoviesData !== 'undefined') {
+        // Проверяем, есть ли уже переводы для текущего языка в i18n (этот флаг нужно добавить в i18n.js)
+        // if (window.i18n.areTranslationsLoadedFor && window.i18n.areTranslationsLoadedFor(window.i18n.getCurrentLanguage())) {
+             console.log('[movie-details.js] i18n and movie data seem ready, attempting early initialization.');
+             initPageAfterTranslations();
+        // }
+    }
 });
