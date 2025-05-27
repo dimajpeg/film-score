@@ -10,13 +10,31 @@ document.addEventListener('DOMContentLoaded', () => {
   let originalAllMovies = [];
 
   const MOVIES_PER_PAGE = 20;
-  let currentPage = 1; // Будет обновляться из URL
+  
+  let currentPage = 1;
 
-  function getText(key, fallbackTextIfKeyNotFound = '') { /* ... (без изменений) ... */ }
-  function createMovieCardHTML(movie) { /* ... (без изменений, но ссылка будет вести на movie-details) ... */
-      // ВАЖНО: В ссылке на фильм теперь будем добавлять текущую страницу пагинации
-      const movieUrl = `movie-details.html?id=${movie.id}&page=${currentPage}`; // Добавляем &page=...
-      // ... остальной код createMovieCardHTML
+  function getText(key, fallbackTextIfKeyNotFound = '', params = {}) {
+      if (window.i18n && typeof window.i18n.getTranslation === 'function') {
+          const translation = window.i18n.getTranslation(key, params);
+          if (translation !== key) return translation;
+          let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+          if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
+              for (const paramKey in params) {
+                  fallback = fallback.replace(new RegExp(`{${paramKey}}`, 'g'), params[paramKey]);
+              }
+          }
+          return fallback;
+      }
+      let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
+          for (const paramKey in params) {
+              fallback = fallback.replace(new RegExp(`{${paramKey}}`, 'g'), params[paramKey]);
+          }
+      }
+      return fallback;
+  }
+
+  function createMovieCardHTML(movie) {
       if (!movie || !movie.id || !movie.titleKey || !movie.posterUrl || !movie.year || !movie.genreKeys || !movie.rating) {
           console.warn('Skipping movie card (movies-page) due to missing data:', movie && movie.id ? movie.id : 'Unknown');
           return '';
@@ -26,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const year = movie.year;
       const rating = movie.rating;
       const poster = movie.posterUrl;
-      // const movieUrl = `movie-details.html?id=${movie.id}`; // Старая ссылка
+      const movieUrl = `movie-details.html?id=${movie.id}&page=${currentPage}`; // Сохраняем текущую страницу
       const genresHTML = movie.genreKeys.map(genreKey => {
           const defaultGenreName = genreKey.split('.').pop();
           const genreName = getText(genreKey, defaultGenreName.charAt(0).toUpperCase() + defaultGenreName.slice(1));
@@ -53,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
   }
 
-
   function renderCurrentPageMovies() {
       if (!moviesGridContainer) return;
       const startIndex = (currentPage - 1) * MOVIES_PER_PAGE;
@@ -61,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const paginatedMovies = currentMoviesToDisplay.slice(startIndex, endIndex);
 
       if (!paginatedMovies || paginatedMovies.length === 0) {
-          moviesGridContainer.innerHTML = `<p>${getText('messages.noMoviesMatchFilters', 'No movies match current filters.')}</p>`;
+          moviesGridContainer.innerHTML = `<p>${getText('messages.noMoviesMatchFilters', 'No movies match your current filters.')}</p>`;
           return;
       }
       moviesGridContainer.innerHTML = paginatedMovies.map(movie => createMovieCardHTML(movie)).join('');
@@ -82,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pageButton.textContent = i;
           pageButton.addEventListener('click', () => {
               currentPage = i;
-              updateUrlWithCurrentState(); // Обновляем URL
+              updateUrlWithCurrentState();
               renderCurrentPageMovies();
               const currentActive = paginationArea.querySelector('.btn-pagination.active');
               if (currentActive) currentActive.classList.remove('active');
@@ -93,24 +110,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
   
-  // НОВАЯ ФУНКЦИЯ для обновления URL
   function updateUrlWithCurrentState() {
       const params = new URLSearchParams(window.location.search);
-      params.set('page', currentPage);
-      // В будущем сюда добавим параметры для сортировки и жанров
-      // params.set('sort', sortSelect.value);
-      // const selectedGenres = ...; params.set('genres', selectedGenres.join(','));
+      params.set('page', currentPage.toString()); // currentPage должно быть строкой для set
       
-      // Обновляем URL без перезагрузки страницы
-      // Используем replaceState, чтобы не засорять историю браузера при каждом клике на пагинацию
-      // Если хочешь, чтобы каждый клик был в истории, используй pushState
-      history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
-  }
+      if (sortSelect && sortSelect.value !== 'default') {
+          params.set('sort', sortSelect.value);
+      } else {
+          params.delete('sort'); // Удаляем, если значение по умолчанию
+      }
 
+      if (genreFilterOptionsContainer) {
+          const selectedGenreCheckboxes = genreFilterOptionsContainer.querySelectorAll('input[name="genre"]:checked');
+          const selectedGenreKeys = Array.from(selectedGenreCheckboxes).map(cb => cb.value);
+          if (selectedGenreKeys.length > 0) {
+              params.set('genres', selectedGenreKeys.join(','));
+          } else {
+              params.delete('genres');
+          }
+      }
+      
+      const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+      history.replaceState(null, '', newUrl);
+  }
 
   function updateDisplayedMovies() {
       let moviesToShow = [...originalAllMovies];
-      // ... (логика фильтрации по жанрам) ...
+
       if (genreFilterOptionsContainer) {
           const selectedGenreCheckboxes = genreFilterOptionsContainer.querySelectorAll('input[name="genre"]:checked');
           const selectedGenreKeys = Array.from(selectedGenreCheckboxes).map(cb => cb.value);
@@ -121,22 +147,48 @@ document.addEventListener('DOMContentLoaded', () => {
           }
       }
 
-      // ... (логика сортировки) ...
       const sortBy = sortSelect ? sortSelect.value : 'default';
-      switch (sortBy) { /* ... cases ... */ }
-
+      // --- ВОССТАНОВЛЕНА ЛОГИКА СОРТИРОВКИ ---
+      switch (sortBy) {
+          case 'rating_desc':
+              moviesToShow.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+              break;
+          case 'rating_asc':
+              moviesToShow.sort((a, b) => parseFloat(a.rating) - parseFloat(b.rating));
+              break;
+          case 'year_desc':
+              moviesToShow.sort((a, b) => b.year - a.year);
+              break;
+          case 'year_asc':
+              moviesToShow.sort((a, b) => a.year - b.year);
+              break;
+          case 'title_asc':
+              moviesToShow.sort((a, b) => getText(a.titleKey, a.id).localeCompare(getText(b.titleKey, b.id)));
+              break;
+          case 'title_desc':
+              moviesToShow.sort((a, b) => getText(b.titleKey, b.id).localeCompare(getText(a.titleKey, a.id)));
+              break;
+          // default: // Можно не делать ничего или сортировать по ID/исходному порядку
+          //   moviesToShow.sort((a,b) => originalAllMovies.indexOf(a) - originalAllMovies.indexOf(b));
+          // break;
+      }
+      // --- КОНЕЦ ВОССТАНОВЛЕННОЙ ЛОГИКИ СОРТИРОВКИ ---
 
       currentMoviesToDisplay = moviesToShow;
-      // currentPage = 1; // НЕ сбрасываем currentPage здесь, если это не полный сброс фильтров
+      // currentPage = 1; // Сбрасываем на первую страницу ТОЛЬКО при изменении фильтров или сортировки
       renderCurrentPageMovies();
       setupPagination();
-      updateUrlWithCurrentState(); // Обновляем URL после применения фильтров/сортировки
+      updateUrlWithCurrentState();
   }
 
-  function populateGenreFilters(selectedKeysFromUrl = []) { // Принимаем выбранные ключи из URL
+  function populateGenreFilters(selectedKeysFromUrl = []) {
       if (!genreFilterOptionsContainer) return;
       genreFilterOptionsContainer.innerHTML = '';
-      const predefinedGenreKeys = [ /* ... твои жанры ... */ ];
+      const predefinedGenreKeys = [
+          "genre.action", "genre.adventure", "genre.comedy", "genre.drama",
+          "genre.fantasy", "genre.horror", "genre.scifi", "genre.thriller",
+          "genre.animation", "genre.family", "genre.crime"
+      ];
 
       predefinedGenreKeys.forEach(genreKey => {
           const genreName = getText(genreKey, genreKey.split('.').pop());
@@ -145,19 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
           checkbox.type = 'checkbox';
           checkbox.name = 'genre';
           checkbox.value = genreKey;
-
-          if (selectedKeysFromUrl.includes(genreKey)) { // Восстанавливаем из URL
+          if (selectedKeysFromUrl.includes(genreKey)) {
               checkbox.checked = true;
               label.classList.add('active');
           }
-
           checkbox.addEventListener('change', (event) => {
               if (event.target.checked) {
                   label.classList.add('active');
               } else {
                   label.classList.remove('active');
               }
-              currentPage = 1; // Сбрасываем на первую страницу при изменении фильтров
+              currentPage = 1; // Сброс на 1-ю страницу при смене фильтра
               updateDisplayedMovies();
           });
           label.appendChild(checkbox);
@@ -168,55 +218,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resetAllFilters() {
       if (sortSelect) sortSelect.value = 'default';
-      // Сбрасываем URL-параметры
-      const params = new URLSearchParams();
-      // params.set('page', '1'); // Можно установить первую страницу или вообще убрать параметр page
-      history.pushState(null, '', `${window.location.pathname}?${params.toString()}`); // Или replaceState
       
-      // Сбрасываем состояние чекбоксов и вызываем обновление
-      populateGenreFilters(); // Перерисует чекбоксы без выбранных
+      const params = new URLSearchParams(); // Очищаем все параметры
+      history.pushState(null, '', `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`);
+      
+      populateGenreFilters(); // Перерисует чекбоксы без выбранных и без класса active
       currentPage = 1;
       updateDisplayedMovies();
   }
 
   function initializePage() {
-      if (typeof allMoviesData !== 'undefined' && allMoviesData.length > 0) {
-          originalAllMovies = [...allMoviesData];
-          
-          // Читаем параметры из URL при загрузке
-          const urlParams = new URLSearchParams(window.location.search);
-          const pageFromUrl = parseInt(urlParams.get('page'));
-          if (pageFromUrl && pageFromUrl > 0) {
-              currentPage = pageFromUrl;
-          } else {
-              currentPage = 1;
-          }
-          // TODO: Прочитать и применить сортировку и жанры из URL
-          // const sortFromUrl = urlParams.get('sort');
-          // if (sortSelect && sortFromUrl) sortSelect.value = sortFromUrl;
-          // const genresFromUrl = urlParams.get('genres')?.split(',') || [];
-          
-          populateGenreFilters(/*genresFromUrl*/); // Передаем жанры из URL для установки чекбоксов
-          updateDisplayedMovies(); // Применит фильтры/сортировку из URL и покажет нужную страницу
+      if (typeof allMoviesData === 'undefined' || !Array.isArray(allMoviesData) || allMoviesData.length === 0) {
+          console.error('`allMoviesData` is not defined or empty. Cannot display movies.');
+          if (moviesGridContainer) moviesGridContainer.innerHTML = `<p>${getText('messages.dataError', 'Error loading movie data.')}</p>`;
+          return;
+      }
+      originalAllMovies = [...allMoviesData];
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const pageFromUrl = parseInt(urlParams.get('page'));
+      currentPage = (pageFromUrl && pageFromUrl > 0) ? pageFromUrl : 1;
+      
+      const sortFromUrl = urlParams.get('sort');
+      if (sortSelect && sortFromUrl) {
+          sortSelect.value = sortFromUrl;
+      }
+      
+      const genresFromUrl = urlParams.get('genres')?.split(',') || [];
+      
+      populateGenreFilters(genresFromUrl);
+      updateDisplayedMovies(); // Применит фильтры/сортировку из URL (если есть) и покажет нужную страницу
 
-          if (sortSelect) {
-              sortSelect.addEventListener('change', () => {
-                  currentPage = 1; // Сбрасываем на первую страницу при смене сортировки
-                  updateDisplayedMovies();
-              });
-          }
-          if (resetBtn) {
-              resetBtn.addEventListener('click', resetAllFilters);
-          }
-      } else { /* ... обработка ошибки ... */ }
+      if (sortSelect) {
+          sortSelect.addEventListener('change', () => {
+              currentPage = 1; 
+              updateDisplayedMovies();
+          });
+      }
+      if (resetBtn) {
+          resetBtn.addEventListener('click', resetAllFilters);
+      }
   }
 
-  // Инициализация и обработка смены языка
   let pageInitialized = false;
   function runInitialization() {
-      if (!pageInitialized && window.i18n && typeof allMoviesData !== 'undefined') {
+      // Проверяем, что allMoviesData существует и не пуст
+      if (!pageInitialized && window.i18n && typeof allMoviesData !== 'undefined' && allMoviesData.length > 0) {
           initializePage();
           pageInitialized = true;
+      } else if (!pageInitialized && (typeof allMoviesData === 'undefined' || allMoviesData.length === 0) ) {
+          // Если данные еще не загружены (маловероятно с defer, но на всякий случай)
+          // Можно добавить таймер или другой механизм ожидания, но лучше убедиться в порядке загрузки скриптов
+          console.warn("allMoviesData not ready for initialization, will retry or rely on events.");
       }
   }
 
@@ -224,25 +277,25 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('[movies-page.js] Translations ready.');
       runInitialization();
   });
+
   document.addEventListener('languageChanged', () => {
       console.log('[movies-page.js] Language changed.');
-      // Сохраняем текущее состояние перед перерисовкой
       const selectedGenreKeys = genreFilterOptionsContainer 
           ? Array.from(genreFilterOptionsContainer.querySelectorAll('input[name="genre"]:checked')).map(cb => cb.value)
           : [];
       const currentSort = sortSelect ? sortSelect.value : 'default';
 
-      populateGenreFilters(selectedGenreKeys); // Перерисовываем лейблы жанров
-      if (sortSelect) { // Обновляем текст в опциях сортировки
+      populateGenreFilters(selectedGenreKeys); 
+      if (sortSelect) { 
           Array.from(sortSelect.options).forEach(option => {
-              const key = option.dataset.i18n; // Если ты добавлял data-i18n к <option>
-              if (key) option.textContent = getText(key, option.textContent);
+              const key = option.dataset.i18n || `page.movies.sort.${option.value}`; // Фоллбэк для ключа
+              if(option.value === 'default' && !option.dataset.i18n) option.dataset.i18n = 'page.movies.sort.default'; // Устанавливаем для default
+              if (option.dataset.i18n) option.textContent = getText(option.dataset.i18n, option.textContent);
           });
-          sortSelect.value = currentSort; // Восстанавливаем выбор сортировки
+          sortSelect.value = currentSort; 
       }
-      updateDisplayedMovies(); // Перерисовываем фильмы
+      updateDisplayedMovies(); 
   });
 
-  // Попытка ранней инициализации, если все уже загружено
-  runInitialization();
+  runInitialization(); // Попытка инициализации при DOMContentLoaded
 });
