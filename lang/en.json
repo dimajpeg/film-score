@@ -638,6 +638,27 @@
   "page.profile.title": "My Profile & Ratings - FilmScore", 
   "page.profile.mainTitleCombined": "My Profile & Ratings", 
   "page.profile.myRatingsTitle": "My Rated Movies",
-  "page.profile.noRatingsYet": "You haven't rated any movies yet."
+  "page.profile.noRatingsYet": "You haven't rated any movies yet.",
+
+  "userMenu.myProfileAndRatings": "My Profile & Ratings", 
+
+  "page.profile.title": "My Profile & Ratings - FilmScore",
+  "page.profile.mainTitleCombined": "My Profile & Ratings",
+  "page.profile.userInfoTitle": "User Information",
+  "page.profile.label.name": "Name:",
+  "page.profile.label.email": "Email:",
+  
+  "page.profile.myRatingsTitle": "My Rated Movies",
+  "page.profile.noRatingsYet": "You haven't rated any movies yet.",
+  "page.profile.sortMyRatingsLabel": "Sort by:",
+  "page.profile.sortRated.dateDesc": "Recently Rated",
+  "page.profile.sortRated.dateAsc": "Oldest Rated",
+  "page.profile.sortRated.ratingDesc": "Highest Rated",
+  "page.profile.sortRated.ratingAsc": "Lowest Rated",
+
+  "user.placeholder.name": "Your Name",
+  "user.placeholder.email": "your.email@example.com"
+
+  
     
 }

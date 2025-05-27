@@ -630,5 +630,22 @@
   "page.movieDetails.commentPlaceholder": "Напишіть ваш коментар тут...",
   "page.movieDetails.submitCommentButton": "Надіслати коментар",
   "message.commentSubmitted": "Коментар надіслано (симуляція)!",
-  "message.commentNotEmpty": "Коментар не може бути порожнім."
+  "message.commentNotEmpty": "Коментар не може бути порожнім.",
+
+  "userMenu.myProfileAndRatings": "Мій профіль та оцінки",
+  "page.profile.title": "Мій профіль та оцінки - FilmScore",
+  "page.profile.mainTitleCombined": "Мій профіль та оцінки",
+  "page.profile.userInfoTitle": "Інформація про користувача",
+  "page.profile.label.name": "Ім'я:",
+  "page.profile.label.email": "Email:",
+  "page.profile.myRatingsTitle": "Мої оцінені фільми",
+  "page.profile.noRatingsYet": "Ви ще не оцінили жодного фільму.",
+  "page.profile.sortMyRatingsLabel": "Сортувати за:",
+  "page.profile.sortRated.dateDesc": "Нещодавно оцінені",
+  "page.profile.sortRated.dateAsc": "Давно оцінені",
+  "page.profile.sortRated.ratingDesc": "Високий рейтинг",
+  "page.profile.sortRated.ratingAsc": "Низький рейтинг",
+
+  "user.placeholder.name": "Ваше ім'я",
+  "user.placeholder.email": "your.email@example.com"
 }

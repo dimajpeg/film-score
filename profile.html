@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="page.profile.title">My Profile - FilmScore</title>
+  <title data-i18n="page.profile.title">My Profile & Ratings - FilmScore</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/static-pages.css">
   <link rel="stylesheet" href="css/profile-page.css">
@@ -32,9 +32,10 @@
                 <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello,
                     User!</span></div>
                 <ul>
-                  <li><a href="profile.html" data-i18n="userMenu.myProfile">My Profile & Ratings</a></li>
+                  <li><a href="profile.html" data-i18n="userMenu.myProfileAndRatings">My Profile & Ratings</a></li>
                   <!-- Обновленная ссылка -->
-                  <li><a href="edit-profile.html" data-i18n="userMenu.editProfile">Edit Profile</a></li>
+                  <!-- <li><a href="edit-profile.html" data-i18n="userMenu.editProfile">Edit Profile</a></li> -->
+                  <!-- УБРАНО -->
                   <li>
                     <hr class="dropdown-divider">
                   </li>
@@ -59,7 +60,7 @@
   <main class="site-main profile-page">
     <div class="container page-container">
       <header class="page-header">
-        <h1 data-i18n="page.profile.mainTitleCombined">My Profile & Ratings</h1> <!-- Обновленный заголовок -->
+        <h1 data-i18n="page.profile.mainTitleCombined">My Profile & Ratings</h1>
       </header>
 
       <section class="profile-info-section card-like-section">
@@ -72,18 +73,13 @@
           <strong data-i18n="page.profile.label.email">Email:</strong>
           <span id="profile-email" data-i18n-key="user.placeholder.email">your.email@example.com</span>
         </div>
-        <a href="edit-profile.html" class="btn btn-secondary btn-small profile-action-btn"
-          data-i18n="page.profile.editProfileBtn">Edit Profile</a>
+        <!-- Кнопка "Edit Profile" убрана -->
       </section>
 
-      <!-- НОВАЯ СЕКЦИЯ ДЛЯ ОЦЕНОК ПОЛЬЗОВАТЕЛЯ -->
       <section class="my-ratings-section card-like-section">
         <h2 data-i18n="page.profile.myRatingsTitle">My Rated Movies</h2>
-
-        <!-- Контролы для сортировки оцененных фильмов -->
-        <div class="my-ratings-controls" style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
-          <label for="sort-my-ratings" style="margin-right: 10px;" data-i18n="page.profile.sortMyRatingsLabel">Sort
-            by:</label>
+        <div class="my-ratings-controls">
+          <label for="sort-my-ratings" data-i18n="page.profile.sortMyRatingsLabel">Sort by:</label>
           <select id="sort-my-ratings" name="sort_my_ratings" class="sort-control-select">
             <option value="date_desc" data-i18n="page.profile.sortRated.dateDesc">Recently Rated</option>
             <option value="date_asc" data-i18n="page.profile.sortRated.dateAsc">Oldest Rated</option>
@@ -91,18 +87,29 @@
             <option value="rating_asc" data-i18n="page.profile.sortRated.ratingAsc">Lowest Rated</option>
           </select>
         </div>
-
-        <!-- Сетка для отображения оцененных фильмов (ОСТАВЛЯЕМ ТОЛЬКО ОДИН ЭКЗЕМПЛЯР) -->
         <div class="movies-grid" id="my-rated-movies-grid">
           <!-- Сюда JS будет вставлять карточки оцененных фильмов -->
         </div>
+      </section>
+
+      <section class="profile-logout-section">
+        <button id="logout-button-profile" class="btn btn-danger" data-i18n="userMenu.logout">Logout</button>
       </section>
 
     </div>
   </main>
 
   <footer class="site-footer">
-    <!-- Твой стандартный футер -->
+    <div class="container">
+      <p data-i18n="footer_copyright">© 2025 FilmScore.</p>
+      <nav class="footer-nav">
+        <ul>
+          <!-- <li><a href="movie-details.html" data-i18n="footer_about">About</a></li> -->
+          <li><a href="about.html" data-i18n="footer_about">About</a></li>
+          <li><a href="contact.html" data-i18n="footer_contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </footer>
 
   <svg style="display: none;">
@@ -116,7 +123,7 @@
 
   <script src="i18n.js" defer></script>
   <script src="header-auth.js" defer></script>
-  <script src="movies-data.js" defer></script> <!-- Нужен для данных о фильмах -->
+  <script src="movies-data.js" defer></script>
   <script src="profile-page.js" defer></script>
 </body>
 

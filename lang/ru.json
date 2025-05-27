@@ -624,6 +624,22 @@
   "page.movieDetails.commentPlaceholder": "Напишите ваш комментарий здесь...",
   "page.movieDetails.submitCommentButton": "Отправить комментарий",
   "message.commentSubmitted": "Комментарий отправлен (симуляция)!",
-  "message.commentNotEmpty": "Комментарий не может быть пустым."
+  "message.commentNotEmpty": "Комментарий не может быть пустым.",
+
+  "userMenu.myProfileAndRatings": "Мой профиль и оценки",
+  "page.profile.title": "Мой профиль и оценки - FilmScore",
+  "page.profile.mainTitleCombined": "Мой профиль и оценки",
+  "page.profile.userInfoTitle": "Информация о пользователе",
+  "page.profile.label.name": "Имя:",
+  "page.profile.label.email": "Email:",
+  "page.profile.myRatingsTitle": "Мои оцененные фильмы",
+  "page.profile.noRatingsYet": "Вы еще не оценили ни одного фильма.",
+  "page.profile.sortMyRatingsLabel": "Сортировать по:",
+  "page.profile.sortRated.dateDesc": "Недавно оцененные",
+  "page.profile.sortRated.dateAsc": "Давно оцененные",
+  "page.profile.sortRated.ratingDesc": "Высокий рейтинг",
+  "page.profile.sortRated.ratingAsc": "Низкий рейтинг",
+  "user.placeholder.name": "Ваше имя",
+  "user.placeholder.email": "your.email@example.com"
   
 }
