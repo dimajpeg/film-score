@@ -308,4 +308,185 @@ border-color: #e50914;
 background-color: #c00711; /* Темнее при наведении на активный */
 border-color: #c00711;
 }
+.stars-interactive .star-icon.interactive.half-selected-temp {
+  fill: #FFD700; /* Другой оттенок желтого для полу-звезды при наведении */
+}
 
+.stars-interactive {
+  display: flex;
+  gap: 2px; /* Очень маленький отступ между "контейнерами" звезд */
+  cursor: pointer;
+  margin-bottom: 5px;
+  position: relative; /* Для псевдоэлементов, если будем их использовать */
+}
+
+.stars-interactive .star-icon-wrapper { /* Новый элемент-обертка для каждой звезды */
+  position: relative; /* Для позиционирования закрашенной части */
+  display: inline-block; /* Чтобы обертки шли в ряд */
+}
+
+.stars-interactive .star-icon.interactive {
+  width: 28px;
+  height: 28px;
+  /* Базовый цвет "пустой" звезды - контур */
+  stroke: #777; /* Цвет контура пустой звезды */
+  stroke-width: 1.5px; /* Толщина контура */
+  fill: none;     /* Пустая внутри */
+  display: block; /* Убираем лишние отступы под SVG */
+  z-index: 1;     /* Сама иконка (контур) */
+  position: relative;
+}
+
+/* Псевдоэлемент для закрашивания. Мы будем использовать JS, чтобы добавлять inline style clip-path */
+/* Или можно через классы */
+
+.stars-interactive .star-icon.interactive.filled,
+.stars-interactive .star-icon.interactive.half-filled {
+  stroke: #f5c518; /* Цвет контура закрашенной звезды */
+  /* fill будет управляться классами или JS для clip-path */
+}
+
+.stars-interactive .star-icon.interactive.filled {
+  fill: #f5c518; /* Полностью закрашена */
+}
+
+.stars-interactive .star-icon.interactive.half-filled {
+  /* Для этого варианта нам нужен будет способ показать только половину fill.
+     Проще всего сделать это, если сама SVG иконка состоит из двух половинок,
+     или использовать overlay.
+     Давай упростим: JS будет добавлять класс .selected или .hover,
+     а для полузвезды мы будем использовать другой SVG или модифицировать fill через JS.
+
+     Для чистого CSS с одной SVG и <use> - это сложно.
+     Поэтому JS будет просто добавлять классы .selected (для полной) и .hover (для полной при наведении)
+     А для половинчатых JS будет выставлять ТЕКСТ оценки, а звезды будут подсвечиваться до ближайшей ЦЕЛОЙ меньшей.
+     Либо, если мы хотим визуал половинок, то JS должен будет напрямую менять fill SVG через градиент.
+  */
+}
+
+
+/* Обновленные стили для hover и selected, которые будет ставить JS */
+.stars-interactive .star-icon.interactive.hover {
+  fill: #d4a100; /* Цвет подсветки при наведении (темно-желтый) */
+  stroke: #d4a100;
+}
+
+.stars-interactive .star-icon.interactive.selected {
+  fill: #f5c518; /* Ярко-желтый для выбранных */
+  stroke: #f5c518;
+}
+.stars-interactive .star-icon.interactive {
+  /* ... твои существующие стили для пустой звезды (stroke, fill:none) ... */
+  stroke: #777;
+  fill: none; /* Важно, чтобы градиент не перекрывался сплошной заливкой */
+  stroke-width: 1.5px;
+}
+
+.stars-interactive .star-icon.interactive.selected,
+.stars-interactive .star-icon.interactive.hover {
+  stroke: #f5c518; /* Контур для закрашенных/ховерных */
+}
+
+.stars-interactive .star-icon.interactive.selected {
+  fill: #f5c518; /* Полностью закрашенная выбранная */
+}
+.stars-interactive .star-icon.interactive.hover {
+  fill: #d4a100; /* Полностью закрашенная при наведении */
+}
+
+/* Для ПОЛОВИНЧАТОЙ ВЫБРАННОЙ звезды */
+.stars-interactive .star-icon.interactive.half-selected {
+  stroke: #f5c518; /* Контур */
+  /* Пытаемся закрасить половину градиентом */
+  fill: linear-gradient(to right, #f5c518 50%, transparent 50.1%); 
+  /* transparent или цвет фона .user-rating-widget, если fill:none не работает с градиентом */
+}
+
+/* Для ПОЛОВИНЧАТОЙ звезды ПРИ НАВЕДЕНИИ */
+.stars-interactive .star-icon.interactive.half-hover {
+  stroke: #d4a100; /* Контур */
+  fill: linear-gradient(to right, #d4a100 50%, transparent 50.1%);
+}
+
+/* css/movie-details.css */
+
+/* ... (существующие стили для .movie-details-page, .movie-backdrop-section и т.д.) ... */
+
+.user-rating-widget {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #2f2f2f;
+  /* visibility: hidden; /* Управляется JS через display: none/block */
+}
+
+.user-rating-widget h3 {
+  font-size: 1.2em;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.stars-interactive {
+  display: flex;
+  gap: 2px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.stars-interactive .star-icon.interactive {
+  width: 28px;
+  height: 28px;
+  stroke: #777; /* Контур пустой звезды */
+  stroke-width: 1.5px;
+  fill: none;   /* Пустая внутри */
+  display: block;
+  transition: fill 0.1s ease-in-out, stroke 0.1s ease-in-out; /* Плавный переход */
+}
+
+/* Состояния звезд, управляемые JS */
+.stars-interactive .star-icon.interactive.hover {
+  fill: #d4a100; /* Цвет подсветки при наведении на всю звезду */
+  stroke: #d4a100;
+}
+
+.stars-interactive .star-icon.interactive.selected {
+  fill: #f5c518; /* Ярко-желтый для выбранных целых звезд */
+  stroke: #f5c518;
+}
+
+/* Стили для ПОЛОВИНЧАТЫХ звезд (требуют JS для установки класса) */
+.stars-interactive .star-icon.interactive.half-hover,
+.stars-interactive .star-icon.interactive.half-selected {
+  stroke: #f5c518; /* Контур как у закрашенной */
+  /* Для отображения половины используем линейный градиент.
+     Цвет фона должен совпадать с цветом НЕзакрашенной части звезды или быть transparent.
+     В данном случае, fill:none у базового стиля звезды, поэтому transparent подойдет. */
+}
+
+.stars-interactive .star-icon.interactive.half-hover {
+  fill: linear-gradient(to right, #d4a100 50%, transparent 50.1%);
+  stroke: #d4a100;
+}
+
+.stars-interactive .star-icon.interactive.half-selected {
+  fill: linear-gradient(to right, #f5c518 50%, transparent 50.1%);
+  stroke: #f5c518;
+}
+
+
+.current-rating-text {
+  color: #aaa;
+  font-size: 0.9em;
+  min-height: 1.2em;
+  margin-top: 5px;
+}
+
+.user-rating-widget .btn-small {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  margin-top:10px; /* Добавил, чтобы кнопка была ниже текста оценки */
+}
+#user-rating-message {
+  margin-top:10px; /* Отступ для сообщения об ошибке/успехе */
+}
+
+/* ... (остальной CSS для movie-details.css) ... */

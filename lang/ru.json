@@ -613,8 +613,17 @@
   "director.howardmoore": "Байрон Ховард и Рич Мур",
   "actor.ginnifergoodwin": "Джиннифер Гудвин",
   "actor.jasonbateman": "Джейсон Бейтман",
-  "actor.idriselba": "Идрис Эльба"
+  "actor.idriselba": "Идрис Эльба",
 
-
+"page.movieDetails.yourRatingTitle": "Ваша оценка",
+  "page.movieDetails.rateThisMovie": "Оцените фильм",
+  "page.movieDetails.submitRatingBtn": "Оценить",
+  "message.ratingSubmitted": "Ваша оценка {ratingValue} принята (симуляция)!",
+  "message.selectRatingFirst": "Пожалуйста, сначала выберите оценку (минимум 0.5 звезды).",
+  "page.movieDetails.leaveCommentTitle": "Оставить комментарий",
+  "page.movieDetails.commentPlaceholder": "Напишите ваш комментарий здесь...",
+  "page.movieDetails.submitCommentButton": "Отправить комментарий",
+  "message.commentSubmitted": "Комментарий отправлен (симуляция)!",
+  "message.commentNotEmpty": "Комментарий не может быть пустым."
   
 }

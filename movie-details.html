@@ -16,7 +16,8 @@
     <div class="container header-container">
       <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
       <form action="/search" method="get" class="search-form">
-        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..." aria-label="Search">
+        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..."
+          aria-label="Search">
         <button type="submit" data-i18n="search_btn">Search</button>
       </form>
       <nav class="main-navigation">
@@ -24,20 +25,30 @@
           <li id="nav-signin-link" class="nav-item"><a href="sign-up.html" data-i18n="sign_in">Sign In</a></li>
           <li id="nav-user-loggedin" class="nav-item" style="display: none;">
             <div class="user-menu-container">
-              <button id="user-avatar-button" class="user-avatar-btn"><svg class="icon icon-user"><use xlink:href="#icon-user-path"/></svg></button> <!-- Предполагаем, что #icon-user-path тоже определен -->
+              <button id="user-avatar-button" class="user-avatar-btn"><svg class="icon icon-user">
+                  <use xlink:href="#icon-user-path" />
+                </svg></button> <!-- Предполагаем, что #icon-user-path тоже определен -->
               <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;">
-                <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span></div>
+                <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello,
+                    User!</span></div>
                 <ul>
                   <li><a href="/my-ratings" data-i18n="userMenu.myRatings">My Ratings</a></li>
                   <li><a href="/edit-profile" data-i18n="userMenu.editProfile">Edit Profile</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><button id="logout-button-header" class="dropdown-item-button" data-i18n="userMenu.logout">Logout</button></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><button id="logout-button-header" class="dropdown-item-button"
+                      data-i18n="userMenu.logout">Logout</button></li>
                 </ul>
               </div>
             </div>
           </li>
           <li class="nav-item">
-            <select id="language-switcher" name="language"><option value="en">EN</option><option value="ru">RU</option><option value="ua">UA</option></select>
+            <select id="language-switcher" name="language">
+              <option value="en">EN</option>
+              <option value="ru">RU</option>
+              <option value="ua">UA</option>
+            </select>
           </li>
         </ul>
       </nav>
@@ -47,7 +58,7 @@
   <main class="site-main movie-details-page">
     <section class="movie-backdrop-section">
       <!-- JS вставит сюда src и alt -->
-      <img src="assets/images/placeholder-banner-large.jpg" alt="Movie Backdrop" id="movie-backdrop-image"> 
+      <img src="assets/images/placeholder-banner-large.jpg" alt="Movie Backdrop" id="movie-backdrop-image">
       <div class="backdrop-overlay"></div>
     </section>
 
@@ -59,7 +70,7 @@
         </div>
         <div class="movie-info-wrapper">
           <!-- JS вставит сюда текст -->
-          <h1 id="movie-details-title" data-i18n-key="movie.placeholder.title">Movie Title</h1> 
+          <h1 id="movie-details-title" data-i18n-key="movie.placeholder.title">Movie Title</h1>
           <div class="meta-data">
             <span id="movie-details-year" data-i18n-key="movie.placeholder.year">YYYY</span>
             <span class="separator">•</span>
@@ -67,27 +78,43 @@
             <span id="movie-details-genres" data-i18n-key="movie.placeholder.genres">Genres</span>
           </div>
           <div class="rating-wrapper">
-            <svg class="icon icon-star-large"><use xlink:href="#icon-star-path"/></svg>
+            <svg class="icon icon-star-large">
+              <use xlink:href="#icon-star-path" />
+            </svg>
             <!-- JS вставит сюда рейтинг -->
             <span id="movie-details-rating" data-i18n-key="movie.placeholder.rating">X.X</span>
           </div>
-          
+
           <div class="user-rating-widget" style="display: none;"> <!-- JS будет управлять видимостью -->
             <h3 data-i18n="page.movieDetails.yourRatingTitle">Your Rating</h3>
+            <!-- Внутри div.user-rating-widget -->
             <div class="stars-interactive" aria-label="Rate this movie">
-              <svg class="star-icon interactive" data-rating-value="1" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
-              <svg class="star-icon interactive" data-rating-value="2" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
-              <svg class="star-icon interactive" data-rating-value="3" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
-              <svg class="star-icon interactive" data-rating-value="4" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
-              <svg class="star-icon interactive" data-rating-value="5" viewBox="0 0 24 24"><use xlink:href="#icon-star-path"/></svg>
+              <svg class="star-icon interactive" data-rating-value="1" viewBox="0 0 24 24">
+                <use xlink:href="#icon-star-path" />
+              </svg>
+              <svg class="star-icon interactive" data-rating-value="2" viewBox="0 0 24 24">
+                <use xlink:href="#icon-star-path" />
+              </svg>
+              <svg class="star-icon interactive" data-rating-value="3" viewBox="0 0 24 24">
+                <use xlink:href="#icon-star-path" />
+              </svg>
+              <svg class="star-icon interactive" data-rating-value="4" viewBox="0 0 24 24">
+                <use xlink:href="#icon-star-path" />
+              </svg>
+              <svg class="star-icon interactive" data-rating-value="5" viewBox="0 0 24 24">
+                <use xlink:href="#icon-star-path" />
+              </svg>
             </div>
             <p id="current-rating-display" class="current-rating-text"></p>
             <input type="hidden" id="user-movie-rating-value" name="user_rating_value">
-            <button id="submit-user-rating-btn" class="btn btn-secondary btn-small" data-i18n="page.movieDetails.submitRatingBtn" style="display: none;"></button>
+            <button id="submit-user-rating-btn" class="btn btn-secondary btn-small"
+              data-i18n="page.movieDetails.submitRatingBtn" style="display: none;"></button>
             <p class="form-message" id="user-rating-message"></p>
           </div>
           <div id="rating-login-prompt" class="comment-login-prompt" style="display: none;">
-            <p data-i18n="page.movieDetails.loginToRatePrompt">Please <a href="sign-up.html?form=signin" data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup" data-i18n="page.movieDetails.registerLink">register</a> to rate this movie.</p>
+            <p data-i18n="page.movieDetails.loginToRatePrompt">Please <a href="sign-up.html?form=signin"
+                data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup"
+                data-i18n="page.movieDetails.registerLink">register</a> to rate this movie.</p>
           </div>
 
           <div class="overview-section">
@@ -96,8 +123,10 @@
             <p id="movie-details-description" data-i18n-key="movie.placeholder.description">Loading description...</p>
           </div>
           <div class="crew-info">
-            <p><strong data-i18n="page.movieDetails.directorLabel">Director:</strong> <span id="movie-details-director" data-i18n-key="director.placeholder">N/A</span></p>
-            <p><strong data-i18n="page.movieDetails.actorsLabel">Starring:</strong> <span id="movie-details-actors" data-i18n-key="actors.placeholder">N/A</span></p>
+            <p><strong data-i18n="page.movieDetails.directorLabel">Director:</strong> <span id="movie-details-director"
+                data-i18n-key="director.placeholder">N/A</span></p>
+            <p><strong data-i18n="page.movieDetails.actorsLabel">Starring:</strong> <span id="movie-details-actors"
+                data-i18n-key="actors.placeholder">N/A</span></p>
           </div>
         </div>
       </section>
@@ -114,10 +143,24 @@
         <h2 data-i18n="page.movieDetails.commentsTitle">Comments</h2>
         <div id="existing-comments-list">
           <!-- JS будет загружать. Оставим примеры для верстки, JS их очистит перед загрузкой реальных -->
-          <div class="comment-item"><div class="comment-author" data-i18n="comment.sample.author">User123</div><div class="comment-date" data-i18n="comment.sample.date">October 27, 2023</div><p class="comment-text" data-i18n="comment.sample.text">This movie looks amazing! Can't wait.</p></div>
+          <div class="comment-item">
+            <div class="comment-author" data-i18n="comment.sample.author">User123</div>
+            <div class="comment-date" data-i18n="comment.sample.date">October 27, 2023</div>
+            <p class="comment-text" data-i18n="comment.sample.text">This movie looks amazing! Can't wait.</p>
+          </div>
         </div>
-        <form id="add-comment-form" class="add-comment-form" style="display: none;"><h3 data-i18n="page.movieDetails.leaveCommentTitle">Leave a Comment</h3><textarea id="comment-text-input" name="commentText" rows="4" data-i18n-placeholder="page.movieDetails.commentPlaceholder" placeholder="Write your comment here..." required></textarea><button type="submit" class="btn btn-primary" data-i18n="page.movieDetails.submitCommentButton">Submit Comment</button><p class="form-message" id="comment-form-message"></p></form>
-        <div id="comment-login-prompt-page" class="comment-login-prompt" style="display: none;"><p data-i18n="page.movieDetails.loginToCommentPrompt">Please <a href="sign-up.html?form=signin" data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup" data-i18n="page.movieDetails.registerLink">register</a> to leave a comment.</p></div>
+        <form id="add-comment-form" class="add-comment-form" style="display: none;">
+          <h3 data-i18n="page.movieDetails.leaveCommentTitle">Leave a Comment</h3><textarea id="comment-text-input"
+            name="commentText" rows="4" data-i18n-placeholder="page.movieDetails.commentPlaceholder"
+            placeholder="Write your comment here..." required></textarea><button type="submit" class="btn btn-primary"
+            data-i18n="page.movieDetails.submitCommentButton">Submit Comment</button>
+          <p class="form-message" id="comment-form-message"></p>
+        </form>
+        <div id="comment-login-prompt-page" class="comment-login-prompt" style="display: none;">
+          <p data-i18n="page.movieDetails.loginToCommentPrompt">Please <a href="sign-up.html?form=signin"
+              data-i18n="page.movieDetails.loginLink">login</a> or <a href="sign-up.html?form=signup"
+              data-i18n="page.movieDetails.registerLink">register</a> to leave a comment.</p>
+        </div>
       </section>
 
       <section class="related-movies-section">
@@ -130,14 +173,23 @@
   </main>
 
   <footer class="site-footer">
-    <!-- Твой стандартный футер -->
+    <div class="container">
+      <p data-i18n="footer_copyright">© 2025 FilmScore.</p>
+      <nav class="footer-nav">
+        <ul>
+          <!-- <li><a href="movie-details.html" data-i18n="footer_about">About</a></li> -->
+          <li><a href="about.html" data-i18n="footer_about">About</a></li>
+          <li><a href="contact.html" data-i18n="footer_contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </footer>
 
   <svg style="display: none;">
     <defs>
       <path id="icon-star-path" d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z"/>
-      <!-- Добавь сюда определение для #icon-user-path, если его нет в общем SVG-спрайте -->
-      <path id="icon-user-path" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2 M12 11A4 4 0 1 0 12 3 4 4 0 0 0 12 11Z"></path>
+      <!-- Убедись, что определение для #icon-user-path тоже здесь, если ты его используешь в хедере через <use> -->
+      <path id="icon-user-path" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2 M12 11A4 4 0 1 0 12 3 4 4 0 0 0 12 11Z"></path> 
     </defs>
   </svg>
 
@@ -146,4 +198,5 @@
   <script src="movies-data.js" defer></script>
   <script src="movie-details.js" defer></script>
 </body>
+
 </html>

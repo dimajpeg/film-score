@@ -1,4 +1,4 @@
-// // header-auth.js (рабочая версия)
+// header-auth.js (рабочая версия)
 
 // document.addEventListener('DOMContentLoaded', function () {
 //   const navSignInLink = document.getElementById('nav-signin-link');

@@ -618,7 +618,17 @@
   "director.howardmoore": "Байрон Говард і Річ Мур",
   "actor.ginnifergoodwin": "Джинніфер Гудвін",
   "actor.jasonbateman": "Джейсон Бейтман",
-  "actor.idriselba": "Ідріс Ельба"
+  "actor.idriselba": "Ідріс Ельба",
 
 
+  "page.movieDetails.yourRatingTitle": "Ваша оцінка",
+  "page.movieDetails.rateThisMovie": "Оцініть фільм",
+  "page.movieDetails.submitRatingBtn": "Оцінити",
+  "message.ratingSubmitted": "Вашу оцінку {ratingValue} прийнято (симуляція)!",
+  "message.selectRatingFirst": "Будь ласка, спочатку виберіть оцінку (мінімум 0.5 зірки).",
+  "page.movieDetails.leaveCommentTitle": "Залишити коментар",
+  "page.movieDetails.commentPlaceholder": "Напишіть ваш коментар тут...",
+  "page.movieDetails.submitCommentButton": "Надіслати коментар",
+  "message.commentSubmitted": "Коментар надіслано (симуляція)!",
+  "message.commentNotEmpty": "Коментар не може бути порожнім."
 }

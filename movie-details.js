@@ -1,4 +1,4 @@
-// movie-details.js
+// movie-details.js (Объединенный и доработанный)
 
 document.addEventListener('DOMContentLoaded', () => {
     // Элементы на странице деталей фильма
@@ -15,47 +15,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const trailerEmbedContainer = document.getElementById('movie-trailer-embed');
     const trailerStatusElement = document.getElementById('trailer-status');
 
+    // Элементы для пользовательской оценки
     const userRatingWidget = document.querySelector('.user-rating-widget');
     const starsInteractiveContainer = document.querySelector('.stars-interactive');
     const currentRatingDisplay = document.getElementById('current-rating-display');
     const userRatingValueInput = document.getElementById('user-movie-rating-value');
     const submitRatingBtn = document.getElementById('submit-user-rating-btn');
-    const ratingLoginPromptContainer = document.getElementById('rating-login-prompt'); // Контейнер div
-    const ratingLoginPromptParagraph = ratingLoginPromptContainer ? ratingLoginPromptContainer.querySelector('p') : null; // Сам параграф
-
-    const addCommentForm = document.getElementById('add-comment-form');
-    const commentLoginPromptPageContainer = document.getElementById('comment-login-prompt-page'); // Контейнер div
-    const commentLoginPromptParagraph = commentLoginPromptPageContainer ? commentLoginPromptPageContainer.querySelector('p') : null; // Сам параграф
-
-    const relatedMoviesGrid = document.getElementById('related-movies-grid');
+    const ratingLoginPromptContainer = document.getElementById('rating-login-prompt');
+    const ratingLoginPromptParagraph = ratingLoginPromptContainer ? ratingLoginPromptContainer.querySelector('p') : null;
     const userRatingMessage = document.getElementById('user-rating-message');
 
+    // Элементы для комментариев
+    const addCommentForm = document.getElementById('add-comment-form');
+    const commentLoginPromptPageContainer = document.getElementById('comment-login-prompt-page'); // Ты назвал его так в HTML
+    const commentLoginPromptParagraph = commentLoginPromptPageContainer ? commentLoginPromptPageContainer.querySelector('p') : null;
+    const existingCommentsList = document.getElementById('existing-comments-list');
+    const commentTextInput = document.getElementById('comment-text-input');
+    const commentFormMessage = document.getElementById('comment-form-message');
+
+    // Элементы для похожих фильмов
+    const relatedMoviesGrid = document.getElementById('related-movies-grid');
 
     let currentMovieData = null;
     let selectedUserRating = 0;
     let potentialUserRating = 0;
 
-    // ИСПРАВЛЕННАЯ Функция для получения текста, которая ПРАВИЛЬНО ПЕРЕДАЕТ PARAMS в i18n
+    // Функция для получения текста (с параметрами)
     function getText(key, fallbackTextIfKeyNotFound = '', params = {}) {
         if (window.i18n && typeof window.i18n.getTranslation === 'function') {
-            // Передаем params в window.i18n.getTranslation
-            const translation = window.i18n.getTranslation(key, params); 
-            
-            // Если i18n.getTranslation вернул сам ключ (значит, перевод не найден в JSON),
-            // тогда используем наш фоллбэк (если он есть), Иначе используем результат от i18n (даже если это ключ)
-            if (translation === key) {
-                let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                // Применяем params и к фоллбэку, если они есть
-                if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
-                    for (const paramKey in params) {
-                        fallback = fallback.replace(new RegExp(`{${paramKey}}`, 'g'), params[paramKey]);
-                    }
+            const translation = window.i18n.getTranslation(key, params);
+            if (translation !== key) return translation;
+            let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
+                for (const paramKey in params) {
+                    fallback = fallback.replace(new RegExp(`{${paramKey}}`, 'g'), params[paramKey]);
                 }
-                return fallback;
             }
-            return translation; // Перевод найден и параметры (если были) уже применены в i18n.js
+            return fallback;
         }
-        // Фоллбэк, если i18n вообще недоступен
         let fallback = fallbackTextIfKeyNotFound || key.split('.').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         if (typeof fallback === 'string' && params && Object.keys(params).length > 0) {
              for (const paramKey in params) {
@@ -65,14 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return fallback;
     }
     
+    // Функция для отображения сообщений под виджетом оценки
     function showRatingMessage(messageText, type = 'error') {
         if (!userRatingMessage) return;
         userRatingMessage.textContent = messageText;
-        userRatingMessage.className = 'form-message'; 
+        userRatingMessage.className = 'form-message';
         userRatingMessage.classList.add(type);
         userRatingMessage.style.display = 'block';
     }
+    function clearRatingMessage() {
+        if (userRatingMessage) userRatingMessage.style.display = 'none';
+    }
 
+    // Функция для отображения данных фильма
     function displayMovieDetails(movie) {
         if (!movie) {
             document.body.innerHTML = `<div class="container" style="padding-top: 50px; text-align: center;"><h1>${getText('error.movieNotFound', 'Movie not found')}</h1><a href="index.html">${getText('error.backToHome', 'Back to Home')}</a></div>`;
@@ -84,14 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pageTitleElement) pageTitleElement.textContent = `${movieTitleForPage} - FilmScore`;
         else document.title = `${movieTitleForPage} - FilmScore`;
 
-        if (backdropImageElement && movie.bannerUrl) {
-            backdropImageElement.src = movie.bannerUrl;
-            backdropImageElement.alt = `${movieTitleForPage} Backdrop`;
-        } else if (backdropImageElement && movie.posterUrl) {
-            backdropImageElement.src = movie.posterUrl;
-            backdropImageElement.alt = `${movieTitleForPage} Backdrop`;
-        } else if (backdropImageElement) {
-            backdropImageElement.style.display = 'none';
+        if (backdropImageElement) {
+            if (movie.bannerUrl) {
+                backdropImageElement.src = movie.bannerUrl;
+                backdropImageElement.alt = `${movieTitleForPage} Backdrop`;
+                backdropImageElement.style.display = 'block';
+            } else if (movie.posterUrl) {
+                backdropImageElement.src = movie.posterUrl;
+                backdropImageElement.alt = `${movieTitleForPage} Backdrop`;
+                backdropImageElement.style.display = 'block';
+            } else {
+                backdropImageElement.style.display = 'none';
+            }
         }
 
         if (posterImageElement && movie.posterUrl) {
@@ -111,19 +117,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join(', ');
         }
 
-        if (descriptionElement) { // Проверка на существование descriptionKey
+        if (descriptionElement) {
             descriptionElement.textContent = movie.descriptionKey 
                 ? getText(movie.descriptionKey, getText('movie.placeholder.description')) 
                 : getText('movie.placeholder.description');
         }
 
-
-        if (directorElement) { // Проверка на существование directorKey
+        if (directorElement) {
             directorElement.textContent = movie.directorKey 
                 ? getText(movie.directorKey, getText('director.placeholder'))
                 : getText('director.placeholder');
         }
-        if (actorsElement) { // Проверка на существование actorsKeys
+        if (actorsElement) {
              if (movie.actorsKeys && movie.actorsKeys.length > 0) {
                 actorsElement.innerHTML = movie.actorsKeys.map(aKey => {
                     const actorName = getText(aKey, getText('actor.placeholderSingle', 'Actor'));
@@ -133,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 actorsElement.textContent = getText('actors.placeholder');
             }
         }
-
 
         if (trailerEmbedContainer) {
             if (movie.trailerUrl) {
@@ -148,8 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 trailerEmbedContainer.innerHTML = '';
                 const p = trailerEmbedContainer.querySelector('p#trailer-status') || document.createElement('p');
                 p.id = 'trailer-status';
+                p.setAttribute('data-i18n', 'page.movieDetails.trailerNotAvailable');
                 p.textContent = getText('page.movieDetails.trailerNotAvailable', 'Trailer not available.');
-                if (!trailerEmbedContainer.querySelector('p#trailer-status')) {
+                if (!trailerEmbedContainer.contains(p)) {
                      trailerEmbedContainer.appendChild(p);
                 }
                 p.style.display = 'block';
@@ -160,16 +165,91 @@ document.addEventListener('DOMContentLoaded', () => {
         displayRelatedMovies(movie.genreKeys, movie.id);
     }
 
-    // --- Логика звезд (остается без изменений, как в предыдущем ответе) ---
-    function updateStarsDisplay(ratingToDisplay) { /* ... */ }
-    function updateHoverStarsDisplay(hoverRating) { /* ... */ }
-    if (starsInteractiveContainer) { /* ... обработчики для звезд ... */ }
-    if (submitRatingBtn) { /* ... обработчик для кнопки submit ... */ }
-    // Скопируй сюда полный код для звездной оценки из предыдущего моего ответа
+    // --- Логика для виджета пользовательской оценки ---
+    function applyStarRatingUI(rating, isHoverEvent = false) {
+        if (!starsInteractiveContainer) return;
+        const stars = starsInteractiveContainer.querySelectorAll('.star-icon.interactive');
+        
+        stars.forEach((star, index) => {
+            const starFullValue = index + 1; // 1, 2, 3, 4, 5
+            star.classList.remove('selected', 'half-selected', 'hover', 'half-hover');
 
+            if (isHoverEvent) {
+                if (rating >= starFullValue) {
+                    star.classList.add('hover'); // Полная звезда для ховера
+                } else if (rating >= starFullValue - 0.5) {
+                    star.classList.add('half-hover'); // Половина для ховера
+                }
+            } else { // Для выбранной оценки
+                if (rating >= starFullValue) {
+                    star.classList.add('selected'); // Полная выбранная
+                } else if (rating === (starFullValue - 0.5)) {
+                    star.classList.add('half-selected'); // Половина выбранная
+                }
+            }
+        });
+    }
+    
+    if (starsInteractiveContainer) {
+        const stars = Array.from(starsInteractiveContainer.querySelectorAll('.star-icon.interactive'));
+        stars.forEach((star, index) => {
+            const starRatingBase = index + 1;
 
+            star.addEventListener('mousemove', function(event) {
+                if (!localStorage.getItem('authToken')) return;
+                const rect = star.getBoundingClientRect();
+                const hoverPositionRatio = (event.clientX - rect.left) / rect.width;
+                potentialUserRating = hoverPositionRatio <= 0.5 ? starRatingBase - 0.5 : starRatingBase;
+                if (potentialUserRating < 0.5) potentialUserRating = 0.5;
+                applyStarRatingUI(potentialUserRating, true);
+                if (currentRatingDisplay) currentRatingDisplay.textContent = `${potentialUserRating.toFixed(1)} / 5.0`;
+            });
+
+            star.addEventListener('click', function() {
+                if (!localStorage.getItem('authToken')) return;
+                selectedUserRating = potentialUserRating;
+                if(userRatingValueInput) userRatingValueInput.value = selectedUserRating;
+                applyStarRatingUI(selectedUserRating, false); // Отображаем выбранные (не ховер)
+                if (currentRatingDisplay) currentRatingDisplay.textContent = `${selectedUserRating.toFixed(1)} / 5.0`;
+                if (submitRatingBtn) submitRatingBtn.style.display = 'inline-block';
+                if (userRatingMessage) userRatingMessage.style.display = 'none';
+            });
+        });
+
+        starsInteractiveContainer.addEventListener('mouseleave', function() {
+            if (!localStorage.getItem('authToken')) return;
+            applyStarRatingUI(selectedUserRating, false); // Показываем выбранные, не ховер
+            if (currentRatingDisplay) {
+                currentRatingDisplay.textContent = selectedUserRating > 0 
+                    ? `${selectedUserRating.toFixed(1)} / 5.0` 
+                    : getText('page.movieDetails.rateThisMovie', "Rate this movie");
+            }
+        });
+    }
+
+    if (submitRatingBtn) {
+        submitRatingBtn.addEventListener('click', function() {
+            const ratingValue = userRatingValueInput ? userRatingValueInput.value : "0";
+            const movieId = currentMovieData ? currentMovieData.id : null;
+
+            if (movieId && ratingValue && parseFloat(ratingValue) >= 0.5) {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    if(userRatingMessage) showRatingMessage(getText('error.notLoggedInToRate', 'You must be logged in to rate.'), 'error');
+                    return;
+                }
+                console.log(`SIMULATING RATING SUBMISSION: Movie ID: ${movieId}, User Rating: ${ratingValue}, Token: ${token}`);
+                if(userRatingMessage) showRatingMessage(getText('message.ratingSubmitted', `Your rating of ${ratingValue} has been submitted (simulated)!`, {ratingValue: ratingValue}), 'success');
+            } else {
+                if(userRatingMessage) showRatingMessage(getText('message.selectRatingFirst', 'Please select a rating (at least 0.5 stars).'), 'error');
+            }
+        });
+    }
+
+    // Показ/скрытие элементов в зависимости от авторизации
     function checkUserAuthForInteractiveElements() {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('authToken'); // Или твоя тестовая переменная isLoggedInForTesting из header-auth.js
+        const initialRatingText = getText('page.movieDetails.rateThisMovie', "Rate this movie");
 
         const loginLinkText = getText('page.movieDetails.loginLink', 'login');
         const registerLinkText = getText('page.movieDetails.registerLink', 'register');
@@ -179,9 +259,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (token) {
             if (userRatingWidget) userRatingWidget.style.display = 'block';
             if (ratingLoginPromptContainer) ratingLoginPromptContainer.style.display = 'none';
+            if (currentRatingDisplay) currentRatingDisplay.textContent = initialRatingText;
+            
+            // TODO: Загрузить и отобразить сохраненную оценку пользователя для ЭТОГО фильма
+            // selectedUserRating = userPreviousRatingFromServer || 0;
+            // if(userRatingValueInput) userRatingValueInput.value = selectedUserRating;
+            // applyStarRatingUI(selectedUserRating, false);
+            // if (currentRatingDisplay && selectedUserRating > 0) {
+            //     currentRatingDisplay.textContent = `${selectedUserRating.toFixed(1)} / 5.0`;
+            // }
+
             if (addCommentForm) addCommentForm.style.display = 'block'; 
             if (commentLoginPromptPageContainer) commentLoginPromptPageContainer.style.display = 'none';
-            // TODO: Загрузить сохраненную оценку
         } else {
             if (userRatingWidget) userRatingWidget.style.display = 'none';
             if (ratingLoginPromptContainer) ratingLoginPromptContainer.style.display = 'block';
@@ -206,8 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Функция createMovieCardHTML (для Related Movies)
-    function createMovieCardHTML(movie) { // Эта функция должна быть здесь
+    function createMovieCardHTML(movie) {
         if (!movie || !movie.id || !movie.titleKey || !movie.posterUrl || !movie.year || !movie.genreKeys || !movie.rating) {
+            console.warn('Skipping related movie card due to missing data:', movie && movie.id ? movie.id : 'Unknown');
             return '';
         }
         const fallbackTitle = movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
@@ -242,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-
     function displayRelatedMovies(currentMovieGenreKeys, currentMovieId) {
         if (!relatedMoviesGrid || typeof allMoviesData === 'undefined' || !currentMovieGenreKeys || !currentMovieId) {
             if(relatedMoviesGrid) relatedMoviesGrid.innerHTML = `<p>${getText('page.movieDetails.noRelatedMovies', 'No similar movies found.')}</p>`;
@@ -261,6 +350,68 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function createMovieCardHTML(movie) {
+        if (!movie || !movie.id || !movie.titleKey || !movie.posterUrl || !movie.year || !movie.genreKeys || !movie.rating) {
+            console.warn('Skipping related movie card in movie-details.js due to missing data:', movie && movie.id ? movie.id : 'Unknown');
+            return '';
+        }
+        const fallbackTitle = movie.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const title = getText(movie.titleKey, fallbackTitle); // getText уже определена выше
+        const year = movie.year;
+        const rating = movie.rating;
+        const poster = movie.posterUrl;
+        const movieUrl = `movie-details.html?id=${movie.id}`; // Ссылка на саму себя, но с другим ID
+        const genresHTML = movie.genreKeys.map(genreKey => {
+            const defaultGenreName = genreKey.split('.').pop();
+            const genreName = getText(genreKey, defaultGenreName.charAt(0).toUpperCase() + defaultGenreName.slice(1));
+            return `<span>${genreName}</span>`;
+        }).join(', ');
+
+        return `
+            <article class="movie-card">
+              <a href="${movieUrl}" class="movie-poster-link">
+                <img src="${poster}" alt="${title} Poster">
+              </a>
+              <div class="movie-info">
+                <h3><a href="${movieUrl}">${title}</a></h3>
+                <div class="movie-meta">
+                  <span class="movie-year">${year}</span>
+                  <span class="movie-genres">${genresHTML || getText('genre.unknown', 'N/A')}</span>
+                </div>
+                <div class="movie-rating">
+                  <svg class="icon icon-star"><use xlink:href="#icon-star-path"/></svg>
+                  <span>${rating}</span>
+                </div>
+              </div>
+            </article>
+        `;
+    }
+
+    function displayRelatedMovies(currentMovieGenreKeys, currentMovieId) {
+        if (!relatedMoviesGrid || typeof allMoviesData === 'undefined' || !Array.isArray(currentMovieGenreKeys) || !currentMovieId) {
+            if(relatedMoviesGrid) relatedMoviesGrid.innerHTML = `<p>${getText('page.movieDetails.noRelatedMovies', 'No similar movies found.')}</p>`;
+            console.warn("Could not display related movies. Missing data or elements.", 
+                {relatedMoviesGrid, allMoviesDataDefined: typeof allMoviesData !== 'undefined', currentMovieGenreKeys, currentMovieId });
+            return;
+        }
+        
+        let similarMovies = allMoviesData.filter(movie => {
+            if (movie.id === currentMovieId) return false; // Не показывать текущий фильм
+            if (!movie.genreKeys || !Array.isArray(movie.genreKeys)) return false; // Пропускаем фильмы без жанров
+            return movie.genreKeys.some(genreKey => currentMovieGenreKeys.includes(genreKey));
+        });
+
+        // Перемешиваем и берем первые 5
+        similarMovies.sort(() => 0.5 - Math.random());
+        const relatedToDisplay = similarMovies.slice(0, 5);
+
+        if (relatedToDisplay.length > 0) {
+            relatedMoviesGrid.innerHTML = relatedToDisplay.map(movie => createMovieCardHTML(movie)).join('');
+        } else {
+            relatedMoviesGrid.innerHTML = `<p>${getText('page.movieDetails.noRelatedMovies', 'No similar movies found.')}</p>`;
+        }
+    }
+    // --- Инициализация страницы ---
     function initializeMovieDetailsPage() {
         const urlParams = new URLSearchParams(window.location.search);
         const movieId = urlParams.get('id');
@@ -270,41 +421,120 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (typeof allMoviesData !== 'undefined') {
             const movie = allMoviesData.find(m => m.id === movieId);
-            displayMovieDetails(movie); // Это вызовет и checkUserAuthForInteractiveElements
+            displayMovieDetails(movie);
         } else {
-            console.error('`allMoviesData` is not defined. Make sure movies-data.js is loaded.');
+            console.error('`allMoviesData` is not defined. Make sure movies-data.js is loaded before movie-details.js.');
         }
     }
-
+    
     // Инициализация после загрузки переводов
     function initPageAfterTranslations() {
         initializeMovieDetailsPage();
-        // Убедимся, что и другие интерактивные элементы обновляются с переводами, если нужно
-        // Например, текст кнопки "Submit Rating" и т.д., если он не через data-i18n
-        if (submitRatingBtn) submitRatingBtn.textContent = getText('page.movieDetails.submitRatingBtn', 'Submit');
+        if (submitRatingBtn) { // Устанавливаем текст кнопки оценки
+            submitRatingBtn.textContent = getText('page.movieDetails.submitRatingBtn', 'Submit');
+        }
+        const commentTextArea = document.getElementById('comment-text-input');
+        if (commentTextArea) { // Устанавливаем плейсхолдер для комментариев
+            commentTextArea.placeholder = getText('page.movieDetails.commentPlaceholder', 'Write your comment here...');
+        }
+        const submitCommentBtn = document.querySelector('#add-comment-form button[type="submit"]');
+        if(submitCommentBtn) { // Устанавливаем текст кнопки отправки комментария
+            submitCommentBtn.textContent = getText('page.movieDetails.submitCommentButton', 'Submit Comment');
+        }
     }
 
-
+    // Слушатели событий
     document.addEventListener('translationsReady', function(event) {
         console.log(`[movie-details.js] Event 'translationsReady' received for lang: ${event.detail.lang}.`);
         initPageAfterTranslations();
     });
-
     document.addEventListener('languageChanged', function(event) {
         console.log(`[movie-details.js] Event 'languageChanged' received for lang: ${event.detail.lang}.`);
-        initPageAfterTranslations();
+        initPageAfterTranslations(); 
     });
-    
-    // Обработка событий логина/логаута
     document.addEventListener('userLoggedInGlobal', checkUserAuthForInteractiveElements);
     document.addEventListener('userLoggedOutGlobal', checkUserAuthForInteractiveElements);
 
-    // Если i18n.js и movies-data.js уже загружены к моменту выполнения этого скрипта
-    if (window.i18n && window.i18n.getCurrentLanguage() && typeof allMoviesData !== 'undefined') {
-        // Проверяем, есть ли уже переводы для текущего языка в i18n (этот флаг нужно добавить в i18n.js)
-        // if (window.i18n.areTranslationsLoadedFor && window.i18n.areTranslationsLoadedFor(window.i18n.getCurrentLanguage())) {
-             console.log('[movie-details.js] i18n and movie data seem ready, attempting early initialization.');
-             initPageAfterTranslations();
-        // }
+    // Попытка ранней инициализации, если все уже готово
+    if (window.i18n && window.i18n.getCurrentLanguage() && typeof allMoviesData !== 'undefined' && document.readyState === 'complete') {
+         // Этот блок может быть полезен, если 'translationsReady' уже сработало до добавления этого слушателя
+         // Но в целом, лучше полагаться на 'translationsReady'. Можно его убрать, если все и так работает.
+         console.log('[movie-details.js] DOM, i18n and movie data seem ready on initial load, attempting early initialization.');
+         // initPageAfterTranslations(); // Вызываем только если translationsReady еще не вызвало
+    } else if (window.i18n && window.i18n.getCurrentLanguage() && typeof allMoviesData !== 'undefined' && !document.querySelector('title').dataset.i18n){
+        // Если title не имеет data-i18n, значит applyTranslations уже мог пройти
+        // Это очень грубая проверка, лучше на нее не полагаться
+    }
+
+
+    // --- Логика для комментариев (добавление) ---
+    function showCommentFormMessage(messageText, type = 'error') {
+        if (!commentFormMessage) return;
+        commentFormMessage.textContent = messageText;
+        commentFormMessage.className = 'form-message';
+        commentFormMessage.classList.add(type);
+        commentFormMessage.style.display = 'block';
+    }
+
+    function createCommentHTMLForDisplay(comment) { // Переименовал, чтобы не конфликтовать с createMovieCardHTML
+        const authorName = comment.author || getText('comment.anonymous', 'Anonymous');
+        // Форматирование даты (простой вариант)
+        const dateString = comment.date ? new Date(comment.date).toLocaleDateString(window.i18n.getCurrentLanguage() || 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString();
+        
+        const commentItem = document.createElement('div');
+        commentItem.classList.add('comment-item');
+        const authorDiv = document.createElement('div');
+        authorDiv.classList.add('comment-author');
+        authorDiv.textContent = authorName;
+        const dateDiv = document.createElement('div');
+        dateDiv.classList.add('comment-date');
+        dateDiv.textContent = dateString;
+        const textP = document.createElement('p');
+        textP.classList.add('comment-text');
+        textP.textContent = comment.text; // Текст комментария не должен переводиться
+        commentItem.appendChild(authorDiv);
+        commentItem.appendChild(dateDiv);
+        commentItem.appendChild(textP);
+        return commentItem;
+    }
+
+    if (addCommentForm) {
+        addCommentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!commentTextInput) return;
+            const commentText = commentTextInput.value.trim();
+            const movieId = currentMovieData ? currentMovieData.id : null;
+
+            if (!movieId) {
+                showCommentFormMessage(getText('error.generic', 'An error occurred.'), 'error');
+                return;
+            }
+            if (commentText) {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    showCommentFormMessage(getText('error.notLoggedInToComment', 'You must be logged in to comment.'), 'error');
+                    return;
+                }
+                console.log(`SIMULATING COMMENT SUBMISSION: Movie ID: ${movieId}, Comment: ${commentText}, Token: ${token}`);
+                const newCommentData = {
+                    // В реальном приложении имя пользователя (или ID) будет браться из данных /auth/me или из токена
+                    author: getText('comment.currentUser', 'You'), 
+                    date: new Date().toISOString(), // Сохраняем дату в ISO формате для будущей сортировки/отображения
+                    text: commentText
+                };
+                const newCommentElement = createCommentHTMLForDisplay(newCommentData);
+                if (existingCommentsList) {
+                    // Удаляем примеры комментариев, если они еще там
+                    const sampleComments = existingCommentsList.querySelectorAll('.comment-item[data-i18n]');
+                    sampleComments.forEach(sc => sc.remove());
+                    existingCommentsList.prepend(newCommentElement);
+                }
+                commentTextInput.value = '';
+                if (commentFormMessage) commentFormMessage.style.display = 'none';
+                showCommentFormMessage(getText('message.commentSubmitted', 'Comment submitted (simulated)!'), 'success');
+            } else {
+                showCommentFormMessage(getText('message.commentNotEmpty', 'Comment cannot be empty.'), 'error');
+            }
+        });
     }
 });

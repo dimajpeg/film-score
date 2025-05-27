@@ -1,0 +1,105 @@
+/* css/profile-page.css */
+
+.profile-page .page-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-top: 20px;
+}
+
+.profile-page .page-header h1 {
+  font-size: 2.5em;
+  color: #e50914;
+}
+
+.card-like-section {
+  background-color: #1c1c1c;
+  padding: 25px 30px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card-like-section h2 {
+  font-size: 1.6em;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+.profile-info-section .info-item {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  color: #ccc;
+}
+
+.profile-info-section .info-item strong {
+  color: #e5e5e5;
+  margin-right: 10px;
+  min-width: 80px; /* Для выравнивания */
+  display: inline-block;
+}
+
+.profile-info-section .profile-action-btn {
+  margin-top: 15px;
+  display: inline-block; /* Чтобы кнопка не растягивалась */
+}
+
+.profile-actions-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-actions-section ul li {
+  margin-bottom: 10px;
+}
+
+.btn-link-styled { /* Общий стиль для ссылок, выглядящих как кнопки */
+  display: inline-block;
+  padding: 10px 15px;
+  color: #0095ff; /* Или твой основной цвет ссылок */
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border: 1px solid transparent; /* Для выравнивания с другими кнопками */
+}
+
+.btn-link-styled:hover {
+  background-color: rgba(0, 149, 255, 0.1);
+  text-decoration: none;
+  color: #33afff;
+}
+
+.profile-logout-section {
+  text-align: center; /* Или другое выравнивание для кнопки выхода */
+  margin-top: 20px;
+}
+
+.profile-logout-section .btn-danger { /* Стили для кнопки "Выйти" */
+  background-color: #dc3545; /* Красный */
+  border-color: #dc3545;
+  color: white;
+}
+.profile-logout-section .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .profile-page .page-header h1 {
+      font-size: 2em;
+  }
+  .card-like-section h2 {
+      font-size: 1.4em;
+  }
+  .profile-info-section .info-item {
+      font-size: 1em;
+  }
+  .profile-info-section .info-item strong {
+      display: block; /* Метки над значениями на мобильных */
+      margin-bottom: 3px;
+      min-width: auto;
+  }
+}

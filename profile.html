@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="page.profile.title">My Profile - FilmScore</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/static-pages.css">
+  <link rel="stylesheet" href="css/profile-page.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <!-- Твой стандартный хедер -->
+    <div class="container header-container">
+      <a href="index.html" class="logo" data-i18n="site.logo">FilmScore</a>
+      <form action="/search" method="get" class="search-form">
+        <input type="search" name="query" data-i18n="search_placeholder" placeholder="Search for movies, series..." aria-label="Search">
+        <button type="submit" data-i18n="search_btn">Search</button>
+      </form>
+      <nav class="main-navigation">
+        <ul>
+          <li id="nav-signin-link" class="nav-item"><a href="sign-up.html" data-i18n="sign_in">Sign In</a></li>
+          <li id="nav-user-loggedin" class="nav-item" style="display: none;">
+            <div class="user-menu-container">
+              <button id="user-avatar-button" class="user-avatar-btn"><svg class="icon icon-user"><use xlink:href="#icon-user-path"/></svg></button>
+              <div id="user-dropdown-menu" class="dropdown-menu" style="display: none;">
+                <div class="dropdown-header"><span id="dropdown-username" data-i18n="userMenu.greeting">Hello, User!</span></div>
+                <ul>
+                  <li><a href="profile.html" data-i18n="userMenu.myProfile">My Profile & Ratings</a></li> <!-- Обновленная ссылка -->
+                  <li><a href="edit-profile.html" data-i18n="userMenu.editProfile">Edit Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><button id="logout-button-header" class="dropdown-item-button" data-i18n="userMenu.logout">Logout</button></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <select id="language-switcher" name="language"><option value="en">EN</option><option value="ru">RU</option><option value="ua">UA</option></select>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main profile-page">
+    <div class="container page-container">
+      <header class="page-header">
+        <h1 data-i18n="page.profile.mainTitleCombined">My Profile & Ratings</h1> <!-- Обновленный заголовок -->
+      </header>
+
+      <section class="profile-info-section card-like-section">
+        <h2 data-i18n="page.profile.userInfoTitle">User Information</h2>
+        <div class="info-item">
+          <strong data-i18n="page.profile.label.name">Name:</strong>
+          <span id="profile-name" data-i18n-key="user.placeholder.name">Your Name</span>
+        </div>
+        <div class="info-item">
+          <strong data-i18n="page.profile.label.email">Email:</strong>
+          <span id="profile-email" data-i18n-key="user.placeholder.email">your.email@example.com</span>
+        </div>
+        <a href="edit-profile.html" class="btn btn-secondary btn-small profile-action-btn" data-i18n="page.profile.editProfileBtn">Edit Profile</a>
+      </section>
+
+      <!-- НОВАЯ СЕКЦИЯ ДЛЯ ОЦЕНОК ПОЛЬЗОВАТЕЛЯ -->
+      <section class="my-ratings-section card-like-section">
+        <h2 data-i18n="page.profile.myRatingsTitle">My Rated Movies</h2>
+        <div class="movies-grid" id="my-rated-movies-grid">
+          <!-- Сюда JS будет вставлять карточки оцененных фильмов -->
+          <!-- <p data-i18n="page.profile.noRatingsYet">You haven't rated any movies yet.</p> --> <!-- Будет показано JS, если список пуст -->
+        </div>
+      </section>
+      
+       <section class="profile-logout-section">
+         <button id="logout-button-profile" class="btn btn-danger" data-i18n="userMenu.logout">Logout</button>
+       </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <!-- Твой стандартный футер -->
+  </footer>
+
+  <svg style="display: none;">
+    <defs>
+      <path id="icon-star-path" d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.444l-7.416 4.004 1.48-8.279-6.064-5.828 8.332-1.151z"/>
+      <path id="icon-user-path" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2 M12 11A4 4 0 1 0 12 3 4 4 0 0 0 12 11Z"></path>
+    </defs>
+  </svg>
+
+  <script src="i18n.js" defer></script>
+  <script src="header-auth.js" defer></script>
+  <script src="movies-data.js" defer></script> <!-- Нужен для данных о фильмах -->
+  <script src="profile-page.js" defer></script>
+</body>
+</html>

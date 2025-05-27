@@ -388,3 +388,13 @@ body { /* Чтобы фон был согласован, если основно
 #rating-login-prompt { /* Убедимся, что у него тоже есть отступы */
   margin-top: 15px;
 }
+
+.stars-interactive .star-icon.interactive.half-selected {
+  /* Закрашиваем первую половину основным цветом, вторую - цветом незакрашенной */
+  fill: linear-gradient(to right, #f5c518 50%, #444 50%);
+}
+
+.stars-interactive .star-icon.interactive.half-hover {
+  /* Закрашиваем первую половину цветом ховера, вторую - цветом незакрашенной */
+  fill: linear-gradient(to right, #d4a100 50%, #444 50%);
+}

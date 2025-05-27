@@ -609,7 +609,35 @@
     "director.howardmoore": "Byron Howard & Rich Moore",
     "actor.ginnifergoodwin": "Ginnifer Goodwin",
     "actor.jasonbateman": "Jason Bateman",
-    "actor.idriselba": "Idris Elba"
+    "actor.idriselba": "Idris Elba",
 
+    "page.movieDetails.yourRatingTitle": "Your Rating",
+  "page.movieDetails.rateThisMovie": "Rate this movie", 
+  "page.movieDetails.submitRatingBtn": "Submit",
+  "message.ratingSubmitted": "Your rating of {ratingValue} has been submitted (simulated)!", 
+  "message.selectRatingFirst": "Please select a rating (at least 0.5 stars).", 
+  "page.movieDetails.leaveCommentTitle": "Leave a Comment",
+  "page.movieDetails.commentPlaceholder": "Write your comment here...", 
+  "page.movieDetails.submitCommentButton": "Submit Comment", 
+  "message.commentSubmitted": "Comment submitted (simulated)!", 
+  "message.commentNotEmpty": "Comment cannot be empty.", 
+  "error.notLoggedInToRate": "You must be logged in to rate.", 
+  "error.notLoggedInToComment": "You must be logged in to comment.",
+
+  "page.profile.mainTitle": "My Profile",
+  "page.profile.userInfoTitle": "User Information",
+  "page.profile.label.name": "Name:",
+  "page.profile.label.email": "Email:",
+  "page.profile.label.joined": "Joined:",
+  "page.profile.editProfileBtn": "Edit Profile",
+  "page.profile.myActivityTitle": "My Activity",
+  "page.profile.myRatingsLink": "View My Rated Movies",
+  "page.profile.myCommentsLink": "View My Comments",
+  "page.profile.myWatchlistLink": "My Watchlist",
+  "userMenu.myProfile": "My Profile & Ratings", 
+  "page.profile.title": "My Profile & Ratings - FilmScore", 
+  "page.profile.mainTitleCombined": "My Profile & Ratings", 
+  "page.profile.myRatingsTitle": "My Rated Movies",
+  "page.profile.noRatingsYet": "You haven't rated any movies yet."
     
 }
