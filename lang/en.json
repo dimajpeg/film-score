@@ -657,7 +657,16 @@
   "page.profile.sortRated.ratingAsc": "Lowest Rated",
 
   "user.placeholder.name": "Your Name",
-  "user.placeholder.email": "your.email@example.com"
+  "user.placeholder.email": "your.email@example.com",
+  
+  "page.movieDetails.loadingComments": "Loading comments...",
+  "page.movieDetails.commentsHeader": "Comments:", 
+  "page.movieDetails.noCommentsYet": "No comments yet. Be the first!",
+  "error.loadingComments": "Failed to load comments.",
+  "error.ratingSaveFailed": "Failed to save rating.", 
+  "error.commentSaveFailed": "Failed to submit comment.",
+  "message.ratingSaved": "Rating saved!", 
+  "comment.anonymous": "Anonymous"
 
   
     
