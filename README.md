@@ -46,7 +46,7 @@ FilmScore is a web application designed for movie enthusiasts to discover, rate,
 
 **3. Movie Details Page**
 
-![dimajpeg github io_film-score_movie-details html_id=the-mask page=1 (1)](https://github.com/user-attachments/assets/93fff453-1a83-42ac-b58d-38d8aae726a3)
+![dimajpeg github io_film-score_movie-details html_id=the-mask page=3 (1)](https://github.com/user-attachments/assets/d7d1e0a0-67a6-4f52-b260-54ce3d013594)
 
 *Description: Detailed information about a specific movie, including its trailer, user rating widget, and comments section.*
 
