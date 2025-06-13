@@ -63,3 +63,13 @@ FilmScore is a web application designed for movie enthusiasts to discover, rate,
 ![dimajpeg github io_film-score_sign-up html (1) (1)](https://github.com/user-attachments/assets/22db8b57-81db-4484-95bd-1bb28ef33116)
 
 *Description: Forms for user registration and login.*
+
+**6. Footer **
+
+![dimajpeg github io_film-score_about html](https://github.com/user-attachments/assets/6eb48a0a-f31a-4c92-8745-6ded49543475)
+
+![dimajpeg github io_film-score_contact html](https://github.com/user-attachments/assets/dff81be6-44ed-465e-86bc-34198f79e25a)
+
+
+
+
