@@ -4,7 +4,6 @@ FilmScore is a web application designed for movie enthusiasts to discover, rate,
 
 <img width="1451" alt="image" src="https://github.com/user-attachments/assets/f8ca79ee-963d-4b63-b828-ba5c79303965" />
 
-
 ## ✨ Features
 
 *   **Movie Browsing:** Explore a comprehensive library of movies.
